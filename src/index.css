@@ -73,6 +73,21 @@ header {
   }
 }
 
+footer {
+  margin: 0;
+  padding: 2rem;
+  background-color: var(--awmf-accent-primary);
+  color: var(--light-foreground);
+  text-align: center;
+  position: sticky;
+  bottom: 0;
+  box-shadow: var(--box-shadow);
+
+  & * {
+    margin: 1.5rem;
+  }
+}
+
 h1 {
   margin: 2rem;
   padding: 0.5rem 2rem;
@@ -109,6 +124,14 @@ p {
   margin: 1rem;
   text-align: justify;
   line-height: 1.65rem;
+}
+
+a,
+a:hover,
+a:active,
+a:visited {
+  color: inherit;
+  text-decoration: none;
 }
 
 /* Others */
