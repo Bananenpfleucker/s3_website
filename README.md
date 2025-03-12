@@ -8,6 +8,12 @@ Die AWMF möchte - um die Verfügbarkeit dieser Leitlinien zu verstärken - ein 
 Ärzten die Möglichkeit gibt, diese einzusehen. Da sich diese Leitlinien bis zu neunzig Seiten erstrecken, steht eine Kurzzusammenfassung
 im Fokus, welche durch eine künstliche Intelligenz erfolgt.
 
+## Ausführen
+
+Zum Ausführen, führe das Kommando `npm run dev` aus.
+
+Bei der ersten Installation der Dateien, führe `npm install` aus.
+
 ## Arbeitsauftrag
 
 Im Zuge der neuen Zusammenfassung, soll ein neues Web-Projekt entwickelt werden.
