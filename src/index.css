@@ -1,0 +1,118 @@
+:root {
+  font-family: "Ubuntu";
+
+  --awmf-accent-primary: #007a87;
+  --awmf-accent-secondary: #3f9c35;
+
+  --awmf-max-content-width: 1225px;
+
+  --light-background: #ccc;
+  --light-foreground: #fff;
+  --dark-background: #111;
+  --dark-foreground: #333;
+
+  --box-shadow: #0003 0 0 0.5rem;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--awmf-accent-secondary) var(--light-background);
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("./assets/font/ubuntu-light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("./assets/font/ubuntu-regular.woff2") format("woff2");
+  font-weight: initial;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("./assets/font/ubuntu-bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* Basic elements */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--light-background);
+}
+
+main {
+  width: var(--awmf-max-content-width);
+  background-color: var(--light-foreground);
+  margin: auto;
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+}
+
+header {
+  margin: 0;
+  padding: 2rem 0 0 0;
+  border-bottom: solid 1px var(--awmf-accent-secondary);
+  background: linear-gradient(90deg, rgba(63, 156, 53, 1) 0%, rgba(63, 156, 53, 1) 42%, rgba(0, 122, 135, 1) 42%, rgba(0, 122, 135, 1) 64%, rgba(204, 204, 204, 1) 64%, rgba(204, 204, 204, 1) 75%, rgba(63, 156, 53, 1) 75%);
+  position: sticky;
+  top: 0;
+  box-shadow: var(--box-shadow);
+
+  & div {
+    padding: 1rem;
+    background-color: var(--light-foreground);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+h1 {
+  margin: 2rem;
+  padding: 0.5rem 2rem;
+  font-size: 3rem;
+  border-bottom: solid 1px var(--awmf-accent-secondary);
+  color: var(--awmf-accent-secondary);
+  font-weight: 300;
+}
+
+h2 {
+  margin: 2rem;
+  padding: 0.5rem 2rem;
+  font-size: 2.25rem;
+  border-bottom: solid 1px var(--awmf-accent-secondary);
+  color: var(--awmf-accent-secondary);
+  font-weight: 300;
+}
+
+h3 {
+  margin: 1rem;
+  padding: 0;
+  font-size: 1.75rem;
+  color: var(--awmf-accent-secondary);
+}
+
+h4 {
+  margin: 1rem;
+  padding: 0;
+  font-size: 1.25rem;
+  color: var(--awmf-accent-secondary);
+}
+
+p {
+  margin: 1rem;
+  text-align: justify;
+  line-height: 1.65rem;
+}
+
+/* Others */
+
+img#logo {
+  width: 320px;
+}
