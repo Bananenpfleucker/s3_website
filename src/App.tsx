@@ -1,9 +1,9 @@
 import { JSX } from "react";
-import { Footer } from "./comp/Footer";
-import { Header } from "./comp/Header";
-import { Home } from "./pages/Home";
+import Footer from "./comp/Footer";
+import Header from "./comp/Header";
+import Home from "./pages/Home";
+import CheatSheet from "./pages/Cheatsheet";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import { CheatSheet } from "./pages/Cheatsheet";
 
 const router = createBrowserRouter([
     {

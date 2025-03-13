@@ -1,6 +1,6 @@
 import { JSX } from "react";
 
-export function CheatSheet(): JSX.Element {
+export default function CheatSheet(): JSX.Element {
     return (
         <>
             <h1>Heading 1</h1>
