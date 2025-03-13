@@ -10,11 +10,11 @@ export function Home(): JSX.Element {
                     <input type="text" placeholder="Suchbegriff" />
 
                     <button>
-                        Suchen →
+                        Suchen
                     </button>
 
                     <button>
-                        Erweitert →
+                        Erweitert
                     </button>
                 </div>
             </div>

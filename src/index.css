@@ -72,6 +72,11 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
+
+    & * {
+      margin: 0;
+    }
   }
 }
 
@@ -91,7 +96,7 @@ footer {
 }
 
 h1 {
-  margin: 2rem;
+  margin: 0 0 2rem 0;
   padding: 0.5rem 2rem;
   font-size: 3rem;
   border-bottom: solid 1px var(--awmf-accent-secondary);
@@ -100,7 +105,7 @@ h1 {
 }
 
 h2 {
-  margin: 2rem;
+  margin: 0 0 2rem 0;
   padding: 0.5rem 2rem;
   font-size: 2.25rem;
   border-bottom: solid 1px var(--awmf-accent-secondary);
@@ -109,15 +114,15 @@ h2 {
 }
 
 h3 {
-  margin: 1rem;
-  padding: 0;
+  margin: 0 0 1rem 0;
+  padding: 0.5rem 2rem;
   font-size: 1.75rem;
   color: var(--awmf-accent-secondary);
 }
 
 h4 {
-  margin: 1rem;
-  padding: 0;
+  margin: 0 0 1rem 0;
+  padding: 0.5rem 2rem;
   font-size: 1.25rem;
   color: var(--awmf-accent-secondary);
 }
@@ -178,8 +183,8 @@ button {
 }
 
 div.card {
-  margin: 0.5rem 3rem;
-  padding: 1rem 3rem;
+  margin: 1rem 3rem;
+  padding: 2rem;
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
 }
