@@ -1,6 +1,7 @@
-import logo from "./../assets/icon/logo.svg"
+import { JSX } from "react";
+import logo from "./../assets/icon/logo.svg";
 
-export function Header() {
+export function Header(): JSX.Element {
     return (
         <header>
             <div>
@@ -9,5 +10,5 @@ export function Header() {
                 <h2>Leitlinienregister der AWMF online</h2>
             </div>
         </header>
-    )
-}
+    );
+};

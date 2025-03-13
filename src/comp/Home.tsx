@@ -1,4 +1,6 @@
-export function Home() {
+import { JSX } from "react";
+
+export function Home(): JSX.Element {
     return (
         <main id="main-page">
             <h1>Heading 1</h1>
@@ -48,5 +50,5 @@ export function Home() {
                 Est orci magna mi senectus quis molestie aliquam placerat. Donec est risus justo mauris conubia.
             </p>
         </main>
-    )
+    );
 };
