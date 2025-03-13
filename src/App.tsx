@@ -1,6 +1,6 @@
 import { JSX } from "react";
-import Footer from "./comp/Footer";
-import Header from "./comp/Header";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 import Home from "./pages/Home";
 import CheatSheet from "./pages/Cheatsheet";
 import { createBrowserRouter, RouterProvider } from "react-router";

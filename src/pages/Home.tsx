@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import Card from "../comp/Card";
+import Card from "../components/Card";
 
 export default function Home(): JSX.Element {
     return (
