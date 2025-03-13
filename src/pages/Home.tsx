@@ -1,11 +1,10 @@
 import { JSX } from "react";
+import Card from "../comp/Card";
 
 export default function Home(): JSX.Element {
     return (
         <>
-            <div className="card">
-                <h1>Leitliniensuche</h1>
-
+            <Card title="Leitliniensuche">
                 <div className="form-merge">
                     <input type="text" placeholder="Suchbegriff" />
 
@@ -17,7 +16,7 @@ export default function Home(): JSX.Element {
                         Erweitert
                     </button>
                 </div>
-            </div>
+            </Card>
         </>
     );
 };
