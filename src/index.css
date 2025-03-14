@@ -118,21 +118,21 @@ h2 {
 
 h3 {
   margin: 0 0 1rem 0;
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 1rem;
   font-size: 1.75rem;
   color: var(--awmf-accent-secondary);
 }
 
 h4 {
   margin: 0 0 1rem 0;
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 1rem;
   font-size: 1.25rem;
   color: var(--awmf-accent-secondary);
 }
 
 p {
   color: var(--light-font-color);
-  margin: 1rem;
+  margin: 0 1rem 0.5rem 1rem;
   text-align: justify;
   line-height: 1.65rem;
 }
@@ -172,10 +172,8 @@ button {
   border: solid 1px var(--awmf-accent-primary);
   color: var(--awmf-accent-primary);
   background: linear-gradient(135deg,
-      var(--light-background) 0%,
       var(--light-background) 50%,
-      var(--awmf-accent-primary) 50%,
-      var(--awmf-accent-primary) 100%);
+      var(--awmf-accent-primary) 50%);
   background-size: 250%;
   background-position: 0 0;
   outline: none;

@@ -13,7 +13,7 @@ export type CardComponentProps = {
 export default function CardComponent({ children, title }: CardComponentProps): JSX.Element {
     return (
         <div className="card">
-            {title != undefined && <h1>{title}</h1>}
+            {title != undefined && <h2>{title}</h2>}
 
             {children}
         </div>
