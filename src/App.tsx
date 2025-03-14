@@ -1,31 +1,31 @@
 import { JSX } from "react";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Home from "./pages/Home";
-import CheatSheet from "./pages/Cheatsheet";
+import FooterComponent from "./components/FooterComponent";
+import HeaderComponent from "./components/HeaderComponent";
+import HomePage from "./pages/HomePage";
+import CheatSheetPage from "./pages/CheatSheetPage";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
 const router = createBrowserRouter([
     {
         path: '/',
-        Component: Home
+        Component: HomePage
     },
     {
         path: '/design-test',
-        Component: CheatSheet
+        Component: CheatSheetPage
     }
 ]);
 
 export default function App(): JSX.Element {
     return (
         <>
-            <Header />
+            <HeaderComponent />
 
             <main id="page">
                 <RouterProvider router={router} />
             </main>
 
-            <Footer />
+            <FooterComponent />
         </>
     );
 };

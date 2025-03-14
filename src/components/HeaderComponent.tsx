@@ -1,7 +1,10 @@
 import { JSX } from "react";
 import logo from "./../assets/icon/logo.svg";
 
-export default function Header(): JSX.Element {
+/**
+ * Displays a regular header element.
+ */
+export default function HeaderComponent(): JSX.Element {
     return (
         <header>
             <div>

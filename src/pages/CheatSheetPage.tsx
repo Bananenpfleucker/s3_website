@@ -1,6 +1,10 @@
 import { JSX } from "react";
 
-export default function CheatSheet(): JSX.Element {
+/**
+ * Displays different elements to provide an overview of the
+ * existing styles and custom elements.
+ */
+export default function CheatSheetPage(): JSX.Element {
     return (
         <>
             <h1>Heading 1</h1>

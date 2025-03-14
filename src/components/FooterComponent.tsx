@@ -1,6 +1,9 @@
 import { JSX } from "react";
 
-export default function Footer(): JSX.Element {
+/**
+ * Displays a regular footer element.
+ */
+export default function FooterComponent(): JSX.Element {
     return (
         <footer>
             <b>Arbeitsgemeinschaft der Wissenschaftlichen Medizinischen Fachgesellschaften e. V.</b>

@@ -10,9 +10,19 @@ export type Guideline = {
     title: string
 }
 
+export const ErrorMessages: { [call: string]: string } = {
+    'fetchGuidelines': 'Es ist ein Fehler aufgetreten. Wir entschuldigen uns für die Unannehmlichkeiten.'
+};
+
+/**
+ * Sends a request with the supplied search term.
+ * 
+ * **The api call is not functional as of now since the server is missing the CORS option.**
+ * 
+ * @param search The search term to filter
+ * @param setValues The setter function to override the variable
+ */
 export function fetchGuidelines(search: string, setValues: (data: SetStateAction<Array<Guideline>>) => void): void {
-    return;
-    // Wait for server to accept Cross Origin requests.
 
     const api: string = `${apiRoot}search?q=${search}`;
     const guidelines: Array<Guideline> = [];
@@ -30,7 +40,6 @@ export function fetchGuidelines(search: string, setValues: (data: SetStateAction
                 });
             }
 
-            alert('Call made.');
             setValues(guidelines);
-        });
+        }).catch(() => alert(ErrorMessages.fetchGuidelines));
 }
