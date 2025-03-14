@@ -1,6 +1,7 @@
 import { JSX, useState } from "react";
 import CardComponent from "../components/CardComponent";
-import { fetchGuidelines, Guideline } from "../data/api";
+import { fetchGuidelinesBySearchTerm, Guideline } from "../data/api";
+import GuidelineComponent from "../components/GuidelineComponent";
 
 /**
  * Displays the home page for the webseite.
@@ -10,13 +11,11 @@ export default function HomePage(): JSX.Element {
     const [guidelines, setGuidelines] = useState(new Array<Guideline>());
 
     const guidelineList = guidelines.map((guideline: Guideline) =>
-        <li>
-            {guideline.guidelineId} - {guideline.title} - {guideline.lversion}
-        </li>
+        <GuidelineComponent key={guideline.id} data={guideline} />
     );
 
     function getGuidelines(): void {
-        fetchGuidelines(search, setGuidelines);
+        fetchGuidelinesBySearchTerm(search, setGuidelines);
     }
 
     return (
@@ -37,9 +36,7 @@ export default function HomePage(): JSX.Element {
 
             {guidelines.length > 0 &&
                 <CardComponent title="Suchergebnisse">
-                    <ul>
-                        {guidelineList}
-                    </ul>
+                    {guidelineList}
                 </CardComponent>
             }
         </>

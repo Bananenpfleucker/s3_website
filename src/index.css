@@ -1,22 +1,25 @@
 :root {
   font-family: "Ubuntu";
-  color: var(--dark-foreground);
+  color: var(--dark-background);
 
   --awmf-accent-primary: #007a87;
   --awmf-accent-secondary: #3f9c35;
 
   --awmf-max-content-width: 1225px;
 
-  --light-background: #ccc;
-  --light-foreground: #fff;
-  --dark-background: #111;
-  --dark-foreground: #333;
+  --light-background-subtle: #ccc;
+  --light-background: #fff;
+  --light-font-color: #666;
+
+  --dark-background-subtle: #111;
+  --dark-background: #333;
+  --dark-font-color: #aaa;
 
   --box-shadow: #0003 0 0 0.5rem;
   --border-radius: 0.25rem;
 
   scrollbar-width: thin;
-  scrollbar-color: var(--awmf-accent-secondary) var(--light-background);
+  scrollbar-color: var(--awmf-accent-secondary) var(--light-background-subtle);
 }
 
 @font-face {
@@ -46,12 +49,12 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--light-background);
+  background-color: var(--light-background-subtle);
 }
 
 main {
   width: var(--awmf-max-content-width);
-  background-color: var(--light-foreground);
+  background-color: var(--light-background);
   margin: auto;
   padding: 2rem;
   box-shadow: var(--box-shadow);
@@ -68,7 +71,7 @@ header {
 
   & div {
     padding: 1rem;
-    background-color: var(--light-foreground);
+    background-color: var(--light-background);
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -84,7 +87,7 @@ footer {
   margin: 0;
   padding: 2rem;
   background-color: var(--awmf-accent-primary);
-  color: var(--light-foreground);
+  color: var(--light-background);
   text-align: center;
   position: sticky;
   bottom: 0;
@@ -128,6 +131,7 @@ h4 {
 }
 
 p {
+  color: var(--light-font-color);
   margin: 1rem;
   text-align: justify;
   line-height: 1.65rem;
@@ -141,11 +145,15 @@ a:visited {
   text-decoration: none;
 }
 
+.awmf-cyan {
+  color: var(--awmf-accent-primary);
+}
+
 input {
   font: inherit;
   padding: 1rem;
   border-radius: var(--border-radius);
-  border: solid 1px var(--light-background);
+  border: solid 1px var(--light-background-subtle);
   outline: none;
   display: block;
   transition: all 0.2s ease-in-out;
@@ -164,8 +172,8 @@ button {
   border: solid 1px var(--awmf-accent-primary);
   color: var(--awmf-accent-primary);
   background: linear-gradient(135deg,
-      var(--light-foreground) 0%,
-      var(--light-foreground) 50%,
+      var(--light-background) 0%,
+      var(--light-background) 50%,
       var(--awmf-accent-primary) 50%,
       var(--awmf-accent-primary) 100%);
   background-size: 250%;
@@ -176,7 +184,7 @@ button {
   min-width: 150px;
 
   &:hover {
-    color: var(--light-foreground);
+    color: var(--light-background);
     background-position-x: 100%;
   }
 }

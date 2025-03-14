@@ -5,9 +5,12 @@ const apiRoot: string = 'http://s3-navigator.duckdns.org:5000/guidelines/';
 export type Guideline = {
     id: number,
     guidelineId: string,
-    creation: Date,
-    lversion?: string | undefined | null,
     title: string
+    lversion?: string | undefined | null,
+    lastReviewedDate: string,
+    creationDate: string,
+    validDate: string,
+    remark?: string | undefined | null
 }
 
 export const ErrorMessages: { [call: string]: string } = {
@@ -22,7 +25,7 @@ export const ErrorMessages: { [call: string]: string } = {
  * @param search The search term to filter
  * @param setValues The setter function to override the variable
  */
-export function fetchGuidelines(search: string, setValues: (data: SetStateAction<Array<Guideline>>) => void): void {
+export function fetchGuidelinesBySearchTerm(search: string, setValues: (data: SetStateAction<Array<Guideline>>) => void): void {
 
     const api: string = `${apiRoot}search?q=${search}`;
     const guidelines: Array<Guideline> = [];
@@ -34,9 +37,12 @@ export function fetchGuidelines(search: string, setValues: (data: SetStateAction
                 guidelines.push({
                     id: item.id,
                     guidelineId: item.awmf_guideline_id,
-                    creation: item.created_at,
-                    title: item.title,
-                    lversion: item.lversion
+                    title: item.titel,
+                    lversion: item.lversion,
+                    lastReviewedDate: item.stand,
+                    creationDate: item.created_at,
+                    validDate: item.valid_until,
+                    remark: item.aktueller_hinweise
                 });
             }
 
