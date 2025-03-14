@@ -175,7 +175,6 @@ button {
   transition: all 0.5s ease-in-out;
   min-width: 150px;
 
-  &:focus,
   &:hover {
     color: var(--light-foreground);
     background-position-x: 100%;
