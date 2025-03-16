@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import logo from "./../assets/icon/logo.svg";
+import logo from '../assets/icon/logo.svg'
 
 /**
  * Displays a regular header element.

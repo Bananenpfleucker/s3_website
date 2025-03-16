@@ -4,8 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build"
+    "start": "vite --config config/dev.config.ts",
+    "dev": "vite --config config/dev.config.ts",
+    "build": "tsc -b && vite build --config config/prod.config.ts",
+    "github": "tsc -b && vite build --config config/github.config.ts"
   },
   "dependencies": {
     "react": "^19.0.0",

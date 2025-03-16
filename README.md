@@ -8,11 +8,22 @@ Die AWMF möchte - um die Verfügbarkeit dieser Leitlinien zu verstärken - ein 
 Ärzten die Möglichkeit gibt, diese einzusehen. Da sich diese Leitlinien bis zu neunzig Seiten erstrecken, steht eine Kurzzusammenfassung
 im Fokus, welche durch eine künstliche Intelligenz erfolgt.
 
+## Vorschau
+
+Um einen aktuellen Stand zur der Webseite zu gewinnen, drücke **[hier](https://bananenpfleucker.github.io/s3_website/)**.
+
 ## Ausführen
 
-Zum Ausführen, führe das Kommando `npm run dev` aus.
+Nach dem ersten Herunterladen der Dateien von GitHub muss `npm install` ausgeführt werden.
 
-Bei der ersten Installation der Dateien, führe `npm install` aus.
+Um die Webseite im Entwicklungszustand auszuführen, nutze `npm run dev` oder `npm start`.
+
+Um das Projekt zu exportieren, nutze `npm run build`.
+Die Dateien befinden sich im `dist`-Verzeichnis und werden nicht automatisch gepusht.
+
+Um die Webseite direkt bereitzustellen, nutze `npm run github`.
+Der aktuelle Stand muss im Zweig `preview` zusammengeführt und hochgeladen werden
+(`checkout preview` → `merge develop` → `push`).
 
 ## Arbeitsauftrag
 
