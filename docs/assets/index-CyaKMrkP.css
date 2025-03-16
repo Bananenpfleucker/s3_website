@@ -1,0 +1,222 @@
+:root {
+  font-family: "Ubuntu";
+  color: var(--dark-background);
+
+  --awmf-accent-primary: #007a87;
+  --awmf-accent-secondary: #3f9c35;
+
+  --awmf-max-content-width: 1225px;
+
+  --light-background-subtle: #ccc;
+  --light-background: #fff;
+  --light-font-color: #666;
+
+  --dark-background-subtle: #111;
+  --dark-background: #333;
+  --dark-font-color: #aaa;
+
+  --box-shadow: #0003 0 0 0.5rem;
+  --border-radius: 0.25rem;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--awmf-accent-secondary) var(--light-background-subtle);
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/s3_website/assets/ubuntu-light-CpnIlgu9.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/s3_website/assets/ubuntu-regular-By8__2gw.woff2") format("woff2");
+  font-weight: initial;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/s3_website/assets/ubuntu-bold-D2z1ZIWH.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* Basic elements */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--light-background-subtle);
+}
+
+main {
+  width: var(--awmf-max-content-width);
+  background-color: var(--light-background);
+  margin: auto;
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+}
+
+header {
+  margin: 0;
+  padding: 2rem 0 0 0;
+  border-bottom: solid 1px var(--awmf-accent-secondary);
+  background: linear-gradient(90deg, rgba(63, 156, 53, 1) 0%, rgba(63, 156, 53, 1) 42%, rgba(0, 122, 135, 1) 42%, rgba(0, 122, 135, 1) 64%, rgba(204, 204, 204, 1) 64%, rgba(204, 204, 204, 1) 75%, rgba(63, 156, 53, 1) 75%);
+  position: sticky;
+  top: 0;
+  box-shadow: var(--box-shadow);
+
+  & div {
+    padding: 1rem;
+    background-color: var(--light-background);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    & * {
+      margin: 0;
+    }
+  }
+}
+
+footer {
+  margin: 0;
+  padding: 2rem;
+  background-color: var(--awmf-accent-primary);
+  color: var(--light-background);
+  text-align: center;
+  position: sticky;
+  bottom: 0;
+  box-shadow: var(--box-shadow);
+
+  & * {
+    margin: 1.5rem;
+  }
+}
+
+h1 {
+  margin: 0 0 2rem 0;
+  padding: 0.5rem 2rem;
+  font-size: 3rem;
+  border-bottom: solid 1px var(--awmf-accent-secondary);
+  color: var(--awmf-accent-secondary);
+  font-weight: 300;
+}
+
+h2 {
+  margin: 0 0 2rem 0;
+  padding: 0.5rem 2rem;
+  font-size: 2.25rem;
+  border-bottom: solid 1px var(--awmf-accent-secondary);
+  color: var(--awmf-accent-secondary);
+  font-weight: 300;
+}
+
+h3 {
+  margin: 0 0 1rem 0;
+  padding: 0.5rem 1rem;
+  font-size: 1.75rem;
+  color: var(--awmf-accent-secondary);
+}
+
+h4 {
+  margin: 0 0 1rem 0;
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  color: var(--awmf-accent-secondary);
+}
+
+p {
+  color: var(--light-font-color);
+  margin: 0 1rem 0.5rem 1rem;
+  text-align: justify;
+  line-height: 1.65rem;
+}
+
+a,
+a:hover,
+a:active,
+a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+.awmf-cyan {
+  color: var(--awmf-accent-primary);
+}
+
+input {
+  font: inherit;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  border: solid 1px var(--light-background-subtle);
+  outline: none;
+  display: block;
+  transition: all 0.2s ease-in-out;
+  flex-grow: 1;
+
+  &:focus,
+  &:hover {
+    border: solid 1px var(--awmf-accent-primary);
+  }
+}
+
+button {
+  font: inherit;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  border: solid 1px var(--awmf-accent-primary);
+  color: var(--awmf-accent-primary);
+  background: linear-gradient(135deg,
+      var(--light-background) 50%,
+      var(--awmf-accent-primary) 50%);
+  background-size: 250%;
+  background-position: 0 0;
+  outline: none;
+  display: block;
+  transition: all 0.5s ease-in-out;
+  min-width: 150px;
+
+  &:hover {
+    color: var(--light-background);
+    background-position-x: 100%;
+  }
+}
+
+div.card {
+  margin: 1rem 3rem;
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+}
+
+div.form-merge {
+  display: flex;
+
+  & * {
+    display: inline-block;
+    border-radius: 0;
+  }
+
+  & :first-child {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+  }
+
+  & :last-child {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  }
+
+  & :not(:last-child) {
+    border-right: 0;
+  }
+}
+
+/* Others */
+
+img#logo {
+  width: 320px;
+}
