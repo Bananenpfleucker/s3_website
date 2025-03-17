@@ -17448,7 +17448,7 @@ const router = createBrowserRouter([
     Component: CheatSheetPage
   }
 ], {
-  basename: "s3_website/"
+  basename: "/s3_website/"
 });
 function App() {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
