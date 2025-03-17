@@ -14,7 +14,9 @@ const router = createBrowserRouter([
         path: '/design-test',
         Component: CheatSheetPage
     }
-]);
+], {
+    basename: import.meta.env.VITE_REACT_APP_BASE_NAME
+});
 
 export default function App(): JSX.Element {
     return (
