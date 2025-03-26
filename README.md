@@ -42,7 +42,7 @@ soll aber auch eine selbsterklärende, intuitive Bedienung haben. Die Darstellun
 * ⬛ Hauptseite entwickelt
 * 🟧 allgemeine, wesentliche Komponenten entwickelt (Kopf- und Fußzeile, ...)
 * ⬛ sonstige Komponenten entwickelt 
-* ⬛ statische Seiten eingepflegt (Datenschutz, Impressum, ...)
+* 🟧 statische Seiten eingepflegt (Datenschutz, Impressum, ...)
 * ⬛ Suchfunktion entwickelt
 * ⬛ Anzeige der Suchergebnisse entwickelt
 * ⬛ Detailansicht entwickelt
