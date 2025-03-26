@@ -3,7 +3,7 @@
   color: var(--dark-background);
 
   --awmf-accent-primary: #007a87;
-  --awmf-accent-secondary: #3f9c35;
+  --awmf-accent-secondary: #007acc;
 
   --awmf-max-content-width: 1225px;
 
@@ -53,18 +53,21 @@ body {
 }
 
 main {
-  width: var(--awmf-max-content-width);
+  width: 100%;
+  max-width: var(--awmf-max-content-width);
   background-color: var(--light-background);
   margin: auto;
   padding: 2rem;
   box-shadow: var(--box-shadow);
+  box-sizing: border-box;
 }
+
 
 header {
   margin: 0;
   padding: 2rem 0 0 0;
   border-bottom: solid 1px var(--awmf-accent-secondary);
-  background: linear-gradient(90deg, rgba(63, 156, 53, 1) 0%, rgba(63, 156, 53, 1) 42%, rgba(0, 122, 135, 1) 42%, rgba(0, 122, 135, 1) 64%, rgba(204, 204, 204, 1) 64%, rgba(204, 204, 204, 1) 75%, rgba(63, 156, 53, 1) 75%);
+  background: linear-gradient(90deg, rgba(0, 122, 204, 1) 0%, rgba(0, 122, 204, 1) 42%, rgba(0, 122, 135, 1) 42%, rgba(0, 122, 135, 1) 64%, rgba(204, 204, 204, 1) 64%, rgba(204, 204, 204, 1) 75%, rgba(0, 122, 204, 1) 75%);
   position: sticky;
   top: 0;
   box-shadow: var(--box-shadow);
@@ -85,18 +88,55 @@ header {
 
 footer {
   margin: 0;
-  padding: 2rem;
+  padding: 0.75rem 1rem;
   background-color: var(--awmf-accent-primary);
   color: var(--light-background);
   text-align: center;
-  position: sticky;
-  bottom: 0;
   box-shadow: var(--box-shadow);
+  box-sizing: border-box;
+  font-size: 0.9rem;
+}
 
-  & * {
-    margin: 1.5rem;
+footer > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  max-width: var(--awmf-max-content-width);
+  margin: 0 auto;
+}
+
+footer b {
+  flex-basis: 100%;
+  font-weight: normal;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
+}
+
+footer a {
+  color: var(--light-background);
+  text-decoration: underline;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 600px) {
+  footer {
+    padding: 0.5rem;
+  }
+
+  footer b {
+    font-size: 0.85rem;
+  }
+
+  footer a {
+    font-size: 0.8rem;
   }
 }
+
+
+
 
 h1 {
   margin: 0 0 2rem 0;
@@ -196,27 +236,133 @@ div.card {
 
 div.form-merge {
   display: flex;
+  flex-wrap: nowrap; /* wichtig: verhindert Umbruch im normalen Zustand */
+  width: 100%;
+}
 
-  & * {
-    display: inline-block;
-    border-radius: 0;
+div.form-merge > * {
+  display: inline-block;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+div.form-merge > input {
+  flex: 1 1 auto;
+  min-width: 0; /* wichtig für Flexbox */
+}
+
+div.form-merge > button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  padding: 1rem;
+  border-left: none; /* entfernen bei mittleren Buttons, wenn nötig */
+}
+
+div.form-merge > :first-child {
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+div.form-merge > :last-child {
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+/* Mobile – untereinander mit Abstand */
+@media (max-width: 600px) {
+  div.form-merge {
+    flex-direction: column;
   }
 
-  & :first-child {
-    border-radius: var(--border-radius) 0 0 var(--border-radius);
+  div.form-merge > * {
+    border-radius: var(--border-radius) !important;
+    border: 1px solid var(--light-background-subtle);
+    margin-top: 0.5rem;
   }
 
-  & :last-child {
-    border-radius: 0 var(--border-radius) var(--border-radius) 0;
-  }
-
-  & :not(:last-child) {
-    border-right: 0;
+  div.form-merge > :first-child {
+    margin-top: 0;
   }
 }
+
+
 
 /* Others */
 
 img#logo {
-  width: 320px;
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+}
+
+html, body {
+  height: 100%;
+}
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#page {
+  flex: 1;
+}
+@media (max-width: 768px) {
+  header div {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+}
+@media (max-width: 1024px) {
+  h1 { font-size: 2.5rem; }
+  h2 { font-size: 2rem; }
+  h3 { font-size: 1.5rem; }
+  h4 { font-size: 1.2rem; }
+}
+
+@media (max-width: 768px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.25rem; }
+  h4 { font-size: 1rem; }
+
+  main {
+    padding: 1rem;
+  }
+
+  div.card {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  footer {
+    padding: 1.5rem;
+  }
+
+  footer * {
+    margin: 1rem;
+  }
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.card {
+  flex: 1 1 300px;
+  max-width: 100%;
+}
+
+.break-word {
+  word-break: break-word;
+  hyphens: auto;
+}
+
+@media (max-width: 600px) {
+  h2 {
+    font-size: 1.5rem;
+  }
 }

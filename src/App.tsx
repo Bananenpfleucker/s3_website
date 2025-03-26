@@ -1,33 +1,16 @@
 import { JSX } from "react";
-import FooterComponent from "./components/FooterComponent";
 import HeaderComponent from "./components/HeaderComponent";
-import HomePage from "./pages/HomePage";
-import CheatSheetPage from "./pages/CheatSheetPage";
-import { createBrowserRouter, RouterProvider } from "react-router";
-
-const router = createBrowserRouter([
-    {
-        path: '/',
-        Component: HomePage
-    },
-    {
-        path: '/design-test',
-        Component: CheatSheetPage
-    }
-], {
-    basename: import.meta.env.VITE_REACT_APP_BASE_NAME
-});
+import FooterComponent from "./components/FooterComponent";
+import { Outlet } from "react-router-dom";
 
 export default function App(): JSX.Element {
     return (
-        <>
+        <div className="app-wrapper">
             <HeaderComponent />
-
             <main id="page">
-                <RouterProvider router={router} />
+                <Outlet />
             </main>
-
             <FooterComponent />
-        </>
+        </div>
     );
-};
+}

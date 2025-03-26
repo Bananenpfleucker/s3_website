@@ -1,4 +1,5 @@
 import { JSX } from "react";
+import { Link } from "react-router-dom";
 
 /**
  * Displays a regular footer element.
@@ -6,10 +7,13 @@ import { JSX } from "react";
 export default function FooterComponent(): JSX.Element {
     return (
         <footer>
-            <b>Arbeitsgemeinschaft der Wissenschaftlichen Medizinischen Fachgesellschaften e. V.</b>
-            <a href="">Datenschutz</a>
-            <a href="">Impressum</a>
-            <a href="">Kontakt</a>
-        </footer>
+            <div>
+                <b>Arbeitsgemeinschaft der Wissenschaftlichen Medizinischen Fachgesellschaften e. V.</b>
+                <Link to="/privacy">Datenschutz</Link>
+                <Link to="/imprint">Impressum</Link>
+                <Link to="/contact">Kontakt</Link>
+            </div>
+            </footer>
+
     );
 };

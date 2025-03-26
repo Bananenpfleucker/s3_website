@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import logo from '../assets/icon/logo.svg'
+import logo from '../assets/icon/logo.jpg'
 
 /**
  * Displays a regular header element.
@@ -10,7 +10,7 @@ export default function HeaderComponent(): JSX.Element {
             <div>
                 <img id="logo" src={logo} alt="AWMF online - Portal der wissenschaftlichen Medizin" />
 
-                <h2>Leitlinienregister der AWMF online</h2>
+                <h2>Leitlinienregister der S3-Leitlinien</h2>
             </div>
         </header>
     );
