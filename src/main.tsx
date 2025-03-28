@@ -14,6 +14,7 @@ import CheatSheetPage from "./pages/CheatSheetPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import ImprintPage from "./pages/ImprintPage";
 import ContactPage from "./pages/ContactPage";
+import GuidelineDetailPage from "./pages/GuidelineDetailPage";
 
 
 // Define routes
@@ -27,6 +28,8 @@ const router = createBrowserRouter([
       { path: "privacy", element: <PrivacyPolicyPage /> },
       { path: "imprint", element: <ImprintPage /> },
       { path: "contact", element: <ContactPage /> },
+      { path: "guideline/:id", element: <GuidelineDetailPage /> },
+
     ],
   },
 ]);

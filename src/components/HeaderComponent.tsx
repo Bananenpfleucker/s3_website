@@ -1,17 +1,26 @@
-import { JSX } from "react";
-import logo from '../assets/icon/logo.jpg'
+import { JSX, ForwardedRef, forwardRef } from "react";
+import { Link } from "react-router-dom";
+import logo from "../assets/icon/logo.jpg";
 
 /**
- * Displays a regular header element.
+ * Displays a regular header element (classic layout with logo, button, and title).
  */
-export default function HeaderComponent(): JSX.Element {
-    return (
-        <header>
-            <div>
-                <img id="logo" src={logo} alt="AWMF online - Portal der wissenschaftlichen Medizin" />
+const HeaderComponent = forwardRef<HTMLElement, {}>(
+    (_props, ref: ForwardedRef<HTMLElement>): JSX.Element => {
+        return (
+            <header ref={ref}>
+                <div>
+                    <img id="logo" src={logo} alt="AWMF online - Portal der wissenschaftlichen Medizin" />
 
-                <h2>Leitlinienregister der S3-Leitlinien</h2>
-            </div>
-        </header>
-    );
-};
+                    <Link to="/" className="home-button">
+                        Startseite
+                    </Link>
+
+                    <h2>Leitlinienregister der S3-Leitlinien</h2>
+                </div>
+            </header>
+        );
+    }
+);
+
+export default HeaderComponent;

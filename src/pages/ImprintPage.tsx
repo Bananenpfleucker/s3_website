@@ -11,19 +11,23 @@ export default function ImprintPage(): JSX.Element {
                 Angaben gemäß § 5 TMG:
             </p>
             <p>
-                Arbeitsgemeinschaft der Wissenschaftlichen Medizinischen Fachgesellschaften e. V. (AWMF)<br />
-                Düsseldorf, Deutschland
+                S3-Navigator<br />
+                Max Mustermann<br />
+                Musterstraße 123<br />
+                12345 Musterstadt<br />
+                Deutschland
             </p>
             <p>
-                Vertreten durch den Vorstand.
+                Kontakt:<br />
+                E-Mail: kontakt@s3-navigator.de
             </p>
             <p>
-                Kontakt: <br />
-                E-Mail: kontakt@beispiel.de
+                Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:<br />
+                Max Mustermann<br />
+                Adresse wie oben
             </p>
             <p>
-                Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV: <br />
-                Max Mustermann
+                Hinweis: S3-Navigator ist ein privates, nicht-kommerzielles Projekt zur Übersicht über medizinische Leitlinien. Trotz sorgfältiger Recherche übernehmen wir keine Gewähr für die Richtigkeit, Vollständigkeit oder Aktualität der Inhalte.
             </p>
         </CardComponent>
     );
