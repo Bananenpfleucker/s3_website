@@ -15,6 +15,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import ImprintPage from "./pages/ImprintPage";
 import ContactPage from "./pages/ContactPage";
 import GuidelineDetailPage from "./pages/GuidelineDetailPage";
+import ResultsPage from "./pages/ResultsPage";
 
 
 // Define routes
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
       { path: "imprint", element: <ImprintPage /> },
       { path: "contact", element: <ContactPage /> },
       { path: "guideline/:id", element: <GuidelineDetailPage /> },
-
+      { path: "results", element: <ResultsPage /> },
     ],
   },
 ]);

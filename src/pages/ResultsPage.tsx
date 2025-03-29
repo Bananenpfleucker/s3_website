@@ -1,52 +1,76 @@
 import { JSX, useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
 import CardComponent from "../components/CardComponent";
+import GuidelineComponent from "../components/GuidelineComponent";
 import { Guideline } from "../data/api";
 
-export default function HomePage(): JSX.Element {
-    const [search, setSearch] = useState('');
-    const [latestGuidelines, setLatestGuidelines] = useState<Guideline[]>([]);
+export default function ResultsPage(): JSX.Element {
+    const [search, setSearch] = useState(localStorage.getItem("searchTerm") || "");
+    const [guidelines, setGuidelines] = useState<Guideline[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [timeoutReached, setTimeoutReached] = useState(false);
     const [showAdvanced, setShowAdvanced] = useState(false);
     const [onlyValid, setOnlyValid] = useState(false);
     const [sortBy, setSortBy] = useState("created_at");
     const [sortDirection, setSortDirection] = useState("desc");
-    const navigate = useNavigate();
-
-    function handleSearch(): void {
-        localStorage.setItem("searchTerm", search);
-        localStorage.setItem("sortBy", sortBy);
-        localStorage.setItem("sortDirection", sortDirection);
-        localStorage.setItem("onlyValid", JSON.stringify(onlyValid));
-        navigate("/results");
-    }
 
     useEffect(() => {
+        const timeout = setTimeout(() => {
+            setTimeoutReached(true);
+        }, 5000);
+    
+        handleNewSearch();
+    
+        return () => clearTimeout(timeout);
+    }, []);
+    
+    function handleNewSearch(): void {
+        if (!search.trim()) {
+            setGuidelines([]);
+            setLoading(false);
+            return;
+        }
+    
+        setLoading(true);
+        setTimeoutReached(false); // Reset Timeout-Flag bei neuer Suche
+    
         const params = new URLSearchParams({
-            limit: "4",
-            offset: "0",
-            order_by: "created_at",
-            order_direction: "desc"
+            q: search,
+            order_by: sortBy,
+            order_direction: sortDirection
         });
     
-        fetch(`http://s3-navigator.duckdns.org:5000/guidelines?${params.toString()}`)
+        if (onlyValid) {
+            params.append("valid_only", "true");
+        }
+    
+        fetch(`http://s3-navigator.duckdns.org:5000/guidelines/search?${params.toString()}`)
             .then((res) => res.json())
             .then((data) => {
-                const mapped: Guideline[] = data.map((item: any) => ({
+                const mapped = data.map((item: any) => ({
                     id: item.id,
                     guidelineId: item.awmf_guideline_id,
-                    title: item.titel ?? item.title ?? "Unbekannter Titel",
+                    title: item.titel,
                     lversion: item.lversion,
                     lastReviewedDate: item.stand,
-                    creationDate: item.created_at ?? "",
-                    validDate: item.valid_until ?? "",
-                    remark: item.aktueller_hinweis ?? ""
+                    creationDate: item.created_at,
+                    validDate: item.valid_until,
+                    remark: item.aktueller_hinweis
                 }));
-                setLatestGuidelines(mapped);
+    
+                setGuidelines(mapped);
+                setLoading(false);
+    
+                // Wenn API fertig ist, und trotzdem leer: Timeout manuell setzen
+                if (mapped.length === 0) {
+                    setTimeoutReached(true);
+                }
             })
             .catch((err) => {
-                console.error("Fehler beim Laden der neuesten Leitlinien:", err);
+                console.error("Fehler bei der Suche:", err);
+                alert("Die Suche ist fehlgeschlagen.");
+                setLoading(false);
             });
-    }, []);
+    }
     
 
     return (
@@ -59,9 +83,9 @@ export default function HomePage(): JSX.Element {
                             placeholder="Suchbegriff"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                            onKeyDown={(e) => e.key === 'Enter' && handleNewSearch()}
                         />
-                        <button onClick={handleSearch}>Suchen</button>
+                        <button onClick={handleNewSearch}>Suchen</button>
                         <button onClick={() => setShowAdvanced(!showAdvanced)}>Erweitert</button>
                     </div>
 
@@ -99,25 +123,27 @@ export default function HomePage(): JSX.Element {
                 </CardComponent>
             </div>
 
-            {/* Aktuellste Leitlinien */}
-            {latestGuidelines.length > 0 && (
-                <div className="search-results-wrapper">
-                    <CardComponent title="Aktuellste Leitlinien">
-                        {latestGuidelines.map(g => (
-                            <div key={g.id} style={{ marginBottom: '1rem' }}>
-                                <Link to={`/guideline/${g.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-                                    <h4 className="awmf-cyan">{g.title}</h4>
-                                </Link>
-                                <p><strong>Letzte Überprüfung:</strong> {g.lastReviewedDate}</p>
-                                <p><strong>Erstellt am:</strong> {g.creationDate}</p>
-                                <p><strong>Gültig bis:</strong> {g.validDate}</p>
-                                {g.lversion && <p><strong>Version:</strong> {g.lversion}</p>}
-                                {g.remark && <p><strong>Hinweis:</strong> {g.remark}</p>}
-                            </div>
-                        ))}
+            <div className="search-results-wrapper">
+                {loading && (
+                    <CardComponent title="Lade Ergebnisse...">
+                        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "1rem" }}>
+                            <div className="spinner" />
+                        </div>
                     </CardComponent>
-                </div>
-            )}
+                )}
+
+                {!loading && guidelines.length > 0 && (
+                    <CardComponent title="Suchergebnisse">
+                        {guidelines.map(g => <GuidelineComponent key={g.id} data={g} />)}
+                    </CardComponent>
+                )}
+
+                {!loading && timeoutReached && guidelines.length === 0 && (
+                    <CardComponent title="Keine Ergebnisse gefunden">
+                        <p>Es wurden keine Leitlinien gefunden. Bitte prüfen Sie Ihr Suchwort.</p>
+                    </CardComponent>
+                )}
+            </div>
         </div>
     );
 }
