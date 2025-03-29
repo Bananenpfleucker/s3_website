@@ -106,7 +106,7 @@ export default function HomePage(): JSX.Element {
                         {latestGuidelines.map(g => (
                             <div key={g.id} style={{ marginBottom: '1rem' }}>
                                 <Link to={`/guideline/${g.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-                                    <h4 className="awmf-cyan">{g.title}</h4>
+                                <h4 className="awmf-cyan latest-guideline-title">{g.title}</h4>
                                 </Link>
                                 <p><strong>Letzte Überprüfung:</strong> {g.lastReviewedDate}</p>
                                 <p><strong>Erstellt am:</strong> {g.creationDate}</p>

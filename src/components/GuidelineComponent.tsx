@@ -13,11 +13,12 @@ export default function GuidelineComponent({ data }: GuidelineComponentProps): J
                 <b>Leitlinie</b>
             </p>
 
-            <Link to={`/guideline/${data.id}`} className="awmf-cyan">
-                <h3 className="break-word">
-                    {data.title ?? 'unbekannter Titel'}
-                </h3>
+            <Link to={`/guideline/${data.id}`} className="awmf-cyan" style={{ textDecoration: "none" }}>
+                 <h3 className="break-word hover-highlight">
+                     {data.title ?? 'unbekannter Titel'}
+                 </h3>
             </Link>
+
 
             {data.guidelineId && (
                 <p>

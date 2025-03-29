@@ -3,17 +3,21 @@ import { Link } from "react-router-dom";
 import logo from "../assets/icon/logo.jpg";
 
 /**
- * Displays a regular header element (classic layout with logo, button, and title).
+ * Displays a regular header element (classic layout with logo and title).
+ * The logo links to the homepage.
  */
 const HeaderComponent = forwardRef<HTMLElement, {}>(
     (_props, ref: ForwardedRef<HTMLElement>): JSX.Element => {
         return (
             <header ref={ref}>
                 <div>
-                    <img id="logo" src={logo} alt="AWMF online - Portal der wissenschaftlichen Medizin" />
-
-                    <Link to="/" className="home-button">
-                        Startseite
+                    <Link to="/">
+                        <img
+                            id="logo"
+                            src={logo}
+                            alt="AWMF online - Portal der wissenschaftlichen Medizin"
+                            style={{ cursor: "pointer" }}
+                        />
                     </Link>
 
                     <h2>Leitlinienregister der S3-Leitlinien</h2>

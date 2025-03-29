@@ -531,3 +531,23 @@ html, body {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.latest-guideline-title {
+  transition: all 0.2s ease;
+}
+
+.latest-guideline-title:hover {
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.hover-highlight {
+  transition: all 0.2s ease;
+}
+
+.hover-highlight:hover {
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
