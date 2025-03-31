@@ -18136,6 +18136,7 @@ const router = createBrowserRouter([
 ], {
   basename: define_process_env_default.REACT_APP_BASE_NAME
 });
+console.log("basepath is %s");
 clientExports.createRoot(document.getElementById("root")).render(
   /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(RouterProvider2, { router }) })
 );

@@ -34,7 +34,7 @@ const router = createBrowserRouter([
         ],
     },
 ], {
-    basename: process.env.REACT_APP_BASE_NAME
+    basename: '/s3_website/'
 });
 
 createRoot(document.getElementById("root")!).render(
