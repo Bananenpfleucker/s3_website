@@ -16975,7 +16975,7 @@ function createBrowserRouter(routes, opts) {
     unstable_getContext: opts == null ? void 0 : opts.unstable_getContext,
     future: opts == null ? void 0 : opts.future,
     history: createBrowserHistory({ window: opts == null ? void 0 : opts.window }),
-    hydrationData: parseHydrationData(),
+    hydrationData: (opts == null ? void 0 : opts.hydrationData) || parseHydrationData(),
     routes,
     mapRouteProperties,
     dataStrategy: opts == null ? void 0 : opts.dataStrategy,
@@ -18118,6 +18118,7 @@ function ResultsPage() {
     ] })
   ] });
 }
+var define_process_env_default = {};
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18132,7 +18133,9 @@ const router = createBrowserRouter([
       { path: "results", element: /* @__PURE__ */ jsxRuntimeExports.jsx(ResultsPage, {}) }
     ]
   }
-]);
+], {
+  basename: define_process_env_default.REACT_APP_BASE_NAME
+});
 clientExports.createRoot(document.getElementById("root")).render(
   /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(RouterProvider2, { router }) })
 );
