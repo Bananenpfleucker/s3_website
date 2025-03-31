@@ -1,5 +1,5 @@
 # Web-Projekt für die AWMF
-42
+88
 Die AWMF (Arbeitsgemeinschaft der Wissenschaftlichen Medizinischen Fachgesellschaften e. V.) ist ein Verein, der sich
 unter anderem für die Haltung von Leitlinien einsetzt. Diese Leitlinien beschreiben Vorgänge und Kritieren zu unterschiedlichen,
 medizinischen Eingriffe.
