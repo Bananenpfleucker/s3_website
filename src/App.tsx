@@ -18,7 +18,7 @@ export default function App(): JSX.Element {
         window.addEventListener("resize", updateHeaderHeight);
         return () => window.removeEventListener("resize", updateHeaderHeight);
     }, []);
-    
+
 
     return (
         <div className="app-wrapper">
