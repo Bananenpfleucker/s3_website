@@ -495,8 +495,8 @@ function requireReact_production() {
   react_production.useOptimistic = function(passthrough, reducer) {
     return ReactSharedInternals.H.useOptimistic(passthrough, reducer);
   };
-  react_production.useReducer = function(reducer, initialArg, init) {
-    return ReactSharedInternals.H.useReducer(reducer, initialArg, init);
+  react_production.useReducer = function(reducer, initialArg, init2) {
+    return ReactSharedInternals.H.useReducer(reducer, initialArg, init2);
   };
   react_production.useRef = function(initialValue) {
     return ReactSharedInternals.H.useRef(initialValue);
@@ -2937,8 +2937,8 @@ function requireReactDomClient_production() {
     );
   }
   function resolveLazy(lazyType) {
-    var init = lazyType._init;
-    return init(lazyType._payload);
+    var init2 = lazyType._init;
+    return init2(lazyType._payload);
   }
   function createChildReconciler(shouldTrackSideEffects) {
     function deleteChild(returnFiber, childToDelete) {
@@ -3053,8 +3053,8 @@ function requireReactDomClient_production() {
               lanes
             ), newChild.return = returnFiber, newChild;
           case REACT_LAZY_TYPE:
-            var init = newChild._init;
-            newChild = init(newChild._payload);
+            var init2 = newChild._init;
+            newChild = init2(newChild._payload);
             return createChild(returnFiber, newChild, lanes);
         }
         if (isArrayImpl(newChild) || getIteratorFn(newChild))
@@ -3123,8 +3123,8 @@ function requireReactDomClient_production() {
               null === newChild.key ? newIdx : newChild.key
             ) || null, updatePortal(returnFiber, existingChildren, newChild, lanes);
           case REACT_LAZY_TYPE:
-            var init = newChild._init;
-            newChild = init(newChild._payload);
+            var init2 = newChild._init;
+            newChild = init2(newChild._payload);
             return updateFromMap(
               existingChildren,
               returnFiber,
@@ -4483,14 +4483,14 @@ function requireReactDomClient_production() {
       hook.memoizedState = [nextValue, deps];
       return nextValue;
     },
-    useReducer: function(reducer, initialArg, init) {
+    useReducer: function(reducer, initialArg, init2) {
       var hook = mountWorkInProgressHook();
-      if (void 0 !== init) {
-        var initialState = init(initialArg);
+      if (void 0 !== init2) {
+        var initialState = init2(initialArg);
         if (shouldDoubleInvokeUserFnsInHooksDEV) {
           setIsStrictModeForDevtools(true);
           try {
-            init(initialArg);
+            init2(initialArg);
           } finally {
             setIsStrictModeForDevtools(false);
           }
@@ -5671,8 +5671,8 @@ function requireReactDomClient_production() {
       case 16:
         a: {
           current = workInProgress2.pendingProps;
-          var lazyComponent = workInProgress2.elementType, init = lazyComponent._init;
-          lazyComponent = init(lazyComponent._payload);
+          var lazyComponent = workInProgress2.elementType, init2 = lazyComponent._init;
+          lazyComponent = init2(lazyComponent._payload);
           workInProgress2.type = lazyComponent;
           if ("function" === typeof lazyComponent)
             shouldConstruct(lazyComponent) ? (current = resolveClassComponentProps(lazyComponent, current), workInProgress2.tag = 1, workInProgress2 = updateClassComponent(
@@ -5690,7 +5690,7 @@ function requireReactDomClient_production() {
             ));
           else {
             if (void 0 !== lazyComponent && null !== lazyComponent) {
-              if (init = lazyComponent.$$typeof, init === REACT_FORWARD_REF_TYPE) {
+              if (init2 = lazyComponent.$$typeof, init2 === REACT_FORWARD_REF_TYPE) {
                 workInProgress2.tag = 11;
                 workInProgress2 = updateForwardRef(
                   null,
@@ -5700,7 +5700,7 @@ function requireReactDomClient_production() {
                   renderLanes2
                 );
                 break a;
-              } else if (init === REACT_MEMO_TYPE) {
+              } else if (init2 === REACT_MEMO_TYPE) {
                 workInProgress2.tag = 14;
                 workInProgress2 = updateMemoComponent(
                   null,
@@ -5726,14 +5726,14 @@ function requireReactDomClient_production() {
           renderLanes2
         );
       case 1:
-        return lazyComponent = workInProgress2.type, init = resolveClassComponentProps(
+        return lazyComponent = workInProgress2.type, init2 = resolveClassComponentProps(
           lazyComponent,
           workInProgress2.pendingProps
         ), updateClassComponent(
           current,
           workInProgress2,
           lazyComponent,
-          init,
+          init2,
           renderLanes2
         );
       case 3:
@@ -5744,14 +5744,14 @@ function requireReactDomClient_production() {
           );
           if (null === current) throw Error(formatProdErrorMessage(387));
           var nextProps = workInProgress2.pendingProps;
-          init = workInProgress2.memoizedState;
-          lazyComponent = init.element;
+          init2 = workInProgress2.memoizedState;
+          lazyComponent = init2.element;
           cloneUpdateQueue(current, workInProgress2);
           processUpdateQueue(workInProgress2, nextProps, null, renderLanes2);
           var nextState = workInProgress2.memoizedState;
           nextProps = nextState.cache;
           pushProvider(workInProgress2, CacheContext, nextProps);
-          nextProps !== init.cache && propagateContextChanges(
+          nextProps !== init2.cache && propagateContextChanges(
             workInProgress2,
             [CacheContext],
             renderLanes2,
@@ -5759,12 +5759,12 @@ function requireReactDomClient_production() {
           );
           suspendIfUpdateReadFromEntangledAsyncAction();
           nextProps = nextState.element;
-          if (init.isDehydrated)
-            if (init = {
+          if (init2.isDehydrated)
+            if (init2 = {
               element: nextProps,
               isDehydrated: false,
               cache: nextState.cache
-            }, workInProgress2.updateQueue.baseState = init, workInProgress2.memoizedState = init, workInProgress2.flags & 256) {
+            }, workInProgress2.updateQueue.baseState = init2, workInProgress2.memoizedState = init2, workInProgress2.flags & 256) {
               workInProgress2 = mountHostRootWithoutHydrating(
                 current,
                 workInProgress2,
@@ -5844,7 +5844,7 @@ function requireReactDomClient_production() {
         ), markRef(current, workInProgress2), workInProgress2.child;
       case 5:
         if (null === current && isHydrating) {
-          if (init = lazyComponent = nextHydratableInstance)
+          if (init2 = lazyComponent = nextHydratableInstance)
             lazyComponent = canHydrateInstance(
               lazyComponent,
               workInProgress2.type,
@@ -5852,23 +5852,23 @@ function requireReactDomClient_production() {
               rootOrSingletonContext
             ), null !== lazyComponent ? (workInProgress2.stateNode = lazyComponent, hydrationParentFiber = workInProgress2, nextHydratableInstance = getNextHydratable(
               lazyComponent.firstChild
-            ), rootOrSingletonContext = false, init = true) : init = false;
-          init || throwOnHydrationMismatch(workInProgress2);
+            ), rootOrSingletonContext = false, init2 = true) : init2 = false;
+          init2 || throwOnHydrationMismatch(workInProgress2);
         }
         pushHostContext(workInProgress2);
-        init = workInProgress2.type;
+        init2 = workInProgress2.type;
         nextProps = workInProgress2.pendingProps;
         nextState = null !== current ? current.memoizedProps : null;
         lazyComponent = nextProps.children;
-        shouldSetTextContent(init, nextProps) ? lazyComponent = null : null !== nextState && shouldSetTextContent(init, nextState) && (workInProgress2.flags |= 32);
-        null !== workInProgress2.memoizedState && (init = renderWithHooks(
+        shouldSetTextContent(init2, nextProps) ? lazyComponent = null : null !== nextState && shouldSetTextContent(init2, nextState) && (workInProgress2.flags |= 32);
+        null !== workInProgress2.memoizedState && (init2 = renderWithHooks(
           current,
           workInProgress2,
           TransitionAwareHostComponent,
           null,
           null,
           renderLanes2
-        ), HostTransitionContext._currentValue = init);
+        ), HostTransitionContext._currentValue = init2);
         markRef(current, workInProgress2);
         reconcileChildren(current, workInProgress2, lazyComponent, renderLanes2);
         return workInProgress2.child;
@@ -5937,7 +5937,7 @@ function requireReactDomClient_production() {
           renderLanes2
         ), workInProgress2.child;
       case 9:
-        return init = workInProgress2.type._context, lazyComponent = workInProgress2.pendingProps.children, prepareToReadContext(workInProgress2), init = readContext(init), lazyComponent = lazyComponent(init), workInProgress2.flags |= 1, reconcileChildren(current, workInProgress2, lazyComponent, renderLanes2), workInProgress2.child;
+        return init2 = workInProgress2.type._context, lazyComponent = workInProgress2.pendingProps.children, prepareToReadContext(workInProgress2), init2 = readContext(init2), lazyComponent = lazyComponent(init2), workInProgress2.flags |= 1, reconcileChildren(current, workInProgress2, lazyComponent, renderLanes2), workInProgress2.child;
       case 14:
         return updateMemoComponent(
           current,
@@ -5959,10 +5959,10 @@ function requireReactDomClient_production() {
       case 22:
         return updateOffscreenComponent(current, workInProgress2, renderLanes2);
       case 24:
-        return prepareToReadContext(workInProgress2), lazyComponent = readContext(CacheContext), null === current ? (init = peekCacheFromPool(), null === init && (init = workInProgressRoot, nextProps = createCache(), init.pooledCache = nextProps, nextProps.refCount++, null !== nextProps && (init.pooledCacheLanes |= renderLanes2), init = nextProps), workInProgress2.memoizedState = {
+        return prepareToReadContext(workInProgress2), lazyComponent = readContext(CacheContext), null === current ? (init2 = peekCacheFromPool(), null === init2 && (init2 = workInProgressRoot, nextProps = createCache(), init2.pooledCache = nextProps, nextProps.refCount++, null !== nextProps && (init2.pooledCacheLanes |= renderLanes2), init2 = nextProps), workInProgress2.memoizedState = {
           parent: lazyComponent,
-          cache: init
-        }, initializeUpdateQueue(workInProgress2), pushProvider(workInProgress2, CacheContext, init)) : (0 !== (current.lanes & renderLanes2) && (cloneUpdateQueue(current, workInProgress2), processUpdateQueue(workInProgress2, null, null, renderLanes2), suspendIfUpdateReadFromEntangledAsyncAction()), init = current.memoizedState, nextProps = workInProgress2.memoizedState, init.parent !== lazyComponent ? (init = { parent: lazyComponent, cache: lazyComponent }, workInProgress2.memoizedState = init, 0 === workInProgress2.lanes && (workInProgress2.memoizedState = workInProgress2.updateQueue.baseState = init), pushProvider(workInProgress2, CacheContext, lazyComponent)) : (lazyComponent = nextProps.cache, pushProvider(workInProgress2, CacheContext, lazyComponent), lazyComponent !== init.cache && propagateContextChanges(
+          cache: init2
+        }, initializeUpdateQueue(workInProgress2), pushProvider(workInProgress2, CacheContext, init2)) : (0 !== (current.lanes & renderLanes2) && (cloneUpdateQueue(current, workInProgress2), processUpdateQueue(workInProgress2, null, null, renderLanes2), suspendIfUpdateReadFromEntangledAsyncAction()), init2 = current.memoizedState, nextProps = workInProgress2.memoizedState, init2.parent !== lazyComponent ? (init2 = { parent: lazyComponent, cache: lazyComponent }, workInProgress2.memoizedState = init2, 0 === workInProgress2.lanes && (workInProgress2.memoizedState = workInProgress2.updateQueue.baseState = init2), pushProvider(workInProgress2, CacheContext, lazyComponent)) : (lazyComponent = nextProps.cache, pushProvider(workInProgress2, CacheContext, lazyComponent), lazyComponent !== init2.cache && propagateContextChanges(
           workInProgress2,
           [CacheContext],
           renderLanes2,
@@ -11932,95 +11932,6 @@ function requireClient() {
   return client.exports;
 }
 var clientExports = requireClient();
-function FooterComponent() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("footer", { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: "Arbeitsgemeinschaft der Wissenschaftlichen Medizinischen Fachgesellschaften e. V." }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "", children: "Datenschutz" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "", children: "Impressum" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "", children: "Kontakt" })
-  ] });
-}
-const logo = "/s3_website/assets/logo-31wd5Byq.svg";
-function HeaderComponent() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("header", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("img", { id: "logo", src: logo, alt: "AWMF online - Portal der wissenschaftlichen Medizin" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Leitlinienregister der AWMF online" })
-  ] }) });
-}
-function CardComponent({ children, title }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "card", children: [
-    title != void 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: title }),
-    children
-  ] });
-}
-const apiRoot = "http://s3-navigator.duckdns.org:5000/guidelines/";
-const ErrorMessages = {
-  "fetchGuidelines": "Es ist ein Fehler aufgetreten. Wir entschuldigen uns für die Unannehmlichkeiten."
-};
-function fetchGuidelinesBySearchTerm(search, setValues) {
-  const api = `${apiRoot}search?q=${search}`;
-  const guidelines = [];
-  fetch(api).then((response) => response.json()).then((json) => {
-    for (let item of json) {
-      guidelines.push({
-        id: item.id,
-        guidelineId: item.awmf_guideline_id,
-        title: item.titel,
-        lversion: item.lversion,
-        lastReviewedDate: item.stand,
-        creationDate: item.created_at,
-        validDate: item.valid_until,
-        remark: item.aktueller_hinweise
-      });
-    }
-    setValues(guidelines);
-  }).catch(() => alert(ErrorMessages.fetchGuidelines));
-}
-function GuidelineComponent({ data }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: "Leitlinie" }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "awmf-cyan", children: data.title ?? "unbekannter Titel" }),
-    data.guidelineId && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-      "Registernummer ",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: data.guidelineId })
-    ] }),
-    data.creationDate && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-      "Erstellt am ",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: data.creationDate })
-    ] })
-  ] });
-}
-function HomePage() {
-  const [search, setSearch] = reactExports.useState("");
-  const [guidelines, setGuidelines] = reactExports.useState(new Array());
-  const guidelineList = guidelines.map(
-    (guideline) => /* @__PURE__ */ jsxRuntimeExports.jsx(GuidelineComponent, { data: guideline }, guideline.id)
-  );
-  function getGuidelines() {
-    fetchGuidelinesBySearchTerm(search, setGuidelines);
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(CardComponent, { title: "Leitliniensuche", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-merge", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "text", placeholder: "Suchbegriff", value: search, onChange: (e) => setSearch(e.target.value) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: getGuidelines, children: "Suchen" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { children: "Erweitert" })
-    ] }) }),
-    guidelines.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(CardComponent, { title: "Suchergebnisse", children: guidelineList })
-  ] });
-}
-function CheatSheetPage() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { children: "Heading 1" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Heading 2" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Heading 3" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { children: "Heading 4" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Lorem ipsum odor amet, consectetuer adipiscing elit. Et hendrerit imperdiet morbi dignissim turpis eu vehicula maecenas. Eros posuere sapien sit duis nostra ornare ut augue. Interdum blandit est urna maximus, aliquet consequat. Fames penatibus parturient varius eleifend duis. Imperdiet placerat quam porttitor arcu natoque congue libero. Conubia nascetur in parturient fermentum turpis venenatis accumsan himenaeos?" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Himenaeos lacinia nam condimentum consequat velit malesuada est accumsan? Gravida rutrum elementum vulputate euismod sollicitudin. Cras scelerisque in, dictum senectus torquent id accumsan. Vitae quam eros; interdum accumsan quisque consequat laoreet sapien. Efficitur class sagittis ex vestibulum varius placerat auctor velit. Hac senectus sit auctor in eu eu. Congue ligula morbi nulla sapien ut suscipit. Ridiculus proin tristique semper augue elementum. Libero viverra adipiscing per adipiscing fringilla blandit." }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Taciti ad turpis parturient phasellus congue rutrum. Id elit lacinia; aliquet hac hac id. Rutrum hac natoque ullamcorper bibendum egestas. Facilisis blandit maximus eget torquent vivamus molestie tempor maecenas arcu. Leo maecenas rutrum nulla per litora imperdiet velit dictum. Maecenas vestibulum laoreet hac lectus, habitant in faucibus pulvinar. Dis sollicitudin et sit penatibus non est hac." }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Habitasse sem consequat platea accumsan proin integer. Ullamcorper ad vulputate pretium volutpat imperdiet. Egestas viverra est sollicitudin inceptos scelerisque quam placerat adipiscing varius. Lobortis ligula leo ut purus montes habitasse fusce. Purus facilisis dignissim vehicula; venenatis tincidunt odio tincidunt duis. Pharetra venenatis fermentum posuere cubilia metus netus senectus. Dictumst dignissim mi facilisis iaculis; sit in. Proin pharetra scelerisque in ornare torquent nec a. Pretium sed cubilia vel penatibus curae." }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Posuere venenatis dis vestibulum morbi risus aliquam. Finibus bibendum ut imperdiet curae rutrum tortor dignissim dictum sollicitudin. Maecenas himenaeos facilisis gravida commodo fames fermentum ridiculus leo metus. Gravida egestas euismod congue nascetur dictum purus. Dapibus est faucibus sagittis nostra tincidunt dignissim turpis id. Ante eros inceptos facilisi lacinia litora netus posuere nam at. Elit pulvinar nec suscipit feugiat vel. Est orci magna mi senectus quis molestie aliquam placerat. Donec est risus justo mauris conubia." })
-  ] });
-}
 var dist = {};
 var hasRequiredDist;
 function requireDist() {
@@ -12182,7 +12093,7 @@ function requireDist() {
 }
 requireDist();
 /**
- * react-router v7.3.0
+ * react-router v7.4.0
  *
  * Copyright (c) Remix Software Inc.
  *
@@ -12236,15 +12147,15 @@ function warning(cond, message) {
 function createKey() {
   return Math.random().toString(36).substring(2, 10);
 }
-function getHistoryState(location, index) {
+function getHistoryState(location2, index) {
   return {
-    usr: location.state,
-    key: location.key,
+    usr: location2.state,
+    key: location2.key,
     idx: index
   };
 }
 function createLocation(current, to, state = null, key) {
-  let location = {
+  let location2 = {
     pathname: typeof current === "string" ? current : current.pathname,
     search: "",
     hash: "",
@@ -12256,7 +12167,7 @@ function createLocation(current, to, state = null, key) {
     // keep as is for the time being and just let any incoming keys take precedence
     key: to && to.key || key || createKey()
   };
-  return location;
+  return location2;
 }
 function createPath({
   pathname = "/",
@@ -12313,10 +12224,10 @@ function getUrlBasedHistory(getLocation, createHref2, validateLocation, options 
   }
   function push(to, state) {
     action = "PUSH";
-    let location = createLocation(history.location, to, state);
+    let location2 = createLocation(history.location, to, state);
     index = getIndex() + 1;
-    let historyState = getHistoryState(location, index);
-    let url = history.createHref(location);
+    let historyState = getHistoryState(location2, index);
+    let url = history.createHref(location2);
     try {
       globalHistory.pushState(historyState, "", url);
     } catch (error) {
@@ -12331,10 +12242,10 @@ function getUrlBasedHistory(getLocation, createHref2, validateLocation, options 
   }
   function replace2(to, state) {
     action = "REPLACE";
-    let location = createLocation(history.location, to, state);
+    let location2 = createLocation(history.location, to, state);
     index = getIndex();
-    let historyState = getHistoryState(location, index);
-    let url = history.createHref(location);
+    let historyState = getHistoryState(location2, index);
+    let url = history.createHref(location2);
     globalHistory.replaceState(historyState, "", url);
     if (v5Compat && listener) {
       listener({ action, location: history.location, delta: 0 });
@@ -12390,10 +12301,10 @@ function getUrlBasedHistory(getLocation, createHref2, validateLocation, options 
 }
 var _map;
 var unstable_RouterContextProvider = class {
-  constructor(init) {
+  constructor(init2) {
     __privateAdd(this, _map, /* @__PURE__ */ new Map());
-    if (init) {
-      for (let [context, value] of init) {
+    if (init2) {
+      for (let [context, value] of init2) {
         this.set(context, value);
       }
     }
@@ -12467,8 +12378,8 @@ function matchRoutes(routes, locationArg, basename = "/") {
   return matchRoutesImpl(routes, locationArg, basename, false);
 }
 function matchRoutesImpl(routes, locationArg, basename, allowPartial) {
-  let location = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
-  let pathname = stripBasename(location.pathname || "/", basename);
+  let location2 = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
+  let pathname = stripBasename(location2.pathname || "/", basename);
   if (pathname == null) {
     return null;
   }
@@ -12888,50 +12799,50 @@ var defaultMapRouteProperties = (route) => ({
 });
 var TRANSITIONS_STORAGE_KEY = "remix-router-transitions";
 var ResetLoaderDataSymbol = Symbol("ResetLoaderData");
-function createRouter(init) {
-  const routerWindow = init.window ? init.window : typeof window !== "undefined" ? window : void 0;
+function createRouter(init2) {
+  const routerWindow = init2.window ? init2.window : typeof window !== "undefined" ? window : void 0;
   const isBrowser2 = typeof routerWindow !== "undefined" && typeof routerWindow.document !== "undefined" && typeof routerWindow.document.createElement !== "undefined";
   invariant(
-    init.routes.length > 0,
+    init2.routes.length > 0,
     "You must provide a non-empty routes array to createRouter"
   );
-  let mapRouteProperties2 = init.mapRouteProperties || defaultMapRouteProperties;
+  let mapRouteProperties2 = init2.mapRouteProperties || defaultMapRouteProperties;
   let manifest = {};
   let dataRoutes = convertRoutesToDataRoutes(
-    init.routes,
+    init2.routes,
     mapRouteProperties2,
     void 0,
     manifest
   );
   let inFlightDataRoutes;
-  let basename = init.basename || "/";
-  let dataStrategyImpl = init.dataStrategy || defaultDataStrategyWithMiddleware;
+  let basename = init2.basename || "/";
+  let dataStrategyImpl = init2.dataStrategy || defaultDataStrategyWithMiddleware;
   let future = {
     unstable_middleware: false,
-    ...init.future
+    ...init2.future
   };
   let unlistenHistory = null;
   let subscribers = /* @__PURE__ */ new Set();
   let savedScrollPositions2 = null;
   let getScrollRestorationKey2 = null;
   let getScrollPosition = null;
-  let initialScrollRestored = init.hydrationData != null;
-  let initialMatches = matchRoutes(dataRoutes, init.history.location, basename);
+  let initialScrollRestored = init2.hydrationData != null;
+  let initialMatches = matchRoutes(dataRoutes, init2.history.location, basename);
   let initialMatchesIsFOW = false;
   let initialErrors = null;
-  if (initialMatches == null && !init.patchRoutesOnNavigation) {
+  if (initialMatches == null && !init2.patchRoutesOnNavigation) {
     let error = getInternalRouterError(404, {
-      pathname: init.history.location.pathname
+      pathname: init2.history.location.pathname
     });
     let { matches, route } = getShortCircuitMatches(dataRoutes);
     initialMatches = matches;
     initialErrors = { [route.id]: error };
   }
-  if (initialMatches && !init.hydrationData) {
+  if (initialMatches && !init2.hydrationData) {
     let fogOfWar = checkFogOfWar(
       initialMatches,
       dataRoutes,
-      init.history.location.pathname
+      init2.history.location.pathname
     );
     if (fogOfWar.active) {
       initialMatches = null;
@@ -12944,7 +12855,7 @@ function createRouter(init) {
     let fogOfWar = checkFogOfWar(
       null,
       dataRoutes,
-      init.history.location.pathname
+      init2.history.location.pathname
     );
     if (fogOfWar.active && fogOfWar.matches) {
       initialMatchesIsFOW = true;
@@ -12955,8 +12866,8 @@ function createRouter(init) {
   } else if (!initialMatches.some((m) => m.route.loader)) {
     initialized = true;
   } else {
-    let loaderData = init.hydrationData ? init.hydrationData.loaderData : null;
-    let errors = init.hydrationData ? init.hydrationData.errors : null;
+    let loaderData = init2.hydrationData ? init2.hydrationData.loaderData : null;
+    let errors = init2.hydrationData ? init2.hydrationData.errors : null;
     if (errors) {
       let idx = initialMatches.findIndex(
         (m) => errors[m.route.id] !== void 0
@@ -12970,18 +12881,18 @@ function createRouter(init) {
   }
   let router2;
   let state = {
-    historyAction: init.history.action,
-    location: init.history.location,
+    historyAction: init2.history.action,
+    location: init2.history.location,
     matches: initialMatches,
     initialized,
     navigation: IDLE_NAVIGATION,
     // Don't restore on initial updateState() if we were SSR'd
-    restoreScrollPosition: init.hydrationData != null ? false : null,
+    restoreScrollPosition: init2.hydrationData != null ? false : null,
     preventScrollReset: false,
     revalidation: "idle",
-    loaderData: init.hydrationData && init.hydrationData.loaderData || {},
-    actionData: init.hydrationData && init.hydrationData.actionData || null,
-    errors: init.hydrationData && init.hydrationData.errors || initialErrors,
+    loaderData: init2.hydrationData && init2.hydrationData.loaderData || {},
+    actionData: init2.hydrationData && init2.hydrationData.actionData || null,
+    errors: init2.hydrationData && init2.hydrationData.errors || initialErrors,
     fetchers: /* @__PURE__ */ new Map(),
     blockers: /* @__PURE__ */ new Map()
   };
@@ -13006,8 +12917,8 @@ function createRouter(init) {
   let unblockBlockerHistoryUpdate = void 0;
   let pendingRevalidationDfd = null;
   function initialize() {
-    unlistenHistory = init.history.listen(
-      ({ action: historyAction, location, delta }) => {
+    unlistenHistory = init2.history.listen(
+      ({ action: historyAction, location: location2, delta }) => {
         if (unblockBlockerHistoryUpdate) {
           unblockBlockerHistoryUpdate();
           unblockBlockerHistoryUpdate = void 0;
@@ -13019,25 +12930,25 @@ function createRouter(init) {
         );
         let blockerKey = shouldBlockNavigation({
           currentLocation: state.location,
-          nextLocation: location,
+          nextLocation: location2,
           historyAction
         });
         if (blockerKey && delta != null) {
           let nextHistoryUpdatePromise = new Promise((resolve) => {
             unblockBlockerHistoryUpdate = resolve;
           });
-          init.history.go(delta * -1);
+          init2.history.go(delta * -1);
           updateBlocker(blockerKey, {
             state: "blocked",
-            location,
+            location: location2,
             proceed() {
               updateBlocker(blockerKey, {
                 state: "proceeding",
                 proceed: void 0,
                 reset: void 0,
-                location
+                location: location2
               });
-              nextHistoryUpdatePromise.then(() => init.history.go(delta));
+              nextHistoryUpdatePromise.then(() => init2.history.go(delta));
             },
             reset() {
               let blockers = new Map(state.blockers);
@@ -13047,7 +12958,7 @@ function createRouter(init) {
           });
           return;
         }
-        return startNavigation(historyAction, location);
+        return startNavigation(historyAction, location2);
       }
     );
     if (isBrowser2) {
@@ -13110,9 +13021,9 @@ function createRouter(init) {
     unmountedFetchers.forEach((key) => deleteFetcher(key));
     mountedFetchers.forEach((key) => state.fetchers.delete(key));
   }
-  function completeNavigation(location, newState, { flushSync } = {}) {
+  function completeNavigation(location2, newState, { flushSync } = {}) {
     var _a, _b;
-    let isActionReload = state.actionData != null && state.navigation.formMethod != null && isMutationMethod(state.navigation.formMethod) && state.navigation.state === "loading" && ((_a = location.state) == null ? void 0 : _a._isRedirect) !== true;
+    let isActionReload = state.actionData != null && state.navigation.formMethod != null && isMutationMethod(state.navigation.formMethod) && state.navigation.state === "loading" && ((_a = location2.state) == null ? void 0 : _a._isRedirect) !== true;
     let actionData;
     if (newState.actionData) {
       if (Object.keys(newState.actionData).length > 0) {
@@ -13136,7 +13047,7 @@ function createRouter(init) {
       blockers = new Map(blockers);
       blockers.forEach((_, k) => blockers.set(k, IDLE_BLOCKER));
     }
-    let preventScrollReset = pendingPreventScrollReset === true || state.navigation.formMethod != null && isMutationMethod(state.navigation.formMethod) && ((_b = location.state) == null ? void 0 : _b._isRedirect) !== true;
+    let preventScrollReset = pendingPreventScrollReset === true || state.navigation.formMethod != null && isMutationMethod(state.navigation.formMethod) && ((_b = location2.state) == null ? void 0 : _b._isRedirect) !== true;
     if (inFlightDataRoutes) {
       dataRoutes = inFlightDataRoutes;
       inFlightDataRoutes = void 0;
@@ -13144,35 +13055,35 @@ function createRouter(init) {
     if (isUninterruptedRevalidation) ;
     else if (pendingAction === "POP") ;
     else if (pendingAction === "PUSH") {
-      init.history.push(location, location.state);
+      init2.history.push(location2, location2.state);
     } else if (pendingAction === "REPLACE") {
-      init.history.replace(location, location.state);
+      init2.history.replace(location2, location2.state);
     }
     let viewTransitionOpts;
     if (pendingAction === "POP") {
       let priorPaths = appliedViewTransitions.get(state.location.pathname);
-      if (priorPaths && priorPaths.has(location.pathname)) {
+      if (priorPaths && priorPaths.has(location2.pathname)) {
         viewTransitionOpts = {
           currentLocation: state.location,
-          nextLocation: location
+          nextLocation: location2
         };
-      } else if (appliedViewTransitions.has(location.pathname)) {
+      } else if (appliedViewTransitions.has(location2.pathname)) {
         viewTransitionOpts = {
-          currentLocation: location,
+          currentLocation: location2,
           nextLocation: state.location
         };
       }
     } else if (pendingViewTransitionEnabled) {
       let toPaths = appliedViewTransitions.get(state.location.pathname);
       if (toPaths) {
-        toPaths.add(location.pathname);
+        toPaths.add(location2.pathname);
       } else {
-        toPaths = /* @__PURE__ */ new Set([location.pathname]);
+        toPaths = /* @__PURE__ */ new Set([location2.pathname]);
         appliedViewTransitions.set(state.location.pathname, toPaths);
       }
       viewTransitionOpts = {
         currentLocation: state.location,
-        nextLocation: location
+        nextLocation: location2
       };
     }
     updateState(
@@ -13182,12 +13093,12 @@ function createRouter(init) {
         actionData,
         loaderData,
         historyAction: pendingAction,
-        location,
+        location: location2,
         initialized: true,
         navigation: IDLE_NAVIGATION,
         revalidation: "idle",
         restoreScrollPosition: getSavedScrollPosition(
-          location,
+          location2,
           newState.matches || state.matches
         ),
         preventScrollReset,
@@ -13208,7 +13119,7 @@ function createRouter(init) {
   }
   async function navigate(to, opts) {
     if (typeof to === "number") {
-      init.history.go(to);
+      init2.history.go(to);
       return;
     }
     let normalizedPath = normalizeTo(
@@ -13228,7 +13139,7 @@ function createRouter(init) {
     let nextLocation = createLocation(state.location, path, opts && opts.state);
     nextLocation = {
       ...nextLocation,
-      ...init.history.encodeLocation(nextLocation)
+      ...init2.history.encodeLocation(nextLocation)
     };
     let userReplace = opts && opts.replace != null ? opts.replace : void 0;
     let historyAction = "PUSH";
@@ -13304,7 +13215,7 @@ function createRouter(init) {
     );
     return promise;
   }
-  async function startNavigation(historyAction, location, opts) {
+  async function startNavigation(historyAction, location2, opts) {
     pendingNavigationController && pendingNavigationController.abort();
     pendingNavigationController = null;
     pendingAction = historyAction;
@@ -13317,22 +13228,22 @@ function createRouter(init) {
     let matches = (opts == null ? void 0 : opts.initialHydration) && state.matches && state.matches.length > 0 && !initialMatchesIsFOW ? (
       // `matchRoutes()` has already been called if we're in here via `router.initialize()`
       state.matches
-    ) : matchRoutes(routesToUse, location, basename);
+    ) : matchRoutes(routesToUse, location2, basename);
     let flushSync = (opts && opts.flushSync) === true;
-    if (matches && state.initialized && !isRevalidationRequired && isHashChangeOnly(state.location, location) && !(opts && opts.submission && isMutationMethod(opts.submission.formMethod))) {
-      completeNavigation(location, { matches }, { flushSync });
+    if (matches && state.initialized && !isRevalidationRequired && isHashChangeOnly(state.location, location2) && !(opts && opts.submission && isMutationMethod(opts.submission.formMethod))) {
+      completeNavigation(location2, { matches }, { flushSync });
       return;
     }
-    let fogOfWar = checkFogOfWar(matches, routesToUse, location.pathname);
+    let fogOfWar = checkFogOfWar(matches, routesToUse, location2.pathname);
     if (fogOfWar.active && fogOfWar.matches) {
       matches = fogOfWar.matches;
     }
     if (!matches) {
       let { error, notFoundMatches, route } = handleNavigational404(
-        location.pathname
+        location2.pathname
       );
       completeNavigation(
-        location,
+        location2,
         {
           matches: notFoundMatches,
           loaderData: {},
@@ -13346,13 +13257,13 @@ function createRouter(init) {
     }
     pendingNavigationController = new AbortController();
     let request = createClientSideRequest(
-      init.history,
-      location,
+      init2.history,
+      location2,
       pendingNavigationController.signal,
       opts && opts.submission
     );
     let scopedContext = new unstable_RouterContextProvider(
-      init.unstable_getContext ? await init.unstable_getContext() : void 0
+      init2.unstable_getContext ? await init2.unstable_getContext() : void 0
     );
     let pendingActionResult;
     if (opts && opts.pendingError) {
@@ -13363,7 +13274,7 @@ function createRouter(init) {
     } else if (opts && opts.submission && isMutationMethod(opts.submission.formMethod)) {
       let actionResult = await handleAction(
         request,
-        location,
+        location2,
         opts.submission,
         matches,
         scopedContext,
@@ -13377,7 +13288,7 @@ function createRouter(init) {
         let [routeId, result] = actionResult.pendingActionResult;
         if (isErrorResult(result) && isRouteErrorResponse(result.error) && result.error.status === 404) {
           pendingNavigationController = null;
-          completeNavigation(location, {
+          completeNavigation(location2, {
             matches: actionResult.matches,
             loaderData: {},
             errors: {
@@ -13389,11 +13300,11 @@ function createRouter(init) {
       }
       matches = actionResult.matches || matches;
       pendingActionResult = actionResult.pendingActionResult;
-      loadingNavigation = getLoadingNavigation(location, opts.submission);
+      loadingNavigation = getLoadingNavigation(location2, opts.submission);
       flushSync = false;
       fogOfWar.active = false;
       request = createClientSideRequest(
-        init.history,
+        init2.history,
         request.url,
         request.signal
       );
@@ -13405,7 +13316,7 @@ function createRouter(init) {
       errors
     } = await handleLoaders(
       request,
-      location,
+      location2,
       matches,
       scopedContext,
       fogOfWar.active,
@@ -13421,21 +13332,21 @@ function createRouter(init) {
       return;
     }
     pendingNavigationController = null;
-    completeNavigation(location, {
+    completeNavigation(location2, {
       matches: updatedMatches || matches,
       ...getActionDataForCommit(pendingActionResult),
       loaderData,
       errors
     });
   }
-  async function handleAction(request, location, submission, matches, scopedContext, isFogOfWar, opts = {}) {
+  async function handleAction(request, location2, submission, matches, scopedContext, isFogOfWar, opts = {}) {
     interruptActiveLoads();
-    let navigation = getSubmittingNavigation(location, submission);
+    let navigation = getSubmittingNavigation(location2, submission);
     updateState({ navigation }, { flushSync: opts.flushSync === true });
     if (isFogOfWar) {
       let discoverResult = await discoverRoutes(
         matches,
-        location.pathname,
+        location2.pathname,
         request.signal
       );
       if (discoverResult.type === "aborted") {
@@ -13454,7 +13365,7 @@ function createRouter(init) {
         };
       } else if (!discoverResult.matches) {
         let { notFoundMatches, error, route } = handleNavigational404(
-          location.pathname
+          location2.pathname
         );
         return {
           matches: notFoundMatches,
@@ -13471,13 +13382,13 @@ function createRouter(init) {
       }
     }
     let result;
-    let actionMatch = getTargetMatch(matches, location);
+    let actionMatch = getTargetMatch(matches, location2);
     if (!actionMatch.route.action && !actionMatch.route.lazy) {
       result = {
         type: "error",
         error: getInternalRouterError(405, {
           method: request.method,
-          pathname: location.pathname,
+          pathname: location2.pathname,
           routeId: actionMatch.route.id
         })
       };
@@ -13508,12 +13419,12 @@ function createRouter(init) {
       if (opts && opts.replace != null) {
         replace2 = opts.replace;
       } else {
-        let location2 = normalizeRedirectLocation(
+        let location22 = normalizeRedirectLocation(
           result.response.headers.get("Location"),
           new URL(request.url),
           basename
         );
-        replace2 = location2 === state.location.pathname + state.location.search;
+        replace2 = location22 === state.location.pathname + state.location.search;
       }
       await startRedirectNavigation(request, result, true, {
         submission,
@@ -13536,8 +13447,8 @@ function createRouter(init) {
       pendingActionResult: [actionMatch.route.id, result]
     };
   }
-  async function handleLoaders(request, location, matches, scopedContext, isFogOfWar, overrideNavigation, submission, fetcherSubmission, replace2, initialHydration, flushSync, pendingActionResult) {
-    let loadingNavigation = overrideNavigation || getLoadingNavigation(location, submission);
+  async function handleLoaders(request, location2, matches, scopedContext, isFogOfWar, overrideNavigation, submission, fetcherSubmission, replace2, initialHydration, flushSync, pendingActionResult) {
+    let loadingNavigation = overrideNavigation || getLoadingNavigation(location2, submission);
     let activeSubmission = submission || fetcherSubmission || getSubmissionFromNavigation(loadingNavigation);
     let shouldUpdateNavigationState = !isUninterruptedRevalidation && !initialHydration;
     if (isFogOfWar) {
@@ -13555,7 +13466,7 @@ function createRouter(init) {
       }
       let discoverResult = await discoverRoutes(
         matches,
-        location.pathname,
+        location2.pathname,
         request.signal
       );
       if (discoverResult.type === "aborted") {
@@ -13571,7 +13482,7 @@ function createRouter(init) {
         };
       } else if (!discoverResult.matches) {
         let { error, notFoundMatches, route } = handleNavigational404(
-          location.pathname
+          location2.pathname
         );
         return {
           matches: notFoundMatches,
@@ -13586,11 +13497,11 @@ function createRouter(init) {
     }
     let routesToUse = inFlightDataRoutes || dataRoutes;
     let [matchesToLoad, revalidatingFetchers] = getMatchesToLoad(
-      init.history,
+      init2.history,
       state,
       matches,
       activeSubmission,
-      location,
+      location2,
       initialHydration === true,
       isRevalidationRequired,
       cancelledFetcherLoads,
@@ -13605,7 +13516,7 @@ function createRouter(init) {
     if (matchesToLoad.length === 0 && revalidatingFetchers.length === 0) {
       let updatedFetchers2 = markFetchRedirectsDone();
       completeNavigation(
-        location,
+        location2,
         {
           matches,
           loaderData: {},
@@ -13759,7 +13670,7 @@ function createRouter(init) {
     }
     let match = getTargetMatch(matches, path);
     let scopedContext = new unstable_RouterContextProvider(
-      init.unstable_getContext ? await init.unstable_getContext() : void 0
+      init2.unstable_getContext ? await init2.unstable_getContext() : void 0
     );
     let preventScrollReset = (opts && opts.preventScrollReset) === true;
     if (submission && isMutationMethod(submission.formMethod)) {
@@ -13815,7 +13726,7 @@ function createRouter(init) {
     });
     let abortController = new AbortController();
     let fetchRequest = createClientSideRequest(
-      init.history,
+      init2.history,
       path,
       abortController.signal,
       submission
@@ -13892,7 +13803,7 @@ function createRouter(init) {
     }
     let nextLocation = state.navigation.location || state.location;
     let revalidationRequest = createClientSideRequest(
-      init.history,
+      init2.history,
       nextLocation,
       abortController.signal
     );
@@ -13904,7 +13815,7 @@ function createRouter(init) {
     let loadFetcher = getLoadingFetcher(submission, actionResult.data);
     state.fetchers.set(key, loadFetcher);
     let [matchesToLoad, revalidatingFetchers] = getMatchesToLoad(
-      init.history,
+      init2.history,
       state,
       matches,
       submission,
@@ -14022,7 +13933,7 @@ function createRouter(init) {
     );
     let abortController = new AbortController();
     let fetchRequest = createClientSideRequest(
-      init.history,
+      init2.history,
       path,
       abortController.signal
     );
@@ -14099,31 +14010,31 @@ function createRouter(init) {
     if (redirect2.response.headers.has("X-Remix-Revalidate")) {
       isRevalidationRequired = true;
     }
-    let location = redirect2.response.headers.get("Location");
-    invariant(location, "Expected a Location header on the redirect Response");
-    location = normalizeRedirectLocation(
-      location,
+    let location2 = redirect2.response.headers.get("Location");
+    invariant(location2, "Expected a Location header on the redirect Response");
+    location2 = normalizeRedirectLocation(
+      location2,
       new URL(request.url),
       basename
     );
-    let redirectLocation = createLocation(state.location, location, {
+    let redirectLocation = createLocation(state.location, location2, {
       _isRedirect: true
     });
     if (isBrowser2) {
       let isDocumentReload = false;
       if (redirect2.response.headers.has("X-Remix-Reload-Document")) {
         isDocumentReload = true;
-      } else if (ABSOLUTE_URL_REGEX.test(location)) {
-        const url = init.history.createURL(location);
+      } else if (ABSOLUTE_URL_REGEX.test(location2)) {
+        const url = init2.history.createURL(location2);
         isDocumentReload = // Hard reload if it's an absolute URL to a new origin
         url.origin !== routerWindow.location.origin || // Hard reload if it's an absolute URL that does not match our basename
         stripBasename(url.pathname, basename) == null;
       }
       if (isDocumentReload) {
         if (replace2) {
-          routerWindow.location.replace(location);
+          routerWindow.location.replace(location2);
         } else {
-          routerWindow.location.assign(location);
+          routerWindow.location.assign(location2);
         }
         return;
       }
@@ -14139,7 +14050,7 @@ function createRouter(init) {
       await startNavigation(redirectNavigationType, redirectLocation, {
         submission: {
           ...activeSubmission,
-          formAction: location
+          formAction: location2
         },
         // Preserve these flags across redirects
         preventScrollReset: preventScrollReset || pendingPreventScrollReset,
@@ -14220,7 +14131,7 @@ function createRouter(init) {
         if (f.matches && f.match && f.controller) {
           let results = await callDataStrategy(
             "loader",
-            createClientSideRequest(init.history, f.path, f.controller.signal),
+            createClientSideRequest(init2.history, f.path, f.controller.signal),
             [f.match],
             f.matches,
             scopedContext,
@@ -14418,25 +14329,25 @@ function createRouter(init) {
       getScrollRestorationKey2 = null;
     };
   }
-  function getScrollKey(location, matches) {
+  function getScrollKey(location2, matches) {
     if (getScrollRestorationKey2) {
       let key = getScrollRestorationKey2(
-        location,
+        location2,
         matches.map((m) => convertRouteMatchToUiMatch(m, state.loaderData))
       );
-      return key || location.key;
+      return key || location2.key;
     }
-    return location.key;
+    return location2.key;
   }
-  function saveScrollPosition(location, matches) {
+  function saveScrollPosition(location2, matches) {
     if (savedScrollPositions2 && getScrollPosition) {
-      let key = getScrollKey(location, matches);
+      let key = getScrollKey(location2, matches);
       savedScrollPositions2[key] = getScrollPosition();
     }
   }
-  function getSavedScrollPosition(location, matches) {
+  function getSavedScrollPosition(location2, matches) {
     if (savedScrollPositions2) {
-      let key = getScrollKey(location, matches);
+      let key = getScrollKey(location2, matches);
       let y = savedScrollPositions2[key];
       if (typeof y === "number") {
         return y;
@@ -14445,7 +14356,7 @@ function createRouter(init) {
     return null;
   }
   function checkFogOfWar(matches, routesToUse, pathname) {
-    if (init.patchRoutesOnNavigation) {
+    if (init2.patchRoutesOnNavigation) {
       if (!matches) {
         let fogMatches = matchRoutesImpl(
           routesToUse,
@@ -14469,7 +14380,7 @@ function createRouter(init) {
     return { active: false, matches: null };
   }
   async function discoverRoutes(matches, pathname, signal, fetcherKey) {
-    if (!init.patchRoutesOnNavigation) {
+    if (!init2.patchRoutesOnNavigation) {
       return { type: "success", matches };
     }
     let partialMatches = matches;
@@ -14478,7 +14389,7 @@ function createRouter(init) {
       let routesToUse = inFlightDataRoutes || dataRoutes;
       let localManifest = manifest;
       try {
-        await init.patchRoutesOnNavigation({
+        await init2.patchRoutesOnNavigation({
           signal,
           path: pathname,
           matches: partialMatches,
@@ -14570,8 +14481,8 @@ function createRouter(init) {
     revalidate,
     // Passthrough to history-aware createHref used by useHref so we get proper
     // hash-aware URLs in DOM paths
-    createHref: (to) => init.history.createHref(to),
-    encodeLocation: (to) => init.history.encodeLocation(to),
+    createHref: (to) => init2.history.createHref(to),
+    encodeLocation: (to) => init2.history.encodeLocation(to),
     getFetcher,
     deleteFetcher: queueFetcherForDeletion,
     dispose,
@@ -14588,7 +14499,7 @@ function createRouter(init) {
 function isSubmissionNavigation(opts) {
   return opts != null && ("formData" in opts && opts.formData != null || "body" in opts && opts.body !== void 0);
 }
-function normalizeTo(location, matches, basename, to, fromRouteId, relative) {
+function normalizeTo(location2, matches, basename, to, fromRouteId, relative) {
   let contextualMatches;
   let activeRouteMatch;
   if (fromRouteId) {
@@ -14607,12 +14518,12 @@ function normalizeTo(location, matches, basename, to, fromRouteId, relative) {
   let path = resolveTo(
     to ? to : ".",
     getResolveToMatches(contextualMatches),
-    stripBasename(location.pathname, basename) || location.pathname,
+    stripBasename(location2.pathname, basename) || location2.pathname,
     relative === "path"
   );
   if (to == null) {
-    path.search = location.search;
-    path.hash = location.hash;
+    path.search = location2.search;
+    path.hash = location2.hash;
   }
   if ((to == null || to === "" || to === ".") && activeRouteMatch) {
     let nakedIndex = hasNakedIndexQuery(path.search);
@@ -14746,10 +14657,10 @@ function getLoaderMatchesUntilBoundary(matches, boundaryId, includeBoundary = fa
   }
   return matches;
 }
-function getMatchesToLoad(history, state, matches, submission, location, initialHydration, isRevalidationRequired, cancelledFetcherLoads, fetchersQueuedForDeletion, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, pendingActionResult) {
+function getMatchesToLoad(history, state, matches, submission, location2, initialHydration, isRevalidationRequired, cancelledFetcherLoads, fetchersQueuedForDeletion, fetchLoadMatches, fetchRedirectIds, routesToUse, basename, pendingActionResult) {
   let actionResult = pendingActionResult ? isErrorResult(pendingActionResult[1]) ? pendingActionResult[1].error : pendingActionResult[1].data : void 0;
   let currentUrl = history.createURL(state.location);
-  let nextUrl = history.createURL(location);
+  let nextUrl = history.createURL(location2);
   let boundaryMatches = matches;
   if (initialHydration && state.errors) {
     boundaryMatches = getLoaderMatchesUntilBoundary(
@@ -14987,14 +14898,13 @@ async function defaultDataStrategyWithMiddleware(args) {
     args,
     false,
     () => defaultDataStrategy(args),
-    (e) => ({ [e.routeId]: { type: "error", result: e.error } })
+    (error, routeId) => ({ [routeId]: { type: "error", result: error } })
   );
 }
 async function runMiddlewarePipeline(args, propagateResult, handler, errorHandler) {
   let { matches, request, params, context } = args;
   let middlewareState = {
-    handlerResult: void 0,
-    propagateResult
+    handlerResult: void 0
   };
   try {
     let tuples = matches.flatMap(
@@ -15003,28 +14913,26 @@ async function runMiddlewarePipeline(args, propagateResult, handler, errorHandle
     let result = await callRouteMiddleware(
       { request, params, context },
       tuples,
+      propagateResult,
       middlewareState,
       handler
     );
-    return middlewareState.propagateResult ? result : middlewareState.handlerResult;
+    return propagateResult ? result : middlewareState.handlerResult;
   } catch (e) {
-    if (!(e instanceof MiddlewareError)) {
+    if (!middlewareState.middlewareError) {
       throw e;
     }
-    let result = await errorHandler(e);
+    let result = await errorHandler(
+      middlewareState.middlewareError.error,
+      middlewareState.middlewareError.routeId
+    );
     if (!middlewareState.handlerResult) {
       return result;
     }
     return Object.assign(middlewareState.handlerResult, result);
   }
 }
-var MiddlewareError = class {
-  constructor(routeId, error) {
-    this.routeId = routeId;
-    this.error = error;
-  }
-};
-async function callRouteMiddleware(args, middlewares, middlewareState, handler, idx = 0) {
+async function callRouteMiddleware(args, middlewares, propagateResult, middlewareState, handler, idx = 0) {
   let { request } = args;
   if (request.signal.aborted) {
     if (request.signal.reason) {
@@ -15047,17 +14955,14 @@ async function callRouteMiddleware(args, middlewares, middlewareState, handler, 
       throw new Error("You may only call `next()` once per middleware");
     }
     nextCalled = true;
-    let result = await callRouteMiddleware(
+    await callRouteMiddleware(
       args,
       middlewares,
+      propagateResult,
       middlewareState,
       handler,
       idx + 1
     );
-    if (middlewareState.propagateResult) {
-      nextResult = result;
-      return nextResult;
-    }
   };
   try {
     let result = await middleware(
@@ -15077,11 +14982,13 @@ async function callRouteMiddleware(args, middlewares, middlewareState, handler, 
     } else {
       return next();
     }
-  } catch (e) {
-    if (e instanceof MiddlewareError) {
-      throw e;
+  } catch (error) {
+    if (!middlewareState.middlewareError) {
+      middlewareState.middlewareError = { routeId, error };
+    } else if (middlewareState.middlewareError.error !== error) {
+      middlewareState.middlewareError = { routeId, error };
     }
-    throw new MiddlewareError(routeId, e);
+    throw error;
   }
 }
 async function callDataStrategyImpl(dataStrategyImpl, type, request, matchesToLoad, matches, fetcherKey, manifest, mapRouteProperties2, scopedContext, enableMiddleware) {
@@ -15286,55 +15193,55 @@ async function convertDataStrategyResultToDataResult(dataStrategyResult) {
   return { type: "data", data: result };
 }
 function normalizeRelativeRoutingRedirectResponse(response, request, routeId, matches, basename) {
-  let location = response.headers.get("Location");
+  let location2 = response.headers.get("Location");
   invariant(
-    location,
+    location2,
     "Redirects returned/thrown from loaders/actions must have a Location header"
   );
-  if (!ABSOLUTE_URL_REGEX.test(location)) {
+  if (!ABSOLUTE_URL_REGEX.test(location2)) {
     let trimmedMatches = matches.slice(
       0,
       matches.findIndex((m) => m.route.id === routeId) + 1
     );
-    location = normalizeTo(
+    location2 = normalizeTo(
       new URL(request.url),
       trimmedMatches,
       basename,
-      location
+      location2
     );
-    response.headers.set("Location", location);
+    response.headers.set("Location", location2);
   }
   return response;
 }
-function normalizeRedirectLocation(location, currentUrl, basename) {
-  if (ABSOLUTE_URL_REGEX.test(location)) {
-    let normalizedLocation = location;
+function normalizeRedirectLocation(location2, currentUrl, basename) {
+  if (ABSOLUTE_URL_REGEX.test(location2)) {
+    let normalizedLocation = location2;
     let url = normalizedLocation.startsWith("//") ? new URL(currentUrl.protocol + normalizedLocation) : new URL(normalizedLocation);
     let isSameBasename = stripBasename(url.pathname, basename) != null;
     if (url.origin === currentUrl.origin && isSameBasename) {
       return url.pathname + url.search + url.hash;
     }
   }
-  return location;
+  return location2;
 }
-function createClientSideRequest(history, location, signal, submission) {
-  let url = history.createURL(stripHashFromPath(location)).toString();
-  let init = { signal };
+function createClientSideRequest(history, location2, signal, submission) {
+  let url = history.createURL(stripHashFromPath(location2)).toString();
+  let init2 = { signal };
   if (submission && isMutationMethod(submission.formMethod)) {
     let { formMethod, formEncType } = submission;
-    init.method = formMethod.toUpperCase();
+    init2.method = formMethod.toUpperCase();
     if (formEncType === "application/json") {
-      init.headers = new Headers({ "Content-Type": formEncType });
-      init.body = JSON.stringify(submission.json);
+      init2.headers = new Headers({ "Content-Type": formEncType });
+      init2.body = JSON.stringify(submission.json);
     } else if (formEncType === "text/plain") {
-      init.body = submission.text;
+      init2.body = submission.text;
     } else if (formEncType === "application/x-www-form-urlencoded" && submission.formData) {
-      init.body = convertFormDataToSearchParams(submission.formData);
+      init2.body = convertFormDataToSearchParams(submission.formData);
     } else {
-      init.body = submission.formData;
+      init2.body = submission.formData;
     }
   }
-  return new Request(url, init);
+  return new Request(url, init2);
 }
 function convertFormDataToSearchParams(formData) {
   let searchParams = new URLSearchParams();
@@ -15579,8 +15486,8 @@ function isMutationMethod(method) {
 function hasNakedIndexQuery(search) {
   return new URLSearchParams(search).getAll("index").some((v) => v === "");
 }
-function getTargetMatch(matches, location) {
-  let search = typeof location === "string" ? parsePath(location).search : location.search;
+function getTargetMatch(matches, location2) {
+  let search = typeof location2 === "string" ? parsePath(location2).search : location2.search;
   if (matches[matches.length - 1].route.index && hasNakedIndexQuery(search || "")) {
     return matches[matches.length - 1];
   }
@@ -15621,11 +15528,11 @@ function getSubmissionFromNavigation(navigation) {
     };
   }
 }
-function getLoadingNavigation(location, submission) {
+function getLoadingNavigation(location2, submission) {
   if (submission) {
     let navigation = {
       state: "loading",
-      location,
+      location: location2,
       formMethod: submission.formMethod,
       formAction: submission.formAction,
       formEncType: submission.formEncType,
@@ -15637,7 +15544,7 @@ function getLoadingNavigation(location, submission) {
   } else {
     let navigation = {
       state: "loading",
-      location,
+      location: location2,
       formMethod: void 0,
       formAction: void 0,
       formEncType: void 0,
@@ -15648,10 +15555,10 @@ function getLoadingNavigation(location, submission) {
     return navigation;
   }
 }
-function getSubmittingNavigation(location, submission) {
+function getSubmittingNavigation(location2, submission) {
   let navigation = {
     state: "submitting",
-    location,
+    location: location2,
     formMethod: submission.formMethod,
     formAction: submission.formAction,
     formEncType: submission.formEncType,
@@ -15893,7 +15800,19 @@ function useNavigateUnstable() {
   );
   return navigate;
 }
-reactExports.createContext(null);
+var OutletContext = reactExports.createContext(null);
+function useOutlet(context) {
+  let outlet = reactExports.useContext(RouteContext).outlet;
+  if (outlet) {
+    return /* @__PURE__ */ reactExports.createElement(OutletContext.Provider, { value: context }, outlet);
+  }
+  return outlet;
+}
+function useParams() {
+  let { matches } = reactExports.useContext(RouteContext);
+  let routeMatch = matches[matches.length - 1];
+  return routeMatch ? routeMatch.params : {};
+}
 function useResolvedPath(to, { relative } = {}) {
   let { matches } = reactExports.useContext(RouteContext);
   let { pathname: locationPathname } = useLocation();
@@ -15933,11 +15852,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     );
   }
   let locationFromContext = useLocation();
-  let location;
+  let location2;
   {
-    location = locationFromContext;
+    location2 = locationFromContext;
   }
-  let pathname = location.pathname || "/";
+  let pathname = location2.pathname || "/";
   let remainingPathname = pathname;
   if (parentPathnameBase !== "/") {
     let parentSegments = parentPathnameBase.replace(/^\//, "").split("/");
@@ -15948,11 +15867,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   {
     warning(
       parentRoute || matches != null,
-      `No routes matched location "${location.pathname}${location.search}${location.hash}" `
+      `No routes matched location "${location2.pathname}${location2.search}${location2.hash}" `
     );
     warning(
       matches == null || matches[matches.length - 1].route.element !== void 0 || matches[matches.length - 1].route.Component !== void 0 || matches[matches.length - 1].route.lazy !== void 0,
-      `Matched leaf route at location "${location.pathname}${location.search}${location.hash}" does not have an element or Component. This means it will render an <Outlet /> with a null value by default resulting in an "empty" page.`
+      `Matched leaf route at location "${location2.pathname}${location2.search}${location2.hash}" does not have an element or Component. This means it will render an <Outlet /> with a null value by default resulting in an "empty" page.`
     );
   }
   let renderedMatches = _renderMatches(
@@ -16497,6 +16416,9 @@ function DataRoutes({
 }) {
   return useRoutesImpl(routes, void 0, state, future);
 }
+function Outlet(props) {
+  return useOutlet(props.context);
+}
 function Router({
   basename: basenameProp = "/",
   children = null,
@@ -16712,7 +16634,7 @@ async function getKeyedPrefetchLinks(matches, manifest, routeModules) {
     )
   );
 }
-function getNewMatchesForLinks(page, nextMatches, currentMatches, manifest, location, mode) {
+function getNewMatchesForLinks(page, nextMatches, currentMatches, manifest, location2, mode) {
   let isNew = (match, index) => {
     if (!currentMatches[index]) return true;
     return match.route.id !== currentMatches[index].route.id;
@@ -16744,7 +16666,7 @@ function getNewMatchesForLinks(page, nextMatches, currentMatches, manifest, loca
       if (match.route.shouldRevalidate) {
         let routeChoice = match.route.shouldRevalidate({
           currentUrl: new URL(
-            location.pathname + location.search + location.hash,
+            location2.pathname + location2.search + location2.hash,
             window.origin
           ),
           currentParams: ((_a = currentMatches[0]) == null ? void 0 : _a.params) || {},
@@ -16951,7 +16873,7 @@ function PrefetchPageLinksImpl({
   matches: nextMatches,
   ...linkProps
 }) {
-  let location = useLocation();
+  let location2 = useLocation();
   let { manifest, routeModules } = useFrameworkContext();
   let { basename } = useDataRouterContext2();
   let { loaderData, matches } = useDataRouterStateContext();
@@ -16961,10 +16883,10 @@ function PrefetchPageLinksImpl({
       nextMatches,
       matches,
       manifest,
-      location,
+      location2,
       "data"
     ),
-    [page, nextMatches, matches, manifest, location]
+    [page, nextMatches, matches, manifest, location2]
   );
   let newMatchesForAssets = reactExports.useMemo(
     () => getNewMatchesForLinks(
@@ -16972,13 +16894,13 @@ function PrefetchPageLinksImpl({
       nextMatches,
       matches,
       manifest,
-      location,
+      location2,
       "assets"
     ),
-    [page, nextMatches, matches, manifest, location]
+    [page, nextMatches, matches, manifest, location2]
   );
   let dataHrefs = reactExports.useMemo(() => {
-    if (page === location.pathname + location.search + location.hash) {
+    if (page === location2.pathname + location2.search + location2.hash) {
       return [];
     }
     let routesParams = /* @__PURE__ */ new Set();
@@ -17011,7 +16933,7 @@ function PrefetchPageLinksImpl({
   }, [
     basename,
     loaderData,
-    location,
+    location2,
     manifest,
     newMatchesForData,
     nextMatches,
@@ -17043,7 +16965,7 @@ function mergeRefs(...refs) {
 var isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined";
 try {
   if (isBrowser) {
-    window.__reactRouterVersion = "7.3.0";
+    window.__reactRouterVersion = "7.4.0";
   }
 } catch (e) {
 }
@@ -17053,7 +16975,7 @@ function createBrowserRouter(routes, opts) {
     unstable_getContext: opts == null ? void 0 : opts.unstable_getContext,
     future: opts == null ? void 0 : opts.future,
     history: createBrowserHistory({ window: opts == null ? void 0 : opts.window }),
-    hydrationData: (opts == null ? void 0 : opts.hydrationData) || parseHydrationData(),
+    hydrationData: parseHydrationData(),
     routes,
     mapRouteProperties,
     dataStrategy: opts == null ? void 0 : opts.dataStrategy,
@@ -17197,14 +17119,14 @@ var NavLink = reactExports.forwardRef(
     ...rest
   }, ref) {
     let path = useResolvedPath(to, { relative: rest.relative });
-    let location = useLocation();
+    let location2 = useLocation();
     let routerState = reactExports.useContext(DataRouterStateContext);
     let { navigator: navigator2, basename } = reactExports.useContext(NavigationContext);
     let isTransitioning = routerState != null && // Conditional usage is OK here because the usage of a data router is static
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useViewTransitionState(path) && viewTransition === true;
     let toPathname = navigator2.encodeLocation ? navigator2.encodeLocation(path).pathname : path.pathname;
-    let locationPathname = location.pathname;
+    let locationPathname = location2.pathname;
     let nextLocationPathname = routerState && routerState.navigation && routerState.navigation.location ? routerState.navigation.location.pathname : null;
     if (!caseSensitive) {
       locationPathname = locationPathname.toLowerCase();
@@ -17319,13 +17241,13 @@ function useLinkClickHandler(to, {
   viewTransition
 } = {}) {
   let navigate = useNavigate();
-  let location = useLocation();
+  let location2 = useLocation();
   let path = useResolvedPath(to, { relative });
   return reactExports.useCallback(
     (event) => {
       if (shouldProcessLinkClick(event, target)) {
         event.preventDefault();
-        let replace2 = replaceProp !== void 0 ? replaceProp : createPath(location) === createPath(path);
+        let replace2 = replaceProp !== void 0 ? replaceProp : createPath(location2) === createPath(path);
         navigate(to, {
           replace: replace2,
           state,
@@ -17336,7 +17258,7 @@ function useLinkClickHandler(to, {
       }
     },
     [
-      location,
+      location2,
       navigate,
       path,
       replaceProp,
@@ -17398,9 +17320,9 @@ function useFormAction(action, { relative } = {}) {
   invariant(routeContext, "useFormAction must be used inside a RouteContext");
   let [match] = routeContext.matches.slice(-1);
   let path = { ...useResolvedPath(action ? action : ".", { relative }) };
-  let location = useLocation();
+  let location2 = useLocation();
   if (action == null) {
-    path.search = location.search;
+    path.search = location2.search;
     let params = new URLSearchParams(path.search);
     let indexValues = params.getAll("index");
     let hasNakedIndexParam = indexValues.some((v) => v === "");
@@ -17438,25 +17360,779 @@ function useViewTransitionState(to, opts = {}) {
   return matchPath(path.pathname, nextPath) != null || matchPath(path.pathname, currentPath) != null;
 }
 new TextEncoder();
-const router = createBrowserRouter([
-  {
-    path: "/",
-    Component: HomePage
-  },
-  {
-    path: "/design-test",
-    Component: CheatSheetPage
+var reactDomExports = requireReactDom();
+/**
+ * react-router v7.4.0
+ *
+ * Copyright (c) Remix Software Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.md file in the root directory of this source tree.
+ *
+ * @license MIT
+ */
+function RouterProvider2(props) {
+  return /* @__PURE__ */ reactExports.createElement(RouterProvider, { flushSync: reactDomExports.flushSync, ...props });
+}
+const logo = "/s3_website/assets/S3Navigator-BWNW2FTN.png";
+const HeaderComponent = reactExports.forwardRef(
+  (_props, ref) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("header", { ref, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "img",
+        {
+          id: "logo",
+          src: logo,
+          alt: "AWMF online - Portal der wissenschaftlichen Medizin",
+          style: { cursor: "pointer" }
+        }
+      ) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Leitlinienregister der S3-Leitlinien" })
+    ] }) });
   }
-], {
-  basename: "/s3_website/"
-});
+);
+function FooterComponent() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("footer", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: "Arbeitsgemeinschaft der Wissenschaftlichen Medizinischen Fachgesellschaften e. V." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/privacy", children: "Datenschutz" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/imprint", children: "Impressum" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/contact", children: "Kontakt" })
+  ] }) });
+}
+const WavesVideo = "/s3_website/assets/Waves-lIM0--NG.mp4";
 function App() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(HeaderComponent, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("main", { id: "page", children: /* @__PURE__ */ jsxRuntimeExports.jsx(RouterProvider, { router }) }),
+  const headerRef = reactExports.useRef(null);
+  const videoRef = reactExports.useRef(null);
+  reactExports.useEffect(() => {
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        const height = headerRef.current.offsetHeight;
+        document.documentElement.style.setProperty("--header-height", `${height}px`);
+      }
+    };
+    updateHeaderHeight();
+    window.addEventListener("resize", updateHeaderHeight);
+    return () => window.removeEventListener("resize", updateHeaderHeight);
+  }, []);
+  reactExports.useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.5;
+    }
+  }, []);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "app-wrapper", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "video",
+      {
+        className: "background-video",
+        autoPlay: true,
+        muted: true,
+        loop: true,
+        playsInline: true,
+        ref: videoRef,
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("source", { src: WavesVideo, type: "video/mp4" }),
+          "Your browser does not support the video tag."
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(HeaderComponent, { ref: headerRef }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("main", { id: "page", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Outlet, {}) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(FooterComponent, {})
   ] });
 }
+function CardComponent({ children, title, variant = "default" }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `card ${variant === "flat" ? "card-flat" : ""}`, children: [
+    title !== void 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "break-word", children: title }),
+    children
+  ] });
+}
+function HomePage() {
+  const [search, setSearch] = reactExports.useState("");
+  const [latestGuidelines, setLatestGuidelines] = reactExports.useState([]);
+  const [showAdvanced, setShowAdvanced] = reactExports.useState(false);
+  const [onlyValid, setOnlyValid] = reactExports.useState(false);
+  const [sortBy, setSortBy] = reactExports.useState("created_at");
+  const [sortDirection, setSortDirection] = reactExports.useState("desc");
+  const navigate = useNavigate();
+  function handleSearch() {
+    localStorage.setItem("searchTerm", search);
+    localStorage.setItem("sortBy", sortBy);
+    localStorage.setItem("sortDirection", sortDirection);
+    localStorage.setItem("onlyValid", JSON.stringify(onlyValid));
+    navigate("/results");
+  }
+  reactExports.useEffect(() => {
+    const params = new URLSearchParams({
+      limit: "4",
+      offset: "0",
+      order_by: "created_at",
+      order_direction: "desc"
+    });
+    fetch(`http://s3-navigator.duckdns.org:5000/guidelines?${params.toString()}`).then((res) => res.json()).then((data) => {
+      const mapped = data.map((item) => ({
+        id: item.id,
+        guidelineId: item.awmf_guideline_id,
+        title: item.titel ?? item.title ?? "Unbekannter Titel",
+        lversion: item.lversion,
+        lastReviewedDate: item.stand,
+        creationDate: item.created_at ?? "",
+        validDate: item.valid_until ?? "",
+        remark: item.aktueller_hinweis ?? ""
+      }));
+      setLatestGuidelines(mapped);
+    }).catch((err) => {
+      console.error("Fehler beim Laden der neuesten Leitlinien:", err);
+    });
+  }, []);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "search-page", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "search-bar-wrapper", style: { top: "var(--header-height+1px)" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardComponent, { title: "Leitliniensuche", variant: "flat", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-merge", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "input",
+          {
+            type: "text",
+            placeholder: "Suchbegriff",
+            value: search,
+            onChange: (e) => setSearch(e.target.value),
+            onKeyDown: (e) => e.key === "Enter" && handleSearch()
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: handleSearch, children: "Suchen" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setShowAdvanced(!showAdvanced), children: "Erweitert" })
+      ] }),
+      showAdvanced && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "advanced-search-panel", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "filter-option", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "checkbox",
+              checked: onlyValid,
+              onChange: (e) => setOnlyValid(e.target.checked)
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Nur gültige Leitlinien" })
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "filter-option", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Sortieren nach:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("select", { value: sortBy, onChange: (e) => setSortBy(e.target.value), children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "created_at", children: "Erstellungsdatum" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "valid_until", children: "Gültig bis" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "title", children: "Titel" })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "filter-option", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Richtung:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("select", { value: sortDirection, onChange: (e) => setSortDirection(e.target.value), children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "desc", children: "Absteigend" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "asc", children: "Aufsteigend" })
+          ] })
+        ] })
+      ] })
+    ] }) }),
+    latestGuidelines.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "search-results-wrapper", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardComponent, { title: "Aktuellste Leitlinien", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "card-container", children: latestGuidelines.map((g) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      Link,
+      {
+        to: `/guideline/${g.id}`,
+        className: "guideline-card",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "awmf-cyan", children: g.title }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Letzte Überprüfung:" }),
+            " ",
+            g.lastReviewedDate
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Erstellt am:" }),
+            " ",
+            g.creationDate
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Gültig bis:" }),
+            " ",
+            g.validDate
+          ] }),
+          g.lversion && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Version:" }),
+            " ",
+            g.lversion
+          ] }),
+          g.remark && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Hinweis:" }),
+            " ",
+            g.remark
+          ] })
+        ]
+      },
+      g.id
+    )) }) }) })
+  ] });
+}
+function CheatSheetPage() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { children: "Heading 1" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "Heading 2" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Heading 3" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { children: "Heading 4" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Lorem ipsum odor amet, consectetuer adipiscing elit. Et hendrerit imperdiet morbi dignissim turpis eu vehicula maecenas. Eros posuere sapien sit duis nostra ornare ut augue. Interdum blandit est urna maximus, aliquet consequat. Fames penatibus parturient varius eleifend duis. Imperdiet placerat quam porttitor arcu natoque congue libero. Conubia nascetur in parturient fermentum turpis venenatis accumsan himenaeos?" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Himenaeos lacinia nam condimentum consequat velit malesuada est accumsan? Gravida rutrum elementum vulputate euismod sollicitudin. Cras scelerisque in, dictum senectus torquent id accumsan. Vitae quam eros; interdum accumsan quisque consequat laoreet sapien. Efficitur class sagittis ex vestibulum varius placerat auctor velit. Hac senectus sit auctor in eu eu. Congue ligula morbi nulla sapien ut suscipit. Ridiculus proin tristique semper augue elementum. Libero viverra adipiscing per adipiscing fringilla blandit." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Taciti ad turpis parturient phasellus congue rutrum. Id elit lacinia; aliquet hac hac id. Rutrum hac natoque ullamcorper bibendum egestas. Facilisis blandit maximus eget torquent vivamus molestie tempor maecenas arcu. Leo maecenas rutrum nulla per litora imperdiet velit dictum. Maecenas vestibulum laoreet hac lectus, habitant in faucibus pulvinar. Dis sollicitudin et sit penatibus non est hac." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Habitasse sem consequat platea accumsan proin integer. Ullamcorper ad vulputate pretium volutpat imperdiet. Egestas viverra est sollicitudin inceptos scelerisque quam placerat adipiscing varius. Lobortis ligula leo ut purus montes habitasse fusce. Purus facilisis dignissim vehicula; venenatis tincidunt odio tincidunt duis. Pharetra venenatis fermentum posuere cubilia metus netus senectus. Dictumst dignissim mi facilisis iaculis; sit in. Proin pharetra scelerisque in ornare torquent nec a. Pretium sed cubilia vel penatibus curae." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Posuere venenatis dis vestibulum morbi risus aliquam. Finibus bibendum ut imperdiet curae rutrum tortor dignissim dictum sollicitudin. Maecenas himenaeos facilisis gravida commodo fames fermentum ridiculus leo metus. Gravida egestas euismod congue nascetur dictum purus. Dapibus est faucibus sagittis nostra tincidunt dignissim turpis id. Ante eros inceptos facilisi lacinia litora netus posuere nam at. Elit pulvinar nec suscipit feugiat vel. Est orci magna mi senectus quis molestie aliquam placerat. Donec est risus justo mauris conubia." })
+  ] });
+}
+function PrivacyPolicyPage() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(CardComponent, { title: "Datenschutzerklärung", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Der Schutz Ihrer persönlichen Daten ist uns, dem Team von S3-Navigator, ein wichtiges Anliegen. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "1. Allgemeine Hinweise" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Die Nutzung unserer Website ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (z. B. Name, E-Mail-Adresse oder IP-Adresse) erhoben werden, erfolgt dies – soweit möglich – stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "2. Erhebung und Verarbeitung von Daten" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Beim Besuch unserer Website werden durch den Webserver automatisch Daten erfasst, die technisch notwendig sind, um die Website anzuzeigen. Diese Informationen (sogenannte Server-Logfiles) beinhalten beispielsweise:" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Browsertyp und -version" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "verwendetes Betriebssystem" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Referrer-URL" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Hostname des zugreifenden Rechners" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Uhrzeit der Serveranfrage" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "IP-Adresse (gekürzt und anonymisiert)" })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Diese Daten sind nicht bestimmten Personen zuordenbar. Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Die Verarbeitung erfolgt auf Grundlage unserer berechtigten Interessen zur Sicherstellung eines störungsfreien Betriebs sowie zur Verbesserung unseres Angebots." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "3. Verwendung von Cookies" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Unsere Website verwendet derzeit keine Cookies zur Benutzerverfolgung oder für Marketingzwecke. Sollte sich dies in Zukunft ändern, werden Sie beim ersten Besuch unserer Seite entsprechend informiert und um Ihre Zustimmung gebeten." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "4. Weitergabe von Daten an Dritte" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "In keinem Fall werden die auf dieser Webseite erhobenen personenbezogenen Daten verkauft, vermietet oder aus anderen Gründen unbefugt an Dritte weitergegeben. Eine Übermittlung erfolgt nur, wenn Sie ausdrücklich eingewilligt haben oder wir gesetzlich dazu verpflichtet sind." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "5. Ihre Rechte" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf:" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Auskunft über Ihre gespeicherten personenbezogenen Daten" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Berichtigung unrichtiger Daten" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Löschung Ihrer Daten (Recht auf Vergessenwerden)" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Einschränkung der Verarbeitung" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Widerspruch gegen die Verarbeitung" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: "Datenübertragbarkeit" })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Bitte wenden Sie sich hierzu jederzeit an uns über die im Impressum angegebenen Kontaktdaten." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "6. Sicherheit" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Wir setzen technische und organisatorische Sicherheitsmaßnahmen ein, um Ihre Daten gegen Manipulation, Verlust, Zerstörung oder gegen den Zugriff unberechtigter Personen zu schützen. Unsere Sicherheitsmaßnahmen werden entsprechend der technologischen Entwicklung fortlaufend verbessert." }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "7. Änderungen der Datenschutzerklärung" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Wir behalten uns vor, diese Datenschutzerklärung bei Bedarf zu aktualisieren, um sie an geänderte rechtliche Anforderungen oder Änderungen unseres Angebots anzupassen. Für Ihren erneuten Besuch gilt dann die jeweils aktuelle Datenschutzerklärung." })
+  ] });
+}
+function ImprintPage() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(CardComponent, { title: "Impressum", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Angaben gemäß § 5 TMG:" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      "S3-Navigator",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+      "Max Mustermann",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+      "Musterstraße 123",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+      "12345 Musterstadt",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+      "Deutschland"
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      "Kontakt:",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+      "E-Mail: kontakt@s3-navigator.de"
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+      "Max Mustermann",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+      "Adresse wie oben"
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Hinweis: S3-Navigator ist ein privates, nicht-kommerzielles Projekt zur Übersicht über medizinische Leitlinien. Trotz sorgfältiger Recherche übernehmen wir keine Gewähr für die Richtigkeit, Vollständigkeit oder Aktualität der Inhalte." })
+  ] });
+}
+class EmailJSResponseStatus {
+  constructor(_status = 0, _text = "Network Error") {
+    this.status = _status;
+    this.text = _text;
+  }
+}
+const createWebStorage = () => {
+  if (typeof localStorage === "undefined")
+    return;
+  return {
+    get: (key) => Promise.resolve(localStorage.getItem(key)),
+    set: (key, value) => Promise.resolve(localStorage.setItem(key, value)),
+    remove: (key) => Promise.resolve(localStorage.removeItem(key))
+  };
+};
+const store = {
+  origin: "https://api.emailjs.com",
+  blockHeadless: false,
+  storageProvider: createWebStorage()
+};
+const buildOptions = (options) => {
+  if (!options)
+    return {};
+  if (typeof options === "string") {
+    return {
+      publicKey: options
+    };
+  }
+  if (options.toString() === "[object Object]") {
+    return options;
+  }
+  return {};
+};
+const init = (options, origin = "https://api.emailjs.com") => {
+  if (!options)
+    return;
+  const opts = buildOptions(options);
+  store.publicKey = opts.publicKey;
+  store.blockHeadless = opts.blockHeadless;
+  store.storageProvider = opts.storageProvider;
+  store.blockList = opts.blockList;
+  store.limitRate = opts.limitRate;
+  store.origin = opts.origin || origin;
+};
+const sendPost = async (url, data, headers = {}) => {
+  const response = await fetch(store.origin + url, {
+    method: "POST",
+    headers,
+    body: data
+  });
+  const message = await response.text();
+  const responseStatus = new EmailJSResponseStatus(response.status, message);
+  if (response.ok) {
+    return responseStatus;
+  }
+  throw responseStatus;
+};
+const validateParams = (publicKey, serviceID, templateID) => {
+  if (!publicKey || typeof publicKey !== "string") {
+    throw "The public key is required. Visit https://dashboard.emailjs.com/admin/account";
+  }
+  if (!serviceID || typeof serviceID !== "string") {
+    throw "The service ID is required. Visit https://dashboard.emailjs.com/admin";
+  }
+  if (!templateID || typeof templateID !== "string") {
+    throw "The template ID is required. Visit https://dashboard.emailjs.com/admin/templates";
+  }
+};
+const validateTemplateParams = (templateParams) => {
+  if (templateParams && templateParams.toString() !== "[object Object]") {
+    throw "The template params have to be the object. Visit https://www.emailjs.com/docs/sdk/send/";
+  }
+};
+const isHeadless = (navigator2) => {
+  return navigator2.webdriver || !navigator2.languages || navigator2.languages.length === 0;
+};
+const headlessError = () => {
+  return new EmailJSResponseStatus(451, "Unavailable For Headless Browser");
+};
+const validateBlockListParams = (list, watchVariable) => {
+  if (!Array.isArray(list)) {
+    throw "The BlockList list has to be an array";
+  }
+  if (typeof watchVariable !== "string") {
+    throw "The BlockList watchVariable has to be a string";
+  }
+};
+const isBlockListDisabled = (options) => {
+  var _a;
+  return !((_a = options.list) == null ? void 0 : _a.length) || !options.watchVariable;
+};
+const getValue = (data, name) => {
+  return data instanceof FormData ? data.get(name) : data[name];
+};
+const isBlockedValueInParams = (options, params) => {
+  if (isBlockListDisabled(options))
+    return false;
+  validateBlockListParams(options.list, options.watchVariable);
+  const value = getValue(params, options.watchVariable);
+  if (typeof value !== "string")
+    return false;
+  return options.list.includes(value);
+};
+const blockedEmailError = () => {
+  return new EmailJSResponseStatus(403, "Forbidden");
+};
+const validateLimitRateParams = (throttle, id) => {
+  if (typeof throttle !== "number" || throttle < 0) {
+    throw "The LimitRate throttle has to be a positive number";
+  }
+  if (id && typeof id !== "string") {
+    throw "The LimitRate ID has to be a non-empty string";
+  }
+};
+const getLeftTime = async (id, throttle, storage) => {
+  const lastTime = Number(await storage.get(id) || 0);
+  return throttle - Date.now() + lastTime;
+};
+const isLimitRateHit = async (defaultID, options, storage) => {
+  if (!options.throttle || !storage) {
+    return false;
+  }
+  validateLimitRateParams(options.throttle, options.id);
+  const id = options.id || defaultID;
+  const leftTime = await getLeftTime(id, options.throttle, storage);
+  if (leftTime > 0) {
+    return true;
+  }
+  await storage.set(id, Date.now().toString());
+  return false;
+};
+const limitRateError = () => {
+  return new EmailJSResponseStatus(429, "Too Many Requests");
+};
+const send = async (serviceID, templateID, templateParams, options) => {
+  const opts = buildOptions(options);
+  const publicKey = opts.publicKey || store.publicKey;
+  const blockHeadless = opts.blockHeadless || store.blockHeadless;
+  const storageProvider = opts.storageProvider || store.storageProvider;
+  const blockList = { ...store.blockList, ...opts.blockList };
+  const limitRate = { ...store.limitRate, ...opts.limitRate };
+  if (blockHeadless && isHeadless(navigator)) {
+    return Promise.reject(headlessError());
+  }
+  validateParams(publicKey, serviceID, templateID);
+  validateTemplateParams(templateParams);
+  if (templateParams && isBlockedValueInParams(blockList, templateParams)) {
+    return Promise.reject(blockedEmailError());
+  }
+  if (await isLimitRateHit(location.pathname, limitRate, storageProvider)) {
+    return Promise.reject(limitRateError());
+  }
+  const params = {
+    lib_version: "4.4.1",
+    user_id: publicKey,
+    service_id: serviceID,
+    template_id: templateID,
+    template_params: templateParams
+  };
+  return sendPost("/api/v1.0/email/send", JSON.stringify(params), {
+    "Content-type": "application/json"
+  });
+};
+const validateForm = (form) => {
+  if (!form || form.nodeName !== "FORM") {
+    throw "The 3rd parameter is expected to be the HTML form element or the style selector of the form";
+  }
+};
+const findHTMLForm = (form) => {
+  return typeof form === "string" ? document.querySelector(form) : form;
+};
+const sendForm = async (serviceID, templateID, form, options) => {
+  const opts = buildOptions(options);
+  const publicKey = opts.publicKey || store.publicKey;
+  const blockHeadless = opts.blockHeadless || store.blockHeadless;
+  const storageProvider = store.storageProvider || opts.storageProvider;
+  const blockList = { ...store.blockList, ...opts.blockList };
+  const limitRate = { ...store.limitRate, ...opts.limitRate };
+  if (blockHeadless && isHeadless(navigator)) {
+    return Promise.reject(headlessError());
+  }
+  const currentForm = findHTMLForm(form);
+  validateParams(publicKey, serviceID, templateID);
+  validateForm(currentForm);
+  const formData = new FormData(currentForm);
+  if (isBlockedValueInParams(blockList, formData)) {
+    return Promise.reject(blockedEmailError());
+  }
+  if (await isLimitRateHit(location.pathname, limitRate, storageProvider)) {
+    return Promise.reject(limitRateError());
+  }
+  formData.append("lib_version", "4.4.1");
+  formData.append("service_id", serviceID);
+  formData.append("template_id", templateID);
+  formData.append("user_id", publicKey);
+  return sendPost("/api/v1.0/email/send-form", formData);
+};
+const emailjs = {
+  init,
+  send,
+  sendForm,
+  EmailJSResponseStatus
+};
+function ContactPage() {
+  const form = reactExports.useRef(null);
+  const [errors, setErrors] = reactExports.useState([]);
+  const [showGeneralHint, setShowGeneralHint] = reactExports.useState(false);
+  const [success, setSuccess] = reactExports.useState(false);
+  function sendEmail(e) {
+    e.preventDefault();
+    setErrors([]);
+    setShowGeneralHint(false);
+    setSuccess(false);
+    if (!form.current) return;
+    const formData = new FormData(form.current);
+    const requiredFields = ["name", "email", "phone", "message"];
+    const newErrors = [];
+    requiredFields.forEach((field) => {
+      const value = formData.get(field);
+      if (!value || typeof value === "string" && value.trim() === "") {
+        newErrors.push(field);
+      }
+    });
+    if (newErrors.length > 0) {
+      setErrors(newErrors);
+      setShowGeneralHint(true);
+      return;
+    }
+    emailjs.sendForm(
+      "service_u4c476a",
+      "template_gjbcf7h",
+      form.current,
+      "oX-fv_E1eu2C7YX4n"
+    ).then(() => {
+      var _a;
+      setSuccess(true);
+      (_a = form.current) == null ? void 0 : _a.reset();
+    }).catch((error) => {
+      console.error("EmailJS Fehler:", error);
+      alert("Fehler beim Versenden der Nachricht.");
+    });
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(CardComponent, { title: "Kontakt", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginBottom: "2rem" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Telefon:" }),
+      " +49 (0)123 456789",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "E-Mail:" }),
+      " ",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "mailto:kontakt@beispiel.de", children: "kontakt@beispiel.de" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Adresse:" }),
+      " Musterstraße 1, 12345 Düsseldorf"
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { ref: form, onSubmit: sendEmail, className: "contact-form", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Name:" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "text", name: "name" }),
+        errors.includes("name") && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "form-error", children: "Bitte Name angeben." })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Telefonnummer:" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "tel", name: "phone" }),
+        errors.includes("phone") && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "form-error", children: "Bitte Telefonnummer angeben." })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "E-Mail:" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "email", name: "email" }),
+        errors.includes("email") && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "form-error", children: "Bitte E-Mail angeben." })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Anliegen:" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("textarea", { name: "message", rows: 5 }),
+        errors.includes("message") && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "form-error", children: "Bitte Anliegen angeben." })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", children: "Nachricht senden" }),
+      showGeneralHint && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "form-error", style: { marginTop: "1rem" }, children: "Bitte füllen Sie alle Pflichtfelder aus." }),
+      success && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "form-success", children: "✅ Nachricht erfolgreich verschickt!" })
+    ] })
+  ] });
+}
+function GuidelineDetailPage() {
+  const { id } = useParams();
+  const [guideline, setGuideline] = reactExports.useState(null);
+  const [fullText, setFullText] = reactExports.useState("");
+  reactExports.useEffect(() => {
+    if (!id) return;
+    fetch(`http://s3-navigator.duckdns.org:5000/guidelines/search?q=${id}`).then((res) => res.json()).then((data) => {
+      const g = data.find((item) => String(item.id) === String(id));
+      if (!g) throw new Error("Keine passende Leitlinie gefunden.");
+      setGuideline({
+        id: g.id,
+        guidelineId: g.awmf_guideline_id,
+        title: g.title,
+        lversion: g.lversion,
+        lastReviewedDate: g.stand,
+        creationDate: g.created_at,
+        validDate: g.valid_until,
+        remark: g.aktueller_hinweis
+      });
+      setFullText(g.compressed_text ?? "Kein Langtext verfügbar");
+    }).catch((err) => {
+      console.error("Fehler beim Laden:", err);
+      alert("Die Leitlinie konnte nicht geladen werden.");
+    });
+  }, [id]);
+  if (!guideline) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(CardComponent, { title: "Lade Daten...", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Bitte warten..." }) });
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(CardComponent, { title: guideline.title, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "AWMF-ID:" }),
+      " ",
+      guideline.guidelineId
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Letzte Überprüfung:" }),
+      " ",
+      guideline.lastReviewedDate
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Erstellt am:" }),
+      " ",
+      guideline.creationDate
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Gültig bis:" }),
+      " ",
+      guideline.validDate
+    ] }),
+    guideline.lversion && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Version:" }),
+      " ",
+      guideline.lversion
+    ] }),
+    guideline.remark && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Hinweis:" }),
+      " ",
+      guideline.remark
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Zusammenfassung:" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { whiteSpace: "pre-wrap" }, children: fullText })
+  ] });
+}
+function GuidelineComponent({ data }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: "Leitlinie" }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/guideline/${data.id}`, className: "awmf-cyan", style: { textDecoration: "none" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "break-word hover-highlight", children: data.title ?? "unbekannter Titel" }) }),
+    data.guidelineId && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      "Registernummer: ",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: data.guidelineId })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      "Interne ID: ",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: data.id })
+    ] }),
+    data.creationDate && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      "Erstellt am: ",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: data.creationDate })
+    ] })
+  ] });
+}
+function ResultsPage() {
+  const [search, setSearch] = reactExports.useState(localStorage.getItem("searchTerm") || "");
+  const [guidelines, setGuidelines] = reactExports.useState([]);
+  const [loading, setLoading] = reactExports.useState(true);
+  const [timeoutReached, setTimeoutReached] = reactExports.useState(false);
+  const [showAdvanced, setShowAdvanced] = reactExports.useState(false);
+  const [onlyValid, setOnlyValid] = reactExports.useState(false);
+  const [sortBy, setSortBy] = reactExports.useState("created_at");
+  const [sortDirection, setSortDirection] = reactExports.useState("desc");
+  reactExports.useEffect(() => {
+    const timeout = setTimeout(() => {
+      setTimeoutReached(true);
+    }, 5e3);
+    handleNewSearch();
+    return () => clearTimeout(timeout);
+  }, []);
+  function handleNewSearch() {
+    if (!search.trim()) {
+      setGuidelines([]);
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    setTimeoutReached(false);
+    const params = new URLSearchParams({
+      q: search,
+      order_by: sortBy,
+      order_direction: sortDirection
+    });
+    if (onlyValid) {
+      params.append("valid_only", "true");
+    }
+    fetch(`http://s3-navigator.duckdns.org:5000/guidelines/search?${params.toString()}`).then((res) => res.json()).then((data) => {
+      const mapped = data.map((item) => ({
+        id: item.id,
+        guidelineId: item.awmf_guideline_id,
+        title: item.titel,
+        lversion: item.lversion,
+        lastReviewedDate: item.stand,
+        creationDate: item.created_at,
+        validDate: item.valid_until,
+        remark: item.aktueller_hinweis
+      }));
+      setGuidelines(mapped);
+      setLoading(false);
+      if (mapped.length === 0) {
+        setTimeoutReached(true);
+      }
+    }).catch((err) => {
+      console.error("Fehler bei der Suche:", err);
+      alert("Die Suche ist fehlgeschlagen.");
+      setLoading(false);
+    });
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "search-page", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "search-bar-wrapper", style: { top: "var(--header-height)" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardComponent, { title: "Leitliniensuche", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-merge", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "input",
+          {
+            type: "text",
+            placeholder: "Suchbegriff",
+            value: search,
+            onChange: (e) => setSearch(e.target.value),
+            onKeyDown: (e) => e.key === "Enter" && handleNewSearch()
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: handleNewSearch, children: "Suchen" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setShowAdvanced(!showAdvanced), children: "Erweitert" })
+      ] }),
+      showAdvanced && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "advanced-search-panel", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "filter-option", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "checkbox",
+              checked: onlyValid,
+              onChange: (e) => setOnlyValid(e.target.checked)
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Nur gültige Leitlinien" })
+        ] }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "filter-option", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Sortieren nach:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("select", { value: sortBy, onChange: (e) => setSortBy(e.target.value), children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "created_at", children: "Erstellungsdatum" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "valid_until", children: "Gültig bis" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "title", children: "Titel" })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "filter-option", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Richtung:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("select", { value: sortDirection, onChange: (e) => setSortDirection(e.target.value), children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "desc", children: "Absteigend" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "asc", children: "Aufsteigend" })
+          ] })
+        ] })
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "search-results-wrapper", children: [
+      loading && /* @__PURE__ */ jsxRuntimeExports.jsx(CardComponent, { title: "Lade Ergebnisse...", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", justifyContent: "center", alignItems: "center", padding: "1rem" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "spinner" }) }) }),
+      !loading && guidelines.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(CardComponent, { title: "Suchergebnisse", children: guidelines.map((g) => /* @__PURE__ */ jsxRuntimeExports.jsx(GuidelineComponent, { data: g }, g.id)) }),
+      !loading && timeoutReached && guidelines.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(CardComponent, { title: "Keine Ergebnisse gefunden", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Es wurden keine Leitlinien gefunden. Bitte prüfen Sie Ihr Suchwort." }) })
+    ] })
+  ] });
+}
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}),
+    children: [
+      { path: "", element: /* @__PURE__ */ jsxRuntimeExports.jsx(HomePage, {}) },
+      { path: "design-test", element: /* @__PURE__ */ jsxRuntimeExports.jsx(CheatSheetPage, {}) },
+      { path: "privacy", element: /* @__PURE__ */ jsxRuntimeExports.jsx(PrivacyPolicyPage, {}) },
+      { path: "imprint", element: /* @__PURE__ */ jsxRuntimeExports.jsx(ImprintPage, {}) },
+      { path: "contact", element: /* @__PURE__ */ jsxRuntimeExports.jsx(ContactPage, {}) },
+      { path: "guideline/:id", element: /* @__PURE__ */ jsxRuntimeExports.jsx(GuidelineDetailPage, {}) },
+      { path: "results", element: /* @__PURE__ */ jsxRuntimeExports.jsx(ResultsPage, {}) }
+    ]
+  }
+]);
 clientExports.createRoot(document.getElementById("root")).render(
-  /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) })
+  /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(RouterProvider2, { router }) })
 );
