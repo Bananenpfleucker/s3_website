@@ -51,8 +51,8 @@ export default function HomePage(): JSX.Element {
 
     return (
         <div className="search-page">
-            <div className="search-bar-wrapper" style={{ top: "var(--header-height)" }}>
-                <CardComponent title="Leitliniensuche">
+            <div className="search-bar-wrapper" style={{ top: "var(--header-height+1px)" }}>
+            <CardComponent title="Leitliniensuche" variant="flat">
                     <div className="form-merge">
                         <input
                             type="text"
@@ -103,19 +103,24 @@ export default function HomePage(): JSX.Element {
             {latestGuidelines.length > 0 && (
                 <div className="search-results-wrapper">
                     <CardComponent title="Aktuellste Leitlinien">
-                        {latestGuidelines.map(g => (
-                            <div key={g.id} style={{ marginBottom: '1rem' }}>
-                                <Link to={`/guideline/${g.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-                                <h4 className="awmf-cyan latest-guideline-title">{g.title}</h4>
+                        <div className="card-container">
+                            {latestGuidelines.map(g => (
+                                <Link
+                                    key={g.id}
+                                    to={`/guideline/${g.id}`}
+                                    className="guideline-card"
+                                >
+                                    <h4 className="awmf-cyan">{g.title}</h4>
+                                    <p><strong>Letzte Überprüfung:</strong> {g.lastReviewedDate}</p>
+                                    <p><strong>Erstellt am:</strong> {g.creationDate}</p>
+                                    <p><strong>Gültig bis:</strong> {g.validDate}</p>
+                                    {g.lversion && <p><strong>Version:</strong> {g.lversion}</p>}
+                                    {g.remark && <p><strong>Hinweis:</strong> {g.remark}</p>}
                                 </Link>
-                                <p><strong>Letzte Überprüfung:</strong> {g.lastReviewedDate}</p>
-                                <p><strong>Erstellt am:</strong> {g.creationDate}</p>
-                                <p><strong>Gültig bis:</strong> {g.validDate}</p>
-                                {g.lversion && <p><strong>Version:</strong> {g.lversion}</p>}
-                                {g.remark && <p><strong>Hinweis:</strong> {g.remark}</p>}
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </CardComponent>
+
                 </div>
             )}
         </div>

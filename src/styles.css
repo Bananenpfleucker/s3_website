@@ -2,10 +2,10 @@
   font-family: "Ubuntu";
   color: var(--dark-background);
 
-  --awmf-accent-primary: #007a87;
-  --awmf-accent-secondary: #007acc;
-
-  --awmf-max-content-width: 1225px;
+  --awmf-accent-primary: #007acc;
+  --awmf-accent-secondary: #007a87;
+  
+  --awmf-max-content-width: 1525px;
 
   --light-background-subtle: #ccc;
   --light-background: #fff;
@@ -15,13 +15,13 @@
   --dark-background: #333;
   --dark-font-color: #aaa;
 
-  --box-shadow: #0003 0 0 0.5rem;
-  --border-radius: 0.25rem;
+  /*--box-shadow: #0003 0 0 0.5rem;*/
+  --border-radius: 1rem;
 
   scrollbar-width: thin;
-  scrollbar-color: var(--awmf-accent-secondary) var(--light-background-subtle);
+  scrollbar-color: var(--awmf-accent-primary) var(--light-background-subtle);
 
-  --header-height: 100px; 
+  --header-height: 70px; 
 }
 
 @font-face {
@@ -47,14 +47,15 @@
 
 /* Basic elements */
 
-html,
-body {
+html, body {
+  height: 100%;
   margin: 0;
   padding: 0;
-  background-color: var(--light-background-subtle);
+ /* background-color: #6da9e4;
+  overflow-x: hidden;*/
 }
 
-main {
+/*main {
   width: 100%;
   max-width: var(--awmf-max-content-width);
   background-color: var(--light-background);
@@ -62,7 +63,7 @@ main {
   padding: 2rem;
   box-shadow: var(--box-shadow);
   box-sizing: border-box;
-}
+}*/
 
 
 header {
@@ -230,15 +231,17 @@ button {
 }
 
 div.card {
-  margin: 1rem 3rem;
+  margin: 1rem auto;
   padding: 2rem;
+  max-width: var(--awmf-max-content-width); 
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
+  border: none;
 }
 
 div.form-merge {
   display: flex;
-  flex-wrap: nowrap; /* wichtig: verhindert Umbruch im normalen Zustand */
+  flex-wrap: nowrap; 
   width: 100%;
 }
 
@@ -298,16 +301,11 @@ div.form-merge > :last-child {
 
 
 
-/* Others */
 
 img#logo {
   width: 100%;
   max-width: 150px;
   height: auto;
-}
-
-html, body {
-  height: 100%;
 }
 
 .app-wrapper {
@@ -468,12 +466,27 @@ html, body {
 
 .search-bar-wrapper {
   position: sticky;
-  top: var(--header-height);
+  top: calc(var(--header-height) + 2px);
   z-index: 9;
-  background-color: var(--light-background);
+  /*background: linear-gradient(120deg, #f0faff, #d8f0ff); /* exakt wie body */
   transition: padding-top 0.2s ease;
   padding-top: 1rem; 
+  
+
 }
+.search-bar-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  pointer-events: none;
+  z-index: -1;
+}
+
 
 .search-results-wrapper {
   flex: 1;
@@ -484,13 +497,22 @@ html, body {
   padding-top: 0; /* Kein Abstand mehr */
 }
 
+.search-bar-wrapper,
+.search-results-wrapper {
+  width: 100%;
+  max-width: var(--awmf-max-content-width); /* das ist wichtig! */
+  margin: 0 auto;
+  padding: 1rem;
+  
+}
 .advanced-search-panel {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   margin-top: 1rem;
   padding: 1rem;
-  border: 1px solid var(--light-background-subtle);
+ /*border: 1px solid var(--light-background-subtle);*/
+ border: none;
   border-radius: var(--border-radius);
   background-color: var(--light-background);
   box-shadow: var(--box-shadow);
@@ -551,3 +573,58 @@ html, body {
   text-decoration: underline;
   cursor: pointer;
 }
+
+.card, .advanced-search-panel, input, button {
+  border-radius: var(--border-radius);
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.guideline-card {
+  background-color: var(--light-background);
+  padding: 1.5rem;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.guideline-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 1rem rgba(0, 122, 204, 0.25);
+  background-color: #f5fbff;
+}
+
+.card-flat {
+  background: transparent;
+  box-shadow: none;
+  padding: none;
+}
+
+header {
+  z-index: 100;
+}
+
+.search-bar-wrapper {
+  z-index: 90;
+  
+}
+
+video.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.4; /* je nach Lesbarkeit anpassen */
+}
+

@@ -13,13 +13,12 @@ export default function GuidelineDetailPage(): JSX.Element {
 
     useEffect(() => {
         if (!id) return;
-
-        fetch(`http://s3-navigator.duckdns.org:5000/guidelines/search?q=${id}`)
+    
+        fetch(`http://s3-navigator.duckdns.org:5000/guidelines/${id}`)
             .then(res => res.json())
             .then(data => {
-                const g = data.find((item: any) => String(item.id) === String(id));
-                if (!g) throw new Error("Keine passende Leitlinie gefunden.");
-
+                const g = data; // <-- Direkt verwenden, kein Array
+    
                 setGuideline({
                     id: g.id,
                     guidelineId: g.awmf_guideline_id,
@@ -30,7 +29,7 @@ export default function GuidelineDetailPage(): JSX.Element {
                     validDate: g.valid_until,
                     remark: g.aktueller_hinweis
                 });
-
+    
                 setFullText(g.compressed_text ?? "Kein Langtext verfügbar");
             })
             .catch(err => {
@@ -38,6 +37,7 @@ export default function GuidelineDetailPage(): JSX.Element {
                 alert("Die Leitlinie konnte nicht geladen werden.");
             });
     }, [id]);
+    
 
     if (!guideline) {
         return (
