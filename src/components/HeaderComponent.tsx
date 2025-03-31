@@ -1,6 +1,6 @@
 import { JSX, ForwardedRef, forwardRef } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/icon/logo.jpg";
+import logo from "../assets/icon/S3Navigator.png";
 
 /**
  * Displays a regular header element (classic layout with logo and title).

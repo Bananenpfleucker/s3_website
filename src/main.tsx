@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
-import "./assets/icon/favicon.ico";
+import "./assets/icon/S3Navigator.ico";
 import App from "./App.tsx";
 
 import {

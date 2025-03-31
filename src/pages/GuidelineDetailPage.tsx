@@ -14,7 +14,6 @@ export default function GuidelineDetailPage(): JSX.Element {
     useEffect(() => {
         if (!id) return;
 
-        // Nutze wieder den funktionierenden Such-Endpunkt:
         fetch(`http://s3-navigator.duckdns.org:5000/guidelines/search?q=${id}`)
             .then(res => res.json())
             .then(data => {
