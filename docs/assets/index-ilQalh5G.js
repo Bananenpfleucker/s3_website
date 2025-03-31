@@ -18135,7 +18135,6 @@ const router = createBrowserRouter([
 ], {
   basename: "/s3_website/"
 });
-console.log("basepath is %s");
 clientExports.createRoot(document.getElementById("root")).render(
   /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(RouterProvider2, { router }) })
 );
