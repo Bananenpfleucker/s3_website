@@ -40,7 +40,6 @@ export default function App(): JSX.Element {
                 ref={videoRef}
             >
                 <source src={WavesVideo} type="video/mp4" />
-                Your browser does not support the video tag.
             </video>
 
             <HeaderComponent ref={headerRef} />
