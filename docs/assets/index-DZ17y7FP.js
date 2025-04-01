@@ -17377,7 +17377,29 @@ function RouterProvider2(props) {
 const logo = "/s3_website/assets/S3Navigator-BWNW2FTN.png";
 const HeaderComponent = reactExports.forwardRef(
   (_props, ref) => {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("header", { ref, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    const headerRef = reactExports.useRef(null);
+    reactExports.useEffect(() => {
+      const marker = document.getElementById("header-marker");
+      const header = headerRef.current;
+      if (!marker || !header) return;
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            header.classList.remove("shrink");
+          } else {
+            header.classList.add("shrink");
+          }
+        },
+        { threshold: 1 }
+      );
+      observer.observe(marker);
+      return () => observer.disconnect();
+    }, []);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("header", { ref: (el) => {
+      headerRef.current = el;
+      if (typeof ref === "function") ref(el);
+      else if (ref) ref.current = el;
+    }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         "img",
         {
@@ -17399,7 +17421,7 @@ function FooterComponent() {
     /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/contact", children: "Kontakt" })
   ] }) });
 }
-const WavesVideo = "/s3_website/assets/Waves-lIM0--NG.mp4";
+const WavesVideo = "/s3_website/assets/waves-BNE1qV01.mp4";
 function App() {
   const headerRef = reactExports.useRef(null);
   const videoRef = reactExports.useRef(null);
@@ -17412,7 +17434,11 @@ function App() {
     };
     updateHeaderHeight();
     window.addEventListener("resize", updateHeaderHeight);
-    return () => window.removeEventListener("resize", updateHeaderHeight);
+    window.addEventListener("scroll", updateHeaderHeight);
+    return () => {
+      window.removeEventListener("resize", updateHeaderHeight);
+      window.removeEventListener("scroll", updateHeaderHeight);
+    };
   }, []);
   reactExports.useEffect(() => {
     if (videoRef.current) {
@@ -17420,7 +17446,7 @@ function App() {
     }
   }, []);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "app-wrapper", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
       "video",
       {
         className: "background-video",
@@ -17429,13 +17455,11 @@ function App() {
         loop: true,
         playsInline: true,
         ref: videoRef,
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("source", { src: WavesVideo, type: "video/mp4" }),
-          "Your browser does not support the video tag."
-        ]
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx("source", { src: WavesVideo, type: "video/mp4" })
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(HeaderComponent, { ref: headerRef }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id: "header-marker", style: { height: "1px" } }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("main", { id: "page", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Outlet, {}) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(FooterComponent, {})
   ] });
@@ -17459,11 +17483,21 @@ function HomePage() {
     localStorage.setItem("sortBy", sortBy);
     localStorage.setItem("sortDirection", sortDirection);
     localStorage.setItem("onlyValid", JSON.stringify(onlyValid));
+    localStorage.setItem("currentPage", "1");
     navigate("/results");
+  }
+  function formatDateGerman(dateString) {
+    if (!dateString) return "-";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("de-DE", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    });
   }
   reactExports.useEffect(() => {
     const params = new URLSearchParams({
-      limit: "4",
+      limit: "6",
       offset: "0",
       order_by: "created_at",
       order_direction: "desc"
@@ -17485,7 +17519,7 @@ function HomePage() {
     });
   }, []);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "search-page", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "search-bar-wrapper", style: { top: "var(--header-height+1px)" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardComponent, { title: "Leitliniensuche", variant: "flat", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "search-bar-wrapper", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardComponent, { title: "Leitliniensuche", variant: "flat", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-merge", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "input",
@@ -17539,22 +17573,17 @@ function HomePage() {
           /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Letzte Überprüfung:" }),
             " ",
-            g.lastReviewedDate
+            formatDateGerman(g.lastReviewedDate)
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Erstellt am:" }),
             " ",
-            g.creationDate
+            formatDateGerman(g.creationDate)
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Gültig bis:" }),
             " ",
-            g.validDate
-          ] }),
-          g.lversion && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Version:" }),
-            " ",
-            g.lversion
+            formatDateGerman(g.validDate)
           ] }),
           g.remark && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Hinweis:" }),
@@ -17618,32 +17647,35 @@ function PrivacyPolicyPage() {
   ] });
 }
 function ImprintPage() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(CardComponent, { title: "Impressum", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Angaben gemäß § 5 TMG:" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-      "S3-Navigator",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-      "Max Mustermann",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-      "Musterstraße 123",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-      "12345 Musterstadt",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-      "Deutschland"
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-      "Kontakt:",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-      "E-Mail: kontakt@s3-navigator.de"
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-      "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-      "Max Mustermann",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-      "Adresse wie oben"
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Hinweis: S3-Navigator ist ein privates, nicht-kommerzielles Projekt zur Übersicht über medizinische Leitlinien. Trotz sorgfältiger Recherche übernehmen wir keine Gewähr für die Richtigkeit, Vollständigkeit oder Aktualität der Inhalte." })
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(CardComponent, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { style: { textAlign: "center" }, children: "Impressum" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "center-text", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Angaben gemäß § 5 TMG:" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+        "S3-Navigator",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+        "Max Mustermann",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+        "Musterstraße 123",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+        "12345 Musterstadt",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+        "Deutschland"
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+        "Kontakt:",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+        "E-Mail: kontakt@s3-navigator.de"
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+        "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+        "Max Mustermann",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+        "Adresse wie oben"
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Hinweis: S3-Navigator ist ein privates, nicht-kommerzielles Projekt zur Übersicht über medizinische Leitlinien. Trotz sorgfältiger Recherche übernehmen wir keine Gewähr für die Richtigkeit, Vollständigkeit oder Aktualität der Inhalte." })
+    ] })
   ] });
 }
 class EmailJSResponseStatus {
@@ -17888,46 +17920,49 @@ function ContactPage() {
       alert("Fehler beim Versenden der Nachricht.");
     });
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(CardComponent, { title: "Kontakt", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginBottom: "2rem" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Telefon:" }),
-      " +49 (0)123 456789",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "E-Mail:" }),
-      " ",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "mailto:kontakt@beispiel.de", children: "kontakt@beispiel.de" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Adresse:" }),
-      " Musterstraße 1, 12345 Düsseldorf"
-    ] }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { ref: form, onSubmit: sendEmail, className: "contact-form", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Name:" }),
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(CardComponent, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { style: { textAlign: "center" }, children: "Kontakt" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "center-text", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginBottom: "2rem" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Telefon:" }),
+        " +49 (0)123 456789",
         /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "text", name: "name" }),
-        errors.includes("name") && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "form-error", children: "Bitte Name angeben." })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Telefonnummer:" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "E-Mail:" }),
+        " ",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "mailto:kontakt@beispiel.de", children: "kontakt@beispiel.de" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "tel", name: "phone" }),
-        errors.includes("phone") && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "form-error", children: "Bitte Telefonnummer angeben." })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "E-Mail:" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "email", name: "email" }),
-        errors.includes("email") && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "form-error", children: "Bitte E-Mail angeben." })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Anliegen:" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("textarea", { name: "message", rows: 5 }),
-        errors.includes("message") && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "form-error", children: "Bitte Anliegen angeben." })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", children: "Nachricht senden" }),
-      showGeneralHint && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "form-error", style: { marginTop: "1rem" }, children: "Bitte füllen Sie alle Pflichtfelder aus." }),
-      success && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "form-success", children: "✅ Nachricht erfolgreich verschickt!" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Adresse:" }),
+        " Musterstraße 1, 12345 Düsseldorf"
+      ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { ref: form, onSubmit: sendEmail, className: "contact-form", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Name:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "text", name: "name" }),
+          errors.includes("name") && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "form-error", children: "Bitte Name angeben." })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Telefonnummer:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "tel", name: "phone" }),
+          errors.includes("phone") && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "form-error", children: "Bitte Telefonnummer angeben." })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "E-Mail:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "email", name: "email" }),
+          errors.includes("email") && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "form-error", children: "Bitte E-Mail angeben." })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: "Anliegen:" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("textarea", { name: "message", rows: 5 }),
+          errors.includes("message") && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "form-error", children: "Bitte Anliegen angeben." })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "submit", children: "Nachricht senden" }),
+        showGeneralHint && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "form-error", style: { marginTop: "1rem" }, children: "Bitte füllen Sie alle Pflichtfelder aus." }),
+        success && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "form-success", children: "✅ Nachricht erfolgreich verschickt!" })
+      ] })
     ] })
   ] });
 }
@@ -17994,33 +18029,27 @@ function GuidelineDetailPage() {
     /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { whiteSpace: "pre-wrap" }, children: fullText })
   ] });
 }
-function GuidelineComponent({ data }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: "Leitlinie" }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/guideline/${data.id}`, className: "awmf-cyan", style: { textDecoration: "none" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "break-word hover-highlight", children: data.title ?? "unbekannter Titel" }) }),
-    data.guidelineId && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-      "Registernummer: ",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: data.guidelineId })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-      "Interne ID: ",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: data.id })
-    ] }),
-    data.creationDate && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-      "Erstellt am: ",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: data.creationDate })
-    ] })
-  ] });
-}
 function ResultsPage() {
   const [search, setSearch] = reactExports.useState(localStorage.getItem("searchTerm") || "");
   const [guidelines, setGuidelines] = reactExports.useState([]);
   const [loading, setLoading] = reactExports.useState(true);
   const [timeoutReached, setTimeoutReached] = reactExports.useState(false);
   const [showAdvanced, setShowAdvanced] = reactExports.useState(false);
-  const [onlyValid, setOnlyValid] = reactExports.useState(false);
-  const [sortBy, setSortBy] = reactExports.useState("created_at");
-  const [sortDirection, setSortDirection] = reactExports.useState("desc");
+  const [onlyValid, setOnlyValid] = reactExports.useState(JSON.parse(localStorage.getItem("onlyValid") || "false"));
+  const [sortBy, setSortBy] = reactExports.useState(localStorage.getItem("sortBy") || "created_at");
+  const [sortDirection, setSortDirection] = reactExports.useState(localStorage.getItem("sortDirection") || "desc");
+  const pageSize = 9;
+  const [currentPage, setCurrentPage] = reactExports.useState(parseInt(localStorage.getItem("currentPage") || "1"));
+  const [totalCount, setTotalCount] = reactExports.useState(0);
+  function formatDateGerman(dateString) {
+    if (!dateString) return "-";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("de-DE", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    });
+  }
   reactExports.useEffect(() => {
     const timeout = setTimeout(() => {
       setTimeoutReached(true);
@@ -18028,7 +18057,7 @@ function ResultsPage() {
     handleNewSearch();
     return () => clearTimeout(timeout);
   }, []);
-  function handleNewSearch() {
+  function handleNewSearch(page = currentPage) {
     if (!search.trim()) {
       setGuidelines([]);
       setLoading(false);
@@ -18036,16 +18065,20 @@ function ResultsPage() {
     }
     setLoading(true);
     setTimeoutReached(false);
+    const offset = (page - 1) * pageSize;
     const params = new URLSearchParams({
       q: search,
       order_by: sortBy,
-      order_direction: sortDirection
+      order_direction: sortDirection,
+      limit: pageSize.toString(),
+      offset: offset.toString()
     });
     if (onlyValid) {
       params.append("valid_only", "true");
     }
     fetch(`http://s3-navigator.duckdns.org:5000/guidelines/search?${params.toString()}`).then((res) => res.json()).then((data) => {
-      const mapped = data.map((item) => ({
+      const resultArray = Array.isArray(data) ? data : data.results ?? [];
+      const mapped = resultArray.map((item) => ({
         id: item.id,
         guidelineId: item.awmf_guideline_id,
         title: item.titel,
@@ -18056,18 +18089,33 @@ function ResultsPage() {
         remark: item.aktueller_hinweis
       }));
       setGuidelines(mapped);
+      setTotalCount(data.total ?? resultArray.length);
+      setCurrentPage(page);
+      localStorage.setItem("currentPage", page.toString());
       setLoading(false);
-      if (mapped.length === 0) {
-        setTimeoutReached(true);
-      }
-    }).catch((err) => {
-      console.error("Fehler bei der Suche:", err);
-      alert("Die Suche ist fehlgeschlagen.");
-      setLoading(false);
+      if (mapped.length === 0) setTimeoutReached(true);
     });
   }
+  function renderPagination() {
+    const totalPages = Math.ceil(totalCount / pageSize);
+    if (totalPages <= 1) return null;
+    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "pagination", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => handleNewSearch(currentPage - 1), disabled: currentPage === 1, children: "Zurück" }),
+      pages.map((page) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "button",
+        {
+          onClick: () => handleNewSearch(page),
+          className: page === currentPage ? "active" : "",
+          children: page
+        },
+        page
+      )),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => handleNewSearch(currentPage + 1), disabled: currentPage === totalPages, children: "Weiter" })
+    ] });
+  }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "search-page", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "search-bar-wrapper", style: { top: "var(--header-height)" }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardComponent, { title: "Leitliniensuche", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "search-bar-wrapper", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardComponent, { title: "Leitliniensuche", variant: "flat", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-merge", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "input",
@@ -18079,7 +18127,7 @@ function ResultsPage() {
             onKeyDown: (e) => e.key === "Enter" && handleNewSearch()
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: handleNewSearch, children: "Suchen" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => handleNewSearch(), children: "Suchen" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setShowAdvanced(!showAdvanced), children: "Erweitert" })
       ] }),
       showAdvanced && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "advanced-search-panel", children: [
@@ -18113,7 +18161,32 @@ function ResultsPage() {
     ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "search-results-wrapper", children: [
       loading && /* @__PURE__ */ jsxRuntimeExports.jsx(CardComponent, { title: "Lade Ergebnisse...", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { display: "flex", justifyContent: "center", alignItems: "center", padding: "1rem" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "spinner" }) }) }),
-      !loading && guidelines.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(CardComponent, { title: "Suchergebnisse", children: guidelines.map((g) => /* @__PURE__ */ jsxRuntimeExports.jsx(GuidelineComponent, { data: g }, g.id)) }),
+      !loading && guidelines.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardComponent, { title: "Suchergebnisse", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "card-container", children: guidelines.map((g) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Link, { to: `/guideline/${g.id}`, className: "guideline-card", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "awmf-cyan", children: g.title }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Letzte Überprüfung:" }),
+            " ",
+            formatDateGerman(g.lastReviewedDate)
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Erstellt am:" }),
+            " ",
+            formatDateGerman(g.creationDate)
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Gültig bis:" }),
+            " ",
+            formatDateGerman(g.validDate)
+          ] }),
+          g.remark && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Hinweis:" }),
+            " ",
+            g.remark
+          ] })
+        ] }, g.id)) }) }),
+        renderPagination()
+      ] }),
       !loading && timeoutReached && guidelines.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(CardComponent, { title: "Keine Ergebnisse gefunden", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Es wurden keine Leitlinien gefunden. Bitte prüfen Sie Ihr Suchwort." }) })
     ] })
   ] });

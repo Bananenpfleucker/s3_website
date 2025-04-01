@@ -22,6 +22,7 @@
   scrollbar-color: var(--awmf-accent-primary) var(--light-background-subtle);
 
   --header-height: 70px; 
+  --header-height-shrink: 20px;
 }
 
 @font-face {
@@ -432,7 +433,7 @@ img#logo {
 .contact-form textarea {
   width: 100%;
   max-width: 600px;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem auto; /* ⬅ das zentriert sie horizontal */
   padding: 0.75rem;
   font: inherit;
   border: 1px solid var(--light-background-subtle);
@@ -442,6 +443,11 @@ img#logo {
 
 .contact-form textarea {
   resize: vertical;
+}
+
+.contact-form button {
+  display: block;
+  margin: 1rem auto;
 }
 
 .form-error {
@@ -466,14 +472,14 @@ img#logo {
 
 .search-bar-wrapper {
   position: sticky;
-  top: calc(var(--header-height) + 2px);
-  z-index: 9;
-  /*background: linear-gradient(120deg, #f0faff, #d8f0ff); /* exakt wie body */
-  transition: padding-top 0.2s ease;
-  padding-top: 1rem; 
+  top: var(--header-height);
+  z-index: 89;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem;
   
-
 }
+
 .search-bar-wrapper::before {
   content: "";
   position: absolute;
@@ -579,13 +585,20 @@ img#logo {
 }
 
 .card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 2rem;
-  padding: 2rem;
+  padding-top: 2rem;
+padding-bottom: 2rem;
 }
 
 .guideline-card {
+  flex: 1 1 calc(33.333% - 2rem); /* max. 3 nebeneinander mit Abstand */
+  max-width: 500px; /* optional für bessere Kontrolle */
+  min-width: 280px;
+  box-sizing: border-box;
+
   background-color: var(--light-background);
   padding: 1.5rem;
   box-shadow: var(--box-shadow);
@@ -627,4 +640,92 @@ video.background-video {
   pointer-events: none;
   opacity: 0.4; /* je nach Lesbarkeit anpassen */
 }
+
+header {
+ 
+  padding: 2rem 0 0 0;
+}
+
+header.shrink {
+  padding: 0.5rem 0 0 0;
+}
+
+header.shrink img#logo {
+  max-width: 100px;
+}
+
+header img#logo {
+  transition: max-width 0.3s ease;
+}
+
+#header-marker {
+  height: 1px;
+  margin-top: 100px; /* größer als maximale Headerhöhe */
+}
+
+header h2 {
+  transition: font-size 0.3s ease;
+}
+
+header.shrink h2 {
+  font-size: 1.25rem;
+}
+
+header.shrink + .search-bar-wrapper {
+  top: var(--header-height-shrink);
+  padding: 0.5rem 1rem;
+}
+
+h1, h2, h3, h4 {
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  -o-hyphens: auto;
+  hyphens: auto;
+
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 2rem 0;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--awmf-accent-secondary);
+  background-color: var(--light-background);
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pagination button.active {
+  background-color: var(--awmf-accent-primary);
+  color: white;
+  font-weight: bold;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.center-text, 
+.center-text p, 
+.center-text h1,
+.center-text h2,
+.center-text h3,
+.center-text ul,
+.center-text li {
+  text-align: center;
+}
+
+.title-center {
+  text-align: center;
+}
+
 
