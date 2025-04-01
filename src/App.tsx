@@ -2,7 +2,7 @@ import { JSX, useRef, useEffect } from "react";
 import HeaderComponent from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponent";
 import { Outlet } from "react-router-dom";
-import WavesVideo from "./assets/video/Waves.mp4";
+import WavesVideo from "./assets/Video/Waves.mp4";
 
 export default function App(): JSX.Element {
     const headerRef = useRef<HTMLElement>(null);
