@@ -5,8 +5,8 @@ import "./assets/icon/S3Navigator.ico";
 import App from "./App.tsx";
 
 import {
-  createBrowserRouter,
-  RouterProvider,
+    createBrowserRouter,
+    RouterProvider,
 } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
@@ -20,23 +20,25 @@ import ResultsPage from "./pages/ResultsPage";
 
 // Define routes
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    children: [
-      { path: "", element: <HomePage /> },
-      { path: "design-test", element: <CheatSheetPage /> },
-      { path: "privacy", element: <PrivacyPolicyPage /> },
-      { path: "imprint", element: <ImprintPage /> },
-      { path: "contact", element: <ContactPage /> },
-      { path: "guideline/:id", element: <GuidelineDetailPage /> },
-      { path: "results", element: <ResultsPage /> },
-    ],
-  },
-]);
+    {
+        path: "/",
+        element: <App />,
+        children: [
+            { path: "", element: <HomePage /> },
+            { path: "design-test", element: <CheatSheetPage /> },
+            { path: "privacy", element: <PrivacyPolicyPage /> },
+            { path: "imprint", element: <ImprintPage /> },
+            { path: "contact", element: <ContactPage /> },
+            { path: "guideline/:id", element: <GuidelineDetailPage /> },
+            { path: "results", element: <ResultsPage /> },
+        ],
+    },
+], {
+    basename: '/s3_website/'
+});
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>
+    <StrictMode>
+        <RouterProvider router={router} />
+    </StrictMode>
 );
