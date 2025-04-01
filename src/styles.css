@@ -15,7 +15,7 @@
   --dark-background: #333;
   --dark-font-color: #aaa;
 
-  /*--box-shadow: #0003 0 0 0.5rem;*/
+
   --border-radius: 1rem;
 
   scrollbar-width: thin;
@@ -24,7 +24,11 @@
   --header-height: 70px; 
   --header-height-shrink: 20px;
 }
-
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 @font-face {
   font-family: "Ubuntu";
   src: url("./assets/font/ubuntu-light.woff2") format("woff2");
@@ -46,26 +50,11 @@
   font-style: normal;
 }
 
-/* Basic elements */
-
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
- /* background-color: #6da9e4;
-  overflow-x: hidden;*/
-}
-
-/*main {
-  width: 100%;
-  max-width: var(--awmf-max-content-width);
-  background-color: var(--light-background);
-  margin: auto;
-  padding: 2rem;
-  box-shadow: var(--box-shadow);
-  box-sizing: border-box;
-}*/
-
+ }
 
 header {
   margin: 0;
@@ -75,6 +64,7 @@ header {
   position: sticky;
   top: 0;
   box-shadow: var(--box-shadow);
+  z-index: 100;
 
   & div {
     padding: 1rem;
@@ -139,7 +129,15 @@ footer a {
   }
 }
 
+@media (max-width: 720px) {
+  header.shrink h2 {
+    display: none;
+  }
 
+  header.shrink + .search-bar-wrapper {
+    top: 0 !important;
+  }
+}
 
 
 h1 {
@@ -254,14 +252,14 @@ div.form-merge > * {
 
 div.form-merge > input {
   flex: 1 1 auto;
-  min-width: 0; /* wichtig für Flexbox */
+  min-width: 0; 
 }
 
 div.form-merge > button {
   flex: 0 0 auto;
   white-space: nowrap;
   padding: 1rem;
-  border-left: none; /* entfernen bei mittleren Buttons, wenn nötig */
+  border-left: none;
 }
 
 div.form-merge > :first-child {
@@ -272,7 +270,6 @@ div.form-merge > :last-child {
   border-radius: 0 var(--border-radius) var(--border-radius) 0;
 }
 
-/* Mobile – untereinander mit Abstand */
 @media (max-width: 600px) {
   div.form-merge {
     flex-direction: row;
@@ -298,10 +295,6 @@ div.form-merge > :last-child {
     flex: 1 1 30%;
   }
 }
-
-
-
-
 
 img#logo {
   width: 100%;
@@ -360,7 +353,9 @@ img#logo {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
+  gap: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .card {
@@ -371,6 +366,7 @@ img#logo {
 .break-word {
   word-break: break-word;
   hyphens: auto;
+  word-break: break-all;
 }
 
 @media (max-width: 600px) {
@@ -386,7 +382,7 @@ img#logo {
 
 .home-button {
   padding: 0.75rem 1.5rem;
-  background-color: #4fa9ff; /* helles, freundliches Blau */
+  background-color: #4fa9ff; 
   color: white;
   border-radius: var(--border-radius);
   text-decoration: none;
@@ -397,7 +393,7 @@ img#logo {
 }
 
 .home-button:hover {
-  background-color: #3398f0; /* leicht dunkler beim Hover */
+  background-color: #3398f0; 
 }
 
 .header-grid {
@@ -433,7 +429,7 @@ img#logo {
 .contact-form textarea {
   width: 100%;
   max-width: 600px;
-  margin: 0 auto 1rem auto; /* ⬅ das zentriert sie horizontal */
+  margin: 0 auto 1rem auto; 
   padding: 0.75rem;
   font: inherit;
   border: 1px solid var(--light-background-subtle);
@@ -473,11 +469,10 @@ img#logo {
 .search-bar-wrapper {
   position: sticky;
   top: var(--header-height);
-  z-index: 89;
+  z-index: 90;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 1rem;
-  
 }
 
 .search-bar-wrapper::before {
@@ -500,13 +495,13 @@ img#logo {
 }
 
 .search-bar-wrapper.scrolled {
-  padding-top: 0; /* Kein Abstand mehr */
+  padding-top: 0; 
 }
 
 .search-bar-wrapper,
 .search-results-wrapper {
   width: 100%;
-  max-width: var(--awmf-max-content-width); /* das ist wichtig! */
+  max-width: var(--awmf-max-content-width); 
   margin: 0 auto;
   padding: 1rem;
   
@@ -517,8 +512,7 @@ img#logo {
   gap: 1rem;
   margin-top: 1rem;
   padding: 1rem;
- /*border: 1px solid var(--light-background-subtle);*/
- border: none;
+  border: none;
   border-radius: var(--border-radius);
   background-color: var(--light-background);
   box-shadow: var(--box-shadow);
@@ -564,7 +558,7 @@ img#logo {
   transition: all 0.2s ease;
 }
 
-.latest-guideline-title:hover {
+.latest-guideline-title:hover, .hover-highlight:hover {
   font-weight: bold;
   text-decoration: underline;
   cursor: pointer;
@@ -574,28 +568,13 @@ img#logo {
   transition: all 0.2s ease;
 }
 
-.hover-highlight:hover {
-  font-weight: bold;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
 .card, .advanced-search-panel, input, button {
   border-radius: var(--border-radius);
 }
 
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  padding-top: 2rem;
-padding-bottom: 2rem;
-}
-
 .guideline-card {
-  flex: 1 1 calc(33.333% - 2rem); /* max. 3 nebeneinander mit Abstand */
-  max-width: 500px; /* optional für bessere Kontrolle */
+  flex: 1 1 calc(33.333% - 2rem); 
+  max-width: 500px;
   min-width: 280px;
   box-sizing: border-box;
 
@@ -607,6 +586,14 @@ padding-bottom: 2rem;
   color: inherit;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.guideline-card * {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  word-break: break-all;
+}
+
 
 .guideline-card:hover {
   transform: translateY(-5px);
@@ -620,15 +607,6 @@ padding-bottom: 2rem;
   padding: none;
 }
 
-header {
-  z-index: 100;
-}
-
-.search-bar-wrapper {
-  z-index: 90;
-  
-}
-
 video.background-video {
   position: fixed;
   top: 0;
@@ -638,12 +616,7 @@ video.background-video {
   object-fit: cover;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.4; /* je nach Lesbarkeit anpassen */
-}
-
-header {
- 
-  padding: 2rem 0 0 0;
+  opacity: 0.4;
 }
 
 header.shrink {
@@ -660,7 +633,7 @@ header img#logo {
 
 #header-marker {
   height: 1px;
-  margin-top: 100px; /* größer als maximale Headerhöhe */
+  margin-top: 100px;
 }
 
 header h2 {
@@ -685,6 +658,7 @@ h1, h2, h3, h4 {
 
   word-break: break-word;
   overflow-wrap: break-word;
+  word-break: break-all;
 }
 
 .pagination {
@@ -728,4 +702,12 @@ h1, h2, h3, h4 {
   text-align: center;
 }
 
+.form-merge.small input,
+.form-merge.small button {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+}
 
+.search-bar-wrapper.scrolled .card-title {
+  display: none;
+}

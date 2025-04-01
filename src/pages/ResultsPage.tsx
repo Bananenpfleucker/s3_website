@@ -15,7 +15,7 @@ export default function ResultsPage(): JSX.Element {
     const pageSize = 9;
     const [currentPage, setCurrentPage] = useState<number>(parseInt(localStorage.getItem("currentPage") || "1"));
     const [totalCount, setTotalCount] = useState<number>(0);
-
+    const [scrolled, setScrolled] = useState(false);
 
     function formatDateGerman(dateString: string): string {
         if (!dateString) return "-";
@@ -28,13 +28,15 @@ export default function ResultsPage(): JSX.Element {
     }
 
     useEffect(() => {
-        const timeout = setTimeout(() => {
-            setTimeoutReached(true);
-        }, 5000);
-
+        const timeout = setTimeout(() => setTimeoutReached(true), 5000);
         handleNewSearch();
-
         return () => clearTimeout(timeout);
+    }, []);
+
+    useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 50);
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     function handleNewSearch(page = currentPage): void {
@@ -44,11 +46,17 @@ export default function ResultsPage(): JSX.Element {
             return;
         }
     
+        // ✅ LocalStorage aktualisieren
+        localStorage.setItem("searchTerm", search);
+        localStorage.setItem("sortBy", sortBy);
+        localStorage.setItem("sortDirection", sortDirection);
+        localStorage.setItem("onlyValid", JSON.stringify(onlyValid));
+        localStorage.setItem("currentPage", page.toString());
+    
         setLoading(true);
         setTimeoutReached(false);
     
         const offset = (page - 1) * pageSize;
-    
         const params = new URLSearchParams({
             q: search,
             order_by: sortBy,
@@ -57,16 +65,13 @@ export default function ResultsPage(): JSX.Element {
             offset: offset.toString()
         });
     
-        if (onlyValid) {
-            params.append("valid_only", "true");
-        }
+        if (onlyValid) params.append("valid_only", "true");
     
         fetch(`http://s3-navigator.duckdns.org:5000/guidelines/search?${params.toString()}`)
             .then((res) => res.json())
             .then((data) => {
-                // Wenn das Backend direkt ein Array zurückgibt (ohne .results):
                 const resultArray = Array.isArray(data) ? data : data.results ?? [];
-            
+    
                 const mapped = resultArray.map((item: any) => ({
                     id: item.id,
                     guidelineId: item.awmf_guideline_id,
@@ -77,32 +82,26 @@ export default function ResultsPage(): JSX.Element {
                     validDate: item.valid_until,
                     remark: item.aktueller_hinweis
                 }));
-            
+    
                 setGuidelines(mapped);
-            
-                // Setze totalCount nur, wenn vorhanden – sonst Anzahl der erhaltenen Ergebnisse
                 setTotalCount(data.total ?? resultArray.length);
-            
                 setCurrentPage(page);
-                localStorage.setItem("currentPage", page.toString());
                 setLoading(false);
-            
+    
                 if (mapped.length === 0) setTimeoutReached(true);
-            })
-            
+            });
     }
     
+
     function renderPagination(): JSX.Element | null {
         const totalPages = Math.ceil(totalCount / pageSize);
         if (totalPages <= 1) return null;
-    
+
         const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    
+
         return (
             <div className="pagination">
-                <button onClick={() => handleNewSearch(currentPage - 1)} disabled={currentPage === 1}>
-                    Zurück
-                </button>
+                <button onClick={() => handleNewSearch(currentPage - 1)} disabled={currentPage === 1}>Zurück</button>
                 {pages.map((page) => (
                     <button
                         key={page}
@@ -112,20 +111,16 @@ export default function ResultsPage(): JSX.Element {
                         {page}
                     </button>
                 ))}
-                <button onClick={() => handleNewSearch(currentPage + 1)} disabled={currentPage === totalPages}>
-                    Weiter
-                </button>
+                <button onClick={() => handleNewSearch(currentPage + 1)} disabled={currentPage === totalPages}>Weiter</button>
             </div>
         );
     }
-    
-    
 
     return (
         <div className="search-page">
-            <div className="search-bar-wrapper">
-                <CardComponent title="Leitliniensuche" variant="flat">
-                    <div className="form-merge">
+            <div className={`search-bar-wrapper ${scrolled ? "scrolled" : ""}`}>
+                <CardComponent title={!scrolled ? "Leitliniensuche" : undefined} variant="flat">
+                    <div className="form-merge small">
                         <input
                             type="text"
                             placeholder="Suchbegriff"
@@ -198,7 +193,6 @@ export default function ResultsPage(): JSX.Element {
                         {renderPagination()}
                     </>
                 )}
-
 
                 {!loading && timeoutReached && guidelines.length === 0 && (
                     <CardComponent title="Keine Ergebnisse gefunden">

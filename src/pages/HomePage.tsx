@@ -10,6 +10,7 @@ export default function HomePage(): JSX.Element {
     const [onlyValid, setOnlyValid] = useState(false);
     const [sortBy, setSortBy] = useState("created_at");
     const [sortDirection, setSortDirection] = useState("desc");
+    const [scrolled, setScrolled] = useState(false);
     const navigate = useNavigate();
 
     function handleSearch(): void {
@@ -59,11 +60,20 @@ export default function HomePage(): JSX.Element {
             });
     }, []);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 50);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     return (
         <div className="search-page">
-            <div className="search-bar-wrapper">
-                <CardComponent title="Leitliniensuche" variant="flat">
-                    <div className="form-merge">
+            <div className={`search-bar-wrapper ${scrolled ? "scrolled" : ""}`}>
+                <CardComponent title={!scrolled ? "Leitliniensuche" : undefined} variant="flat">
+                    <div className="form-merge small">
                         <input
                             type="text"
                             placeholder="Suchbegriff"
@@ -124,7 +134,6 @@ export default function HomePage(): JSX.Element {
                                     <p><strong>Letzte Überprüfung:</strong> {formatDateGerman(g.lastReviewedDate)}</p>
                                     <p><strong>Erstellt am:</strong> {formatDateGerman(g.creationDate)}</p>
                                     <p><strong>Gültig bis:</strong> {formatDateGerman(g.validDate)}</p>
-                                    
                                     {g.remark && <p><strong>Hinweis:</strong> {g.remark}</p>}
                                 </Link>
                             ))}
