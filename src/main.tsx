@@ -34,7 +34,7 @@ const router = createBrowserRouter([
         ],
     },
 ], {
-    basename: '/s3_website/'
+    basename: ''
 });
 
 createRoot(document.getElementById("root")!).render(
