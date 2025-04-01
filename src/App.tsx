@@ -15,22 +15,32 @@ export default function App(): JSX.Element {
                 document.documentElement.style.setProperty("--header-height", `${height}px`);
             }
         };
-
+    
+        // Initial setzen
         updateHeaderHeight();
+    
+        // Bei Resize und Scroll aktualisieren
         window.addEventListener("resize", updateHeaderHeight);
-        return () => window.removeEventListener("resize", updateHeaderHeight);
+        window.addEventListener("scroll", updateHeaderHeight);
+    
+        return () => {
+            window.removeEventListener("resize", updateHeaderHeight);
+            window.removeEventListener("scroll", updateHeaderHeight);
+        };
     }, []);
+    
+    
 
     useEffect(() => {
-        // 🎬 Wiedergabegeschwindigkeit setzen
+
         if (videoRef.current) {
-            videoRef.current.playbackRate = 0.5; // z. B. halb so schnell
+            videoRef.current.playbackRate = 0.5; 
         }
     }, []);
 
     return (
         <div className="app-wrapper">
-            {/* 🎥 Hintergrundvideo */}
+            {/*  Hintergrundvideo */}
             <video
                 className="background-video"
                 autoPlay
@@ -40,10 +50,11 @@ export default function App(): JSX.Element {
                 ref={videoRef}
             >
                 <source src={WavesVideo} type="video/mp4" />
-                Your browser does not support the video tag.
+                
             </video>
 
             <HeaderComponent ref={headerRef} />
+            <div id="header-marker" style={{ height: "1px" }}></div>
             <main id="page">
                 <Outlet />
             </main>

@@ -17,17 +17,28 @@ export default function HomePage(): JSX.Element {
         localStorage.setItem("sortBy", sortBy);
         localStorage.setItem("sortDirection", sortDirection);
         localStorage.setItem("onlyValid", JSON.stringify(onlyValid));
+        localStorage.setItem("currentPage", "1");
         navigate("/results");
+    }
+
+    function formatDateGerman(dateString: string): string {
+        if (!dateString) return "-";
+        const date = new Date(dateString);
+        return date.toLocaleDateString("de-DE", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+        });
     }
 
     useEffect(() => {
         const params = new URLSearchParams({
-            limit: "4",
+            limit: "6",
             offset: "0",
             order_by: "created_at",
             order_direction: "desc"
         });
-    
+
         fetch(`http://s3-navigator.duckdns.org:5000/guidelines?${params.toString()}`)
             .then((res) => res.json())
             .then((data) => {
@@ -47,12 +58,11 @@ export default function HomePage(): JSX.Element {
                 console.error("Fehler beim Laden der neuesten Leitlinien:", err);
             });
     }, []);
-    
 
     return (
         <div className="search-page">
-            <div className="search-bar-wrapper" style={{ top: "var(--header-height+1px)" }}>
-            <CardComponent title="Leitliniensuche" variant="flat">
+            <div className="search-bar-wrapper">
+                <CardComponent title="Leitliniensuche" variant="flat">
                     <div className="form-merge">
                         <input
                             type="text"
@@ -111,16 +121,15 @@ export default function HomePage(): JSX.Element {
                                     className="guideline-card"
                                 >
                                     <h4 className="awmf-cyan">{g.title}</h4>
-                                    <p><strong>Letzte Überprüfung:</strong> {g.lastReviewedDate}</p>
-                                    <p><strong>Erstellt am:</strong> {g.creationDate}</p>
-                                    <p><strong>Gültig bis:</strong> {g.validDate}</p>
-                                    {g.lversion && <p><strong>Version:</strong> {g.lversion}</p>}
+                                    <p><strong>Letzte Überprüfung:</strong> {formatDateGerman(g.lastReviewedDate)}</p>
+                                    <p><strong>Erstellt am:</strong> {formatDateGerman(g.creationDate)}</p>
+                                    <p><strong>Gültig bis:</strong> {formatDateGerman(g.validDate)}</p>
+                                    
                                     {g.remark && <p><strong>Hinweis:</strong> {g.remark}</p>}
                                 </Link>
                             ))}
                         </div>
                     </CardComponent>
-
                 </div>
             )}
         </div>

@@ -1,6 +1,6 @@
 import { JSX, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import CardComponent from "../components/CardComponent";
-import GuidelineComponent from "../components/GuidelineComponent";
 import { Guideline } from "../data/api";
 
 export default function ResultsPage(): JSX.Element {
@@ -9,21 +9,35 @@ export default function ResultsPage(): JSX.Element {
     const [loading, setLoading] = useState(true);
     const [timeoutReached, setTimeoutReached] = useState(false);
     const [showAdvanced, setShowAdvanced] = useState(false);
-    const [onlyValid, setOnlyValid] = useState(false);
-    const [sortBy, setSortBy] = useState("created_at");
-    const [sortDirection, setSortDirection] = useState("desc");
+    const [onlyValid, setOnlyValid] = useState(JSON.parse(localStorage.getItem("onlyValid") || "false"));
+    const [sortBy, setSortBy] = useState(localStorage.getItem("sortBy") || "created_at");
+    const [sortDirection, setSortDirection] = useState(localStorage.getItem("sortDirection") || "desc");
+    const pageSize = 9;
+    const [currentPage, setCurrentPage] = useState<number>(parseInt(localStorage.getItem("currentPage") || "1"));
+    const [totalCount, setTotalCount] = useState<number>(0);
+
+
+    function formatDateGerman(dateString: string): string {
+        if (!dateString) return "-";
+        const date = new Date(dateString);
+        return date.toLocaleDateString("de-DE", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+        });
+    }
 
     useEffect(() => {
         const timeout = setTimeout(() => {
             setTimeoutReached(true);
         }, 5000);
-    
+
         handleNewSearch();
-    
+
         return () => clearTimeout(timeout);
     }, []);
-    
-    function handleNewSearch(): void {
+
+    function handleNewSearch(page = currentPage): void {
         if (!search.trim()) {
             setGuidelines([]);
             setLoading(false);
@@ -31,12 +45,16 @@ export default function ResultsPage(): JSX.Element {
         }
     
         setLoading(true);
-        setTimeoutReached(false); // Reset Timeout-Flag bei neuer Suche
+        setTimeoutReached(false);
+    
+        const offset = (page - 1) * pageSize;
     
         const params = new URLSearchParams({
             q: search,
             order_by: sortBy,
-            order_direction: sortDirection
+            order_direction: sortDirection,
+            limit: pageSize.toString(),
+            offset: offset.toString()
         });
     
         if (onlyValid) {
@@ -46,7 +64,10 @@ export default function ResultsPage(): JSX.Element {
         fetch(`http://s3-navigator.duckdns.org:5000/guidelines/search?${params.toString()}`)
             .then((res) => res.json())
             .then((data) => {
-                const mapped = data.map((item: any) => ({
+                // Wenn das Backend direkt ein Array zurückgibt (ohne .results):
+                const resultArray = Array.isArray(data) ? data : data.results ?? [];
+            
+                const mapped = resultArray.map((item: any) => ({
                     id: item.id,
                     guidelineId: item.awmf_guideline_id,
                     title: item.titel,
@@ -56,27 +77,54 @@ export default function ResultsPage(): JSX.Element {
                     validDate: item.valid_until,
                     remark: item.aktueller_hinweis
                 }));
-    
+            
                 setGuidelines(mapped);
+            
+                // Setze totalCount nur, wenn vorhanden – sonst Anzahl der erhaltenen Ergebnisse
+                setTotalCount(data.total ?? resultArray.length);
+            
+                setCurrentPage(page);
+                localStorage.setItem("currentPage", page.toString());
                 setLoading(false);
-    
-                // Wenn API fertig ist, und trotzdem leer: Timeout manuell setzen
-                if (mapped.length === 0) {
-                    setTimeoutReached(true);
-                }
+            
+                if (mapped.length === 0) setTimeoutReached(true);
             })
-            .catch((err) => {
-                console.error("Fehler bei der Suche:", err);
-                alert("Die Suche ist fehlgeschlagen.");
-                setLoading(false);
-            });
+            
     }
+    
+    function renderPagination(): JSX.Element | null {
+        const totalPages = Math.ceil(totalCount / pageSize);
+        if (totalPages <= 1) return null;
+    
+        const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    
+        return (
+            <div className="pagination">
+                <button onClick={() => handleNewSearch(currentPage - 1)} disabled={currentPage === 1}>
+                    Zurück
+                </button>
+                {pages.map((page) => (
+                    <button
+                        key={page}
+                        onClick={() => handleNewSearch(page)}
+                        className={page === currentPage ? "active" : ""}
+                    >
+                        {page}
+                    </button>
+                ))}
+                <button onClick={() => handleNewSearch(currentPage + 1)} disabled={currentPage === totalPages}>
+                    Weiter
+                </button>
+            </div>
+        );
+    }
+    
     
 
     return (
         <div className="search-page">
-            <div className="search-bar-wrapper" style={{ top: "var(--header-height)" }}>
-                <CardComponent title="Leitliniensuche">
+            <div className="search-bar-wrapper">
+                <CardComponent title="Leitliniensuche" variant="flat">
                     <div className="form-merge">
                         <input
                             type="text"
@@ -85,7 +133,7 @@ export default function ResultsPage(): JSX.Element {
                             onChange={(e) => setSearch(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleNewSearch()}
                         />
-                        <button onClick={handleNewSearch}>Suchen</button>
+                        <button onClick={() => handleNewSearch()}>Suchen</button>
                         <button onClick={() => setShowAdvanced(!showAdvanced)}>Erweitert</button>
                     </div>
 
@@ -133,10 +181,24 @@ export default function ResultsPage(): JSX.Element {
                 )}
 
                 {!loading && guidelines.length > 0 && (
-                    <CardComponent title="Suchergebnisse">
-                        {guidelines.map(g => <GuidelineComponent key={g.id} data={g} />)}
-                    </CardComponent>
+                    <>
+                        <CardComponent title="Suchergebnisse">
+                            <div className="card-container">
+                                {guidelines.map(g => (
+                                    <Link key={g.id} to={`/guideline/${g.id}`} className="guideline-card">
+                                        <h4 className="awmf-cyan">{g.title}</h4>
+                                        <p><strong>Letzte Überprüfung:</strong> {formatDateGerman(g.lastReviewedDate)}</p>
+                                        <p><strong>Erstellt am:</strong> {formatDateGerman(g.creationDate)}</p>
+                                        <p><strong>Gültig bis:</strong> {formatDateGerman(g.validDate)}</p>
+                                        {g.remark && <p><strong>Hinweis:</strong> {g.remark}</p>}
+                                    </Link>
+                                ))}
+                            </div>
+                        </CardComponent>
+                        {renderPagination()}
+                    </>
                 )}
+
 
                 {!loading && timeoutReached && guidelines.length === 0 && (
                     <CardComponent title="Keine Ergebnisse gefunden">

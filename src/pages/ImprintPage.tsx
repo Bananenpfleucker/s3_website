@@ -6,7 +6,10 @@ import CardComponent from "../components/CardComponent";
  */
 export default function ImprintPage(): JSX.Element {
     return (
-        <CardComponent title="Impressum">
+        <CardComponent>
+             <h2 style={{ textAlign: "center" }}>Impressum</h2>
+
+            <div className="center-text">
             <p>
                 Angaben gemäß § 5 TMG:
             </p>
@@ -29,6 +32,7 @@ export default function ImprintPage(): JSX.Element {
             <p>
                 Hinweis: S3-Navigator ist ein privates, nicht-kommerzielles Projekt zur Übersicht über medizinische Leitlinien. Trotz sorgfältiger Recherche übernehmen wir keine Gewähr für die Richtigkeit, Vollständigkeit oder Aktualität der Inhalte.
             </p>
+            </div>
         </CardComponent>
     );
 }
