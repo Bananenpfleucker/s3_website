@@ -7,6 +7,7 @@ import CardComponent from "../components/CardComponent";
 export default function PrivacyPolicyPage(): JSX.Element {
     return (
         <CardComponent title="Datenschutzerklärung">
+           
             <p>
                 Der Schutz Ihrer persönlichen Daten ist uns, dem Team von S3-Navigator, ein wichtiges Anliegen.
                 Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.
@@ -72,6 +73,7 @@ export default function PrivacyPolicyPage(): JSX.Element {
                 Wir behalten uns vor, diese Datenschutzerklärung bei Bedarf zu aktualisieren, um sie an geänderte rechtliche Anforderungen oder Änderungen unseres Angebots anzupassen.
                 Für Ihren erneuten Besuch gilt dann die jeweils aktuelle Datenschutzerklärung.
             </p>
+           
         </CardComponent>
     );
 }

@@ -54,14 +54,17 @@ export default function ContactPage(): JSX.Element {
     }
 
     return (
-        <CardComponent title="Kontakt">
+        <CardComponent >
+            <h2 style={{ textAlign: "center" }}>Kontakt</h2>
+
+            <div className="center-text">
             <div style={{ marginBottom: "2rem" }}>
                 <p>
                     <strong>Telefon:</strong> +49 (0)123 456789<br />
                     <strong>E-Mail:</strong> <a href="mailto:kontakt@beispiel.de">kontakt@beispiel.de</a><br />
                     <strong>Adresse:</strong> Musterstraße 1, 12345 Düsseldorf
                 </p>
-            </div>
+                </div>
 
             <form ref={form} onSubmit={sendEmail} className="contact-form">
                 <p>
@@ -102,6 +105,7 @@ export default function ContactPage(): JSX.Element {
                     </p>
                 )}
             </form>
+            </div>
         </CardComponent>
     );
 }
