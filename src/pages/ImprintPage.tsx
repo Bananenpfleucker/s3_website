@@ -1,9 +1,7 @@
 import { JSX } from "react";
 import CardComponent from "../components/CardComponent";
 
-/**
- * Displays the imprint (legal notice) page.
- */
+
 export default function ImprintPage(): JSX.Element {
     return (
         <CardComponent>

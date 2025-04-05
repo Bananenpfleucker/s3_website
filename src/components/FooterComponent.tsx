@@ -1,9 +1,7 @@
 import { JSX } from "react";
 import { Link } from "react-router-dom";
 
-/**
- * Displays a regular footer element.
- */
+
 export default function FooterComponent(): JSX.Element {
     return (
         <footer>

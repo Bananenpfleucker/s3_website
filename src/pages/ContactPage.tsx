@@ -2,9 +2,7 @@ import { JSX, useRef, useState } from "react";
 import CardComponent from "../components/CardComponent";
 import emailjs from "@emailjs/browser";
 
-/**
- * Displays the contact page with a working contact form and validation.
- */
+
 export default function ContactPage(): JSX.Element {
     const form = useRef<HTMLFormElement>(null);
     const [errors, setErrors] = useState<string[]>([]);

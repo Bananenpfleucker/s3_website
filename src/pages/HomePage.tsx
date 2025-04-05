@@ -119,7 +119,7 @@ export default function HomePage(): JSX.Element {
                 </CardComponent>
             </div>
 
-            {/* Aktuellste Leitlinien */}
+            
             {latestGuidelines.length > 0 && (
                 <div className="search-results-wrapper">
                     <CardComponent title="Aktuellste Leitlinien">
