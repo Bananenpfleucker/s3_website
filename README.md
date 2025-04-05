@@ -40,10 +40,10 @@ soll aber auch eine selbsterklärende, intuitive Bedienung haben. Die Darstellun
 ### Frontend
 
 * 🟧 Hauptseite entwickelt
-* 🟧 allgemeine, wesentliche Komponenten entwickelt (Kopf- und Fußzeile, ...)
-* 🟧 sonstige Komponenten entwickelt 
+* 🟩 allgemeine, wesentliche Komponenten entwickelt (Kopf- und Fußzeile, ...)
+* 🟩 sonstige Komponenten entwickelt 
 * 🟩 statische Seiten eingepflegt (Datenschutz, Impressum, ...)
 * 🟧 Suchfunktion entwickelt
-* 🟧 Anzeige der Suchergebnisse entwickelt
+* 🟩 Anzeige der Suchergebnisse entwickelt
 * 🟧 Detailansicht entwickelt
-* 🟧 allgemeine Darstellung und Stil entwickelt 
+* 🟩 allgemeine Darstellung und Stil entwickelt 

@@ -15,11 +15,17 @@ export default function App(): JSX.Element {
                 document.documentElement.style.setProperty("--header-height", `${height}px`);
             }
         };
+<<<<<<< HEAD
 
         // Initial setzen
         updateHeaderHeight();
 
         // Bei Resize und Scroll aktualisieren
+=======
+    
+        updateHeaderHeight();
+    
+>>>>>>> develop
         window.addEventListener("resize", updateHeaderHeight);
         window.addEventListener("scroll", updateHeaderHeight);
 
@@ -40,8 +46,7 @@ export default function App(): JSX.Element {
 
     return (
         <div className="app-wrapper">
-            {/*  Hintergrundvideo */}
-            <video
+                <video
                 className="background-video"
                 autoPlay
                 muted

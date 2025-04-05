@@ -2,10 +2,7 @@ import { JSX, ForwardedRef, forwardRef, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/icon/S3Navigator.png";
 
-/**
- * Displays a regular header element (classic layout with logo and title).
- * The logo links to the homepage.
- */
+
 const HeaderComponent = forwardRef<HTMLElement, {}>(
     (_props, ref: ForwardedRef<HTMLElement>): JSX.Element => {
         const headerRef = useRef<HTMLElement | null>(null);
