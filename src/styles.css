@@ -705,9 +705,10 @@ h1, h2, h3, h4 {
 .form-merge.small input,
 .form-merge.small button {
   padding: 0.5rem 0.75rem;
-  font-size: 0.9rem;
+  font-size: 0.94rem;
 }
 
 .search-bar-wrapper.scrolled .card-title {
   display: none;
 }
+

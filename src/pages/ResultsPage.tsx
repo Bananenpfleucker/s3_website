@@ -181,12 +181,13 @@ export default function ResultsPage(): JSX.Element {
                             <div className="card-container">
                                 {guidelines.map(g => (
                                     <Link key={g.id} to={`/guideline/${g.id}`} className="guideline-card">
-                                        <h4 className="awmf-cyan">{g.title}</h4>
-                                        <p><strong>Letzte Überprüfung:</strong> {formatDateGerman(g.lastReviewedDate)}</p>
-                                        <p><strong>Erstellt am:</strong> {formatDateGerman(g.creationDate)}</p>
-                                        <p><strong>Gültig bis:</strong> {formatDateGerman(g.validDate)}</p>
-                                        {g.remark && <p><strong>Hinweis:</strong> {g.remark}</p>}
-                                    </Link>
+                                    <h4 className="awmf-cyan">{g.title}</h4>
+                                    <p><strong>Letzte Überprüfung:</strong> {formatDateGerman(g.lastReviewedDate)}</p>
+                                    <p><strong>Erstellt am:</strong> {formatDateGerman(g.creationDate)}</p>
+                                    <p><strong>Gültig bis:</strong> {formatDateGerman(g.validDate)}</p>
+                                    {g.remark && <p><strong>Hinweis:</strong> {g.remark}</p>}
+                                    <p className="disclaimer"> Diese Zusammenfassung wurde automatisiert durch eine KI erstellt. Es wird keine Gewähr für Richtigkeit oder Vollständigkeit übernommen.</p>
+                                </Link>
                                 ))}
                             </div>
                         </CardComponent>
