@@ -2,6 +2,9 @@ import { JSX, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CardComponent from "../components/CardComponent";
 import { Guideline } from "../data/api";
+import searchIcon from "../assets/icon/search.svg";
+import filterIcon from "../assets/icon/filter.svg";
+
 
 export default function ResultsPage(): JSX.Element {
     const [search, setSearch] = useState(localStorage.getItem("searchTerm") || "");
@@ -46,7 +49,6 @@ export default function ResultsPage(): JSX.Element {
             return;
         }
     
-        // ✅ LocalStorage aktualisieren
         localStorage.setItem("searchTerm", search);
         localStorage.setItem("sortBy", sortBy);
         localStorage.setItem("sortDirection", sortDirection);
@@ -128,8 +130,14 @@ export default function ResultsPage(): JSX.Element {
                             onChange={(e) => setSearch(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleNewSearch()}
                         />
-                        <button onClick={() => handleNewSearch()}>Suchen</button>
-                        <button onClick={() => setShowAdvanced(!showAdvanced)}>Erweitert</button>
+                        <button className="primary" onClick={() => handleNewSearch()} title="Suche starten">
+                        <img src={searchIcon} alt="Suche" className="button-icon" />
+                        </button>
+
+                        <button className="secondary" onClick={() => setShowAdvanced(!showAdvanced)} title="Erweiterte Filter">
+                        <img src={filterIcon} alt="Filter" className="button-icon" />
+                        </button>
+
                     </div>
 
                     {showAdvanced && (

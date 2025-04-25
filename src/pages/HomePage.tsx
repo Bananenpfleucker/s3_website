@@ -2,6 +2,9 @@ import { JSX, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import CardComponent from "../components/CardComponent";
 import { Guideline } from "../data/api";
+import searchIcon from "../assets/icon/search.svg";
+import filterIcon from "../assets/icon/filter.svg";
+
 
 export default function HomePage(): JSX.Element {
     const [search, setSearch] = useState('');
@@ -81,8 +84,14 @@ export default function HomePage(): JSX.Element {
                             onChange={(e) => setSearch(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                         />
-                        <button onClick={handleSearch}>Suchen</button>
-                        <button onClick={() => setShowAdvanced(!showAdvanced)}>Erweitert</button>
+                        <button className="primary" onClick={() => handleSearch()} title="Suche starten">
+                        <img src={searchIcon} alt="Suche" className="button-icon" />
+                        </button>
+
+                        <button className="secondary" onClick={() => setShowAdvanced(!showAdvanced)} title="Erweiterte Filter">
+                        <img src={filterIcon} alt="Filter" className="button-icon" />
+                        </button>
+
                     </div>
 
                     {showAdvanced && (

@@ -8,6 +8,8 @@ export default function GuidelineDetailPage(): JSX.Element {
     const { id } = useParams();
     const [guideline, setGuideline] = useState<Guideline | null>(null);
     const [fullText, setFullText] = useState<string>("");
+    const [structuredText, setStructuredText] = useState<Record<string, string> | null>(null);
+
 
     function formatDateGerman(dateString: string): string {
         if (!dateString) return "-";
@@ -18,6 +20,26 @@ export default function GuidelineDetailPage(): JSX.Element {
             day: "2-digit"
         });
     }
+
+    function renderStructuredText(json: Record<string, string>): JSX.Element {
+        return (
+          <div className="structured-text">
+            {Object.entries(json)
+              .filter(([, value]) => value && value.trim() !== "")
+              .map(([key, value]) => (
+                <div key={key} className="section">
+                  
+                  <h4 className="section-title">{key.replace(/_/g, " ")}</h4>
+                  
+                  <p className="section-content">{value}</p>
+                </div>
+            ))}
+          </div>
+        );
+      }
+      
+    
+    
     
     useEffect(() => {
         if (!id) return;
@@ -25,7 +47,10 @@ export default function GuidelineDetailPage(): JSX.Element {
         fetch(`http://s3-navigator.duckdns.org:5000/guidelines/${id}`)
             .then(res => res.json())
             .then(data => {
-                const g = data; 
+                const g = data;
+    
+                console.log("API-Antwort:", g);
+                console.log("compressed_text (als string):", g.compressed_text);
     
                 setGuideline({
                     id: g.id,
@@ -38,13 +63,27 @@ export default function GuidelineDetailPage(): JSX.Element {
                     remark: g.aktueller_hinweis
                 });
     
-                setFullText(g.compressed_text ?? "Kein Langtext verfügbar");
+                if (g.compressed_text) {
+                    try {
+                        const cleaned = g.compressed_text.replace(/,\s*}$/, '}');
+                        const parsed = JSON.parse(cleaned);
+                        console.log("Parsed compressed_text", parsed);
+                        setStructuredText(parsed);
+                    } catch (error) {
+                        console.error("Fehler beim Parsen von compressed_text:", error);
+                        setStructuredText(null);
+                        setFullText("Fehler beim Laden der Zusammenfassung");
+                    }
+                } else {
+                    setStructuredText(null);
+                    setFullText("Kein Langtext verfügbar");
+                }
             })
             .catch(err => {
-                console.error("Fehler beim Laden:", err);
-                alert("Die Leitlinie konnte nicht geladen werden.");
+                console.error("Fetch-Fehler:", err);
             });
     }, [id]);
+    
     
 
     if (!guideline) {
@@ -65,9 +104,16 @@ export default function GuidelineDetailPage(): JSX.Element {
             {guideline.remark && <p><strong>Hinweis:</strong> {guideline.remark}</p>}
 
             <h3>Zusammenfassung:</h3>
-            
-            <p style={{ whiteSpace: "pre-wrap" }}>{fullText}</p>
-            <p className="disclaimer"> Diese Zusammenfassung wurde automatisiert durch eine KI erstellt. Es wird keine Gewähr für Richtigkeit oder Vollständigkeit übernommen.</p>
+
+            {structuredText
+        ? renderStructuredText(structuredText)
+        : <p style={{ whiteSpace: "pre-wrap" }}>{fullText}</p>
+}
+
+
+            <p className="disclaimer">
+                Diese Zusammenfassung wurde automatisiert durch eine KI erstellt. Es wird keine Gewähr für Richtigkeit oder Vollständigkeit übernommen.
+            </p>
 
         </CardComponent>
     );
