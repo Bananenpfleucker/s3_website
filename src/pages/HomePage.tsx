@@ -10,7 +10,6 @@ export default function HomePage(): JSX.Element {
     const [search, setSearch] = useState('');
     const [latestGuidelines, setLatestGuidelines] = useState<Guideline[]>([]);
     const [showAdvanced, setShowAdvanced] = useState(false);
-    const [onlyValid, setOnlyValid] = useState(false);
     const [sortBy, setSortBy] = useState("created_at");
     const [sortDirection, setSortDirection] = useState("desc");
     const [scrolled, setScrolled] = useState(false);
@@ -20,8 +19,8 @@ export default function HomePage(): JSX.Element {
         localStorage.setItem("searchTerm", search);
         localStorage.setItem("sortBy", sortBy);
         localStorage.setItem("sortDirection", sortDirection);
-        localStorage.setItem("onlyValid", JSON.stringify(onlyValid));
         localStorage.setItem("currentPage", "1");
+
         navigate("/results");
     }
 
@@ -95,35 +94,28 @@ export default function HomePage(): JSX.Element {
                     </div>
 
                     {showAdvanced && (
-                        <div className="advanced-search-panel">
-                            <div className="filter-option">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={onlyValid}
-                                        onChange={(e) => setOnlyValid(e.target.checked)}
-                                    />
-                                    <span>Nur gültige Leitlinien</span>
-                                </label>
-                            </div>
-
-                            <div className="filter-option">
-                                <label>Sortieren nach:</label>
-                                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-                                    <option value="created_at">Erstellungsdatum</option>
-                                    <option value="valid_until">Gültig bis</option>
-                                    <option value="title">Titel</option>
-                                </select>
-                            </div>
-
-                            <div className="filter-option">
-                                <label>Richtung:</label>
-                                <select value={sortDirection} onChange={(e) => setSortDirection(e.target.value)}>
-                                    <option value="desc">Absteigend</option>
-                                    <option value="asc">Aufsteigend</option>
-                                </select>
-                            </div>
-                        </div>
+                       <div className="advanced-search-panel">
+                       <div className="filter-option">
+                           <label>Sortieren nach:</label>
+                           <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                               <option value="created_at">Erstellungsdatum</option>
+                               <option value="title">Titel</option>
+                               <option value="valid_until">Gültigkeit</option>
+                               <option value="stand">Stand (letzte Überprüfung)</option>
+                               <option value="lversion">Leitlinien-Version</option>
+                           </select>
+                       </div>
+                   
+                       <div className="filter-option">
+                           <label>Richtung:</label>
+                           <select value={sortDirection} onChange={(e) => setSortDirection(e.target.value)}>
+                               <option value="desc">Absteigend</option>
+                               <option value="asc">Aufsteigend</option>
+                           </select>
+                       </div>
+                   </div>
+                   
+                   
                     )}
                 </CardComponent>
             </div>

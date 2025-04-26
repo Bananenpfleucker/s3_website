@@ -12,7 +12,6 @@ export default function ResultsPage(): JSX.Element {
     const [loading, setLoading] = useState(true);
     const [timeoutReached, setTimeoutReached] = useState(false);
     const [showAdvanced, setShowAdvanced] = useState(false);
-    const [onlyValid, setOnlyValid] = useState(JSON.parse(localStorage.getItem("onlyValid") || "false"));
     const [sortBy, setSortBy] = useState(localStorage.getItem("sortBy") || "created_at");
     const [sortDirection, setSortDirection] = useState(localStorage.getItem("sortDirection") || "desc");
     const pageSize = 9;
@@ -31,10 +30,12 @@ export default function ResultsPage(): JSX.Element {
     }
 
     useEffect(() => {
+        localStorage.removeItem("onlyValid");
         const timeout = setTimeout(() => setTimeoutReached(true), 5000);
         handleNewSearch();
         return () => clearTimeout(timeout);
     }, []);
+    
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -52,7 +53,6 @@ export default function ResultsPage(): JSX.Element {
         localStorage.setItem("searchTerm", search);
         localStorage.setItem("sortBy", sortBy);
         localStorage.setItem("sortDirection", sortDirection);
-        localStorage.setItem("onlyValid", JSON.stringify(onlyValid));
         localStorage.setItem("currentPage", page.toString());
     
         setLoading(true);
@@ -66,9 +66,7 @@ export default function ResultsPage(): JSX.Element {
             limit: pageSize.toString(),
             offset: offset.toString()
         });
-    
-        if (onlyValid) params.append("valid_only", "true");
-    
+        
         fetch(`http://s3-navigator.duckdns.org:5000/guidelines/search?${params.toString()}`)
             .then((res) => res.json())
             .then((data) => {
@@ -142,34 +140,26 @@ export default function ResultsPage(): JSX.Element {
 
                     {showAdvanced && (
                         <div className="advanced-search-panel">
-                            <div className="filter-option">
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={onlyValid}
-                                        onChange={(e) => setOnlyValid(e.target.checked)}
-                                    />
-                                    <span>Nur gültige Leitlinien</span>
-                                </label>
-                            </div>
-
-                            <div className="filter-option">
-                                <label>Sortieren nach:</label>
-                                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-                                    <option value="created_at">Erstellungsdatum</option>
-                                    <option value="valid_until">Gültig bis</option>
-                                    <option value="title">Titel</option>
-                                </select>
-                            </div>
-
-                            <div className="filter-option">
-                                <label>Richtung:</label>
-                                <select value={sortDirection} onChange={(e) => setSortDirection(e.target.value)}>
-                                    <option value="desc">Absteigend</option>
-                                    <option value="asc">Aufsteigend</option>
-                                </select>
-                            </div>
+                        <div className="filter-option">
+                            <label>Sortieren nach:</label>
+                            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                                <option value="created_at">Erstellungsdatum</option>
+                                <option value="title">Titel</option>
+                                <option value="valid_until">Gültigkeit</option>
+                                <option value="stand">Stand (letzte Überprüfung)</option>
+                                <option value="lversion">Leitlinien-Version</option>
+                            </select>
                         </div>
+                    
+                        <div className="filter-option">
+                            <label>Richtung:</label>
+                            <select value={sortDirection} onChange={(e) => setSortDirection(e.target.value)}>
+                                <option value="desc">Absteigend</option>
+                                <option value="asc">Aufsteigend</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     )}
                 </CardComponent>
             </div>
