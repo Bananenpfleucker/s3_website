@@ -933,8 +933,6 @@ button.secondary .button-icon {
   padding: 0.25rem 0.5rem 0.25rem 1rem !important;
 }
 
-
-
 .section-title {
   color: #555; 
   font-weight: 600; 
@@ -1054,4 +1052,19 @@ body.dark-mode .pagination.custom-pagination .dots {
 
 body.dark-mode .vote-button span {
   color: white; 
+}
+
+@media (max-width: 600px) {
+  .vote-button img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .vote-button span {
+    font-size: 0.9rem;
+  }
+
+  .vote-buttons {
+    gap: 1rem; 
+  }
 }
