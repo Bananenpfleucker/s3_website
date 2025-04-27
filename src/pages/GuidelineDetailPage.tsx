@@ -2,7 +2,7 @@ import { JSX, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Guideline } from "../data/api";
 import CardComponent from "../components/CardComponent";
-import ThumbsUp from "../assets/icon/Thumbs_up.png";
+import ThumbsUp from "../assets/icon/thumbs_up.png";
 import ThumbsDown from "../assets/icon/Thumbs_down.png";
 
 
