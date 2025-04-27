@@ -11,19 +11,13 @@ export type Guideline = {
     creationDate: string,
     validDate: string,
     remark?: string | undefined | null,
-    extractedText?: string | null  // ✅ NEU hinzugefügt
+    extractedText?: string | null  
 }
 
 export const ErrorMessages: { [call: string]: string } = {
     'fetchGuidelines': 'Es ist ein Fehler aufgetreten. Wir entschuldigen uns für die Unannehmlichkeiten.'
 };
 
-/**
- * Sends a request with the supplied search term.
- * 
- * @param search The search term to filter
- * @param setValues The setter function to override the variable
- */
 export function fetchGuidelinesBySearchTerm(
     search: string,
     setValues: (data: SetStateAction<Array<Guideline>>) => void
@@ -45,7 +39,7 @@ export function fetchGuidelinesBySearchTerm(
                     creationDate: item.created_at,
                     validDate: item.valid_until,
                     remark: item.aktueller_hinweis,
-                    extractedText: item.extracted_text // ✅ NEU hinzugefügt
+                    extractedText: item.extracted_text 
                 });
             }
 

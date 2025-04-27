@@ -2,6 +2,9 @@ import { JSX, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Guideline } from "../data/api";
 import CardComponent from "../components/CardComponent";
+import ThumbsUp from "../assets/icon/Thumbs_up.png";
+import ThumbsDown from "../assets/icon/Thumbs_down.png";
+
 
 
 export default function GuidelineDetailPage(): JSX.Element {
@@ -9,6 +12,9 @@ export default function GuidelineDetailPage(): JSX.Element {
     const [guideline, setGuideline] = useState<Guideline | null>(null);
     const [fullText, setFullText] = useState<string>("");
     const [structuredText, setStructuredText] = useState<Record<string, string> | null>(null);
+    const [votes, setVotes] = useState<{ up: number; down: number }>({ up: 0, down: 0 });
+    const [voting, setVoting] = useState<null | "up" | "down">(null);
+
 
 
     function formatDateGerman(dateString: string): string {
@@ -20,6 +26,43 @@ export default function GuidelineDetailPage(): JSX.Element {
             day: "2-digit"
         });
     }
+
+    function fetchVotes() {
+        if (!id) return;
+        fetch(`http://s3-navigator.duckdns.org:5000/guidelines/${id}/votes`)
+          .then(res => res.json())
+          .then(data => {
+            setVotes({
+              up: data.upvotes || 0,
+              down: data.downvotes || 0,
+            });
+          })
+          .catch(err => {
+            console.error("Fehler beim Laden der Votes:", err);
+          });
+    }
+    
+    function submitVote(vote: "up" | "down") {
+        if (!id) return;
+        setVoting(vote);
+        fetch(`http://s3-navigator.duckdns.org:5000/guidelines/${id}/vote`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ vote }),
+        })
+        .then(() => {
+            fetchVotes();
+        })
+        .catch(err => {
+            console.error("Fehler beim Abstimmen:", err);
+        })
+        .finally(() => {
+            setTimeout(() => setVoting(null), 50);
+        });
+    }
+    
 
     function renderStructuredText(json: Record<string, string>): JSX.Element {
         return (
@@ -36,8 +79,7 @@ export default function GuidelineDetailPage(): JSX.Element {
             ))}
           </div>
         );
-      }
-      
+      }  
     
     
     
@@ -78,6 +120,7 @@ export default function GuidelineDetailPage(): JSX.Element {
                     setStructuredText(null);
                     setFullText("Kein Langtext verfügbar");
                 }
+                fetchVotes();
             })
             .catch(err => {
                 console.error("Fetch-Fehler:", err);
@@ -110,6 +153,25 @@ export default function GuidelineDetailPage(): JSX.Element {
         : <p style={{ whiteSpace: "pre-wrap" }}>{fullText}</p>
 }
 
+            <div className="vote-buttons">
+            <button
+                onClick={() => submitVote("up")}
+                className={`vote-button ${voting === "up" ? "voting" : ""}`}
+                title="Hilfreich"
+            >
+                <img src={ThumbsUp} alt="Daumen hoch" />
+                <span>{votes.up}</span>
+            </button>
+
+            <button
+                onClick={() => submitVote("down")}
+                className={`vote-button ${voting === "down" ? "voting" : ""}`}
+                title="Nicht hilfreich"
+            >
+                <img src={ThumbsDown} alt="Daumen runter" />
+                <span>{votes.down}</span>
+            </button>
+            </div>
 
             <p className="disclaimer">
                 Diese Zusammenfassung wurde automatisiert durch eine KI erstellt. Es wird keine Gewähr für Richtigkeit oder Vollständigkeit übernommen.

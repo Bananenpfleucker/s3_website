@@ -1,9 +1,6 @@
 import { JSX } from "react";
 
-/**
- * Displays different elements to provide an overview of the
- * existing styles and custom elements.
- */
+
 export default function CheatSheetPage(): JSX.Element {
     return (
         <>

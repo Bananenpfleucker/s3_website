@@ -1,9 +1,7 @@
 import { JSX } from "react";
 import CardComponent from "../components/CardComponent";
 
-/**
- * Displays the privacy policy page.
- */
+
 export default function PrivacyPolicyPage(): JSX.Element {
     return (
         <CardComponent title="Datenschutzerklärung">

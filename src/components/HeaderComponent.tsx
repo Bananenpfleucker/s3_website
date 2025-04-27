@@ -9,13 +9,11 @@ const HeaderComponent = forwardRef<HTMLElement, {}>(
             return localStorage.getItem("darkMode") === "true";
         });
 
-        // Set dark-mode class on body
         useEffect(() => {
             document.body.classList.toggle("dark-mode", darkMode);
             localStorage.setItem("darkMode", String(darkMode));
         }, [darkMode]);
 
-        // Shrink-Effekt
         useEffect(() => {
             const marker = document.getElementById("header-marker");
             const header = headerRef.current;

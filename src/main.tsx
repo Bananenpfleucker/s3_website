@@ -18,7 +18,6 @@ import GuidelineDetailPage from "./pages/GuidelineDetailPage";
 import ResultsPage from "./pages/ResultsPage";
 
 
-// Define routes
 const router = createBrowserRouter([
     {
         path: "/",

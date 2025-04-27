@@ -300,9 +300,9 @@ div.form-merge > button {
 @media (max-width: 600px) {
   div.form-merge > input,
   div.form-merge > button {
-    padding: 0.125rem 0.25rem; /* weniger vertikales Padding */
-    font-size: 0.7rem;       /* kleinere Schrift */
-    min-height: 1rem;         /* maximale Höhe reduzieren */
+    padding: 0.125rem 0.25rem; 
+    font-size: 0.7rem;       
+    min-height: 1rem;         
   }
 
   .button-icon {
@@ -311,13 +311,13 @@ div.form-merge > button {
   }
 
   div.form-merge > * {
-    line-height: 1rem; /* keine überhöhte Zeilenhöhe */
+    line-height: 1rem; 
   }
 }
 
 @media (max-width: 600px) {
   button {
-    min-height: 1rem; /* oder unset */
+    min-height: 1rem; 
   }
 }
 
@@ -1008,4 +1008,50 @@ button.secondary .button-icon {
 
 body.dark-mode .pagination.custom-pagination .dots {
   color: #ddd;
+}
+
+.vote-buttons {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.vote-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none !important;
+  border: none !important;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  color: var(--awmf-accent-secondary);
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: none !important;
+}
+
+.vote-button img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+  transition: transform 0.2s ease;
+}
+
+.vote-button.voting img {
+  transform: scale(0.8);
+}
+
+.vote-button span {
+  font-size: 1.1rem;
+}
+
+.vote-button span {
+  color: var(--awmf-accent-secondary); 
+}
+
+body.dark-mode .vote-button span {
+  color: white; 
 }
