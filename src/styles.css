@@ -905,7 +905,7 @@ button.secondary {
   min-width: 45px;
   min-height: 45px;
   border-radius: var(--border-radius);
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, background-position 0.5s ease-in-out;
 }
 
 button.primary {
@@ -941,4 +941,71 @@ button.secondary .button-icon {
   margin-top: 1.2rem;
   margin-bottom: 0.5rem;
   font-size: 1.1rem; 
+}
+
+.pagination.custom-pagination > button.active {
+  background-color: var(--awmf-accent-primary) !important;
+  color: white !important;
+  border-color: var(--awmf-accent-primary) !important;
+  font-weight: bold !important;
+}
+
+.custom-pagination button {
+  min-width: 2rem;
+  min-height: 2rem;
+  font-size: 0.9rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--awmf-accent-secondary);
+  background-color: var(--light-background);
+  color: var(--awmf-accent-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-pagination button:not(.active):hover {
+  background-color: var(--awmf-accent-primary);
+  color: white;
+}
+
+.custom-pagination > button.active {
+  background-color: var(--awmf-accent-primary) !important;
+  color: white !important;
+  border-color: var(--awmf-accent-primary) !important;
+  font-weight: bold;
+}
+
+.custom-pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.custom-pagination .dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+  color: var(--light-font-color);
+  font-size: 1rem;
+}
+
+.pagination.custom-pagination > button.active {
+  background: var(--awmf-accent-primary) !important;
+  color: white !important;
+  border-color: var(--awmf-accent-primary) !important;
+  font-weight: bold !important;
+  background-size: initial !important;
+  background-position: initial !important;
+}
+
+.pagination.custom-pagination > button.active:hover {
+  background: var(--awmf-accent-primary) !important;
+  color: white !important;
+}
+
+body.dark-mode .pagination.custom-pagination .dots {
+  color: #ddd;
 }

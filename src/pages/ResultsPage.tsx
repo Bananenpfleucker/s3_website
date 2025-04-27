@@ -66,9 +66,15 @@ export default function ResultsPage(): JSX.Element {
             limit: pageSize.toString(),
             offset: offset.toString()
         });
-        
-        fetch(`http://s3-navigator.duckdns.org:5000/guidelines/search?${params.toString()}`)
-            .then((res) => res.json())
+    
+        fetch(`http://s3-navigator.duckdns.org:5000/guidelines/search/count?q=${encodeURIComponent(search)}`)
+            .then(res => res.json())
+            .then(countData => {
+                console.log("Antwort von /count:", countData);
+                setTotalCount(countData.count || 0); 
+                return fetch(`http://s3-navigator.duckdns.org:5000/guidelines/search?${params.toString()}`);
+            })
+            .then(res => res.json())
             .then((data) => {
                 const resultArray = Array.isArray(data) ? data : data.results ?? [];
     
@@ -84,24 +90,52 @@ export default function ResultsPage(): JSX.Element {
                 }));
     
                 setGuidelines(mapped);
-                setTotalCount(data.total ?? resultArray.length);
                 setCurrentPage(page);
                 setLoading(false);
     
                 if (mapped.length === 0) setTimeoutReached(true);
+            })
+            .catch(() => {
+                setGuidelines([]);
+                setLoading(false);
+                setTimeoutReached(true);
             });
     }
     
-
+    
     function renderPagination(): JSX.Element | null {
         const totalPages = Math.ceil(totalCount / pageSize);
         if (totalPages <= 1) return null;
-
-        const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-
+    
+        const pages = [];
+        const maxDisplayedPages = 5;
+    
+        let startPage = Math.max(currentPage - 2, 1);
+        let endPage = Math.min(startPage + maxDisplayedPages - 1, totalPages);
+    
+        if (endPage - startPage < maxDisplayedPages - 1) {
+            startPage = Math.max(endPage - maxDisplayedPages + 1, 1);
+        }
+    
+        for (let page = startPage; page <= endPage; page++) {
+            pages.push(page);
+        }
+    
         return (
-            <div className="pagination">
-                <button onClick={() => handleNewSearch(currentPage - 1)} disabled={currentPage === 1}>Zurück</button>
+            <div className="pagination custom-pagination">
+                <button onClick={() => handleNewSearch(currentPage - 1)} disabled={currentPage === 1}>
+                    &lt;
+                </button>
+    
+                {startPage > 1 && (
+                    <>
+                        <button onClick={() => handleNewSearch(1)} className={currentPage === 1 ? "active" : ""}>
+                            1
+                        </button>
+                        {startPage > 2 && <span className="dots">...</span>}
+                    </>
+                )}
+    
                 {pages.map((page) => (
                     <button
                         key={page}
@@ -111,10 +145,24 @@ export default function ResultsPage(): JSX.Element {
                         {page}
                     </button>
                 ))}
-                <button onClick={() => handleNewSearch(currentPage + 1)} disabled={currentPage === totalPages}>Weiter</button>
+    
+                {endPage < totalPages && (
+                    <>
+                        {endPage < totalPages - 1 && <span className="dots">...</span>}
+                        <button onClick={() => handleNewSearch(totalPages)} className={currentPage === totalPages ? "active" : ""}>
+                            {totalPages}
+                        </button>
+                    </>
+                )}
+    
+                <button onClick={() => handleNewSearch(currentPage + 1)} disabled={currentPage === totalPages}>
+                    &gt;
+                </button>
             </div>
         );
     }
+    
+    
 
     return (
         <div className="search-page">
