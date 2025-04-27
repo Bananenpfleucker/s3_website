@@ -909,8 +909,19 @@ button.secondary {
 }
 
 button.primary {
-  background-color: var(--awmf-accent-primary);
-  color: white;
+  background: linear-gradient(135deg,
+      var(--light-background) 50%,
+      var(--awmf-accent-primary) 50%);
+  background-size: 250%;
+  background-position: 0 0;
+  color: var(--light-font-color); 
+  border: 1px solid var(--awmf-accent-primary);
+  transition: all 0.5s ease-in-out;
+}
+
+button.primary:hover {
+  background-position-x: 100%;
+  color: var(--light-background);
 }
 
 button.secondary {

@@ -5,8 +5,6 @@ import CardComponent from "../components/CardComponent";
 import ThumbsUp from "../assets/icon/thumbs_up.png";
 import ThumbsDown from "../assets/icon/Thumbs_down.png";
 
-
-
 export default function GuidelineDetailPage(): JSX.Element {
     const { id } = useParams();
     const [guideline, setGuideline] = useState<Guideline | null>(null);
@@ -14,8 +12,7 @@ export default function GuidelineDetailPage(): JSX.Element {
     const [structuredText, setStructuredText] = useState<Record<string, string> | null>(null);
     const [votes, setVotes] = useState<{ up: number; down: number }>({ up: 0, down: 0 });
     const [voting, setVoting] = useState<null | "up" | "down">(null);
-
-
+    const [isSummarizing, setIsSummarizing] = useState(false);
 
     function formatDateGerman(dateString: string): string {
         if (!dateString) return "-";
@@ -30,70 +27,85 @@ export default function GuidelineDetailPage(): JSX.Element {
     function fetchVotes() {
         if (!id) return;
         fetch(`http://s3-navigator.duckdns.org:5000/guidelines/${id}/votes`)
-          .then(res => res.json())
-          .then(data => {
-            setVotes({
-              up: data.upvotes || 0,
-              down: data.downvotes || 0,
+            .then(res => res.json())
+            .then(data => {
+                setVotes({
+                    up: data.upvotes || 0,
+                    down: data.downvotes || 0,
+                });
+            })
+            .catch(err => {
+                console.error("Fehler beim Laden der Votes:", err);
             });
-          })
-          .catch(err => {
-            console.error("Fehler beim Laden der Votes:", err);
-          });
     }
-    
+
     function submitVote(vote: "up" | "down") {
         if (!id) return;
         setVoting(vote);
         fetch(`http://s3-navigator.duckdns.org:5000/guidelines/${id}/vote`, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({ vote }),
         })
-        .then(() => {
-            fetchVotes();
-        })
-        .catch(err => {
-            console.error("Fehler beim Abstimmen:", err);
-        })
-        .finally(() => {
-            setTimeout(() => setVoting(null), 50);
-        });
+            .then(() => {
+                fetchVotes();
+            })
+            .catch(err => {
+                console.error("Fehler beim Abstimmen:", err);
+            })
+            .finally(() => {
+                setTimeout(() => setVoting(null), 50);
+            });
     }
-    
+
+    function summarizeGuideline() {
+        if (!id) return;
+        setIsSummarizing(true);
+
+        fetch(`http://s3-navigator.duckdns.org:5000/guidelines/${id}/summarize`, {
+            method: "POST",
+        })
+            .then((res) => {
+                if (!res.ok) throw new Error("Fehler beim Zusammenfassen");
+                console.log("Backend hat Zusammenfassung bestätigt!"); 
+                return res.json();
+            })
+            .then(() => {
+                window.location.reload();
+            })
+        
+            .catch((err) => {
+                console.error("Zusammenfassung fehlgeschlagen:", err);
+                setIsSummarizing(false);
+            });
+    }
 
     function renderStructuredText(json: Record<string, string>): JSX.Element {
         return (
-          <div className="structured-text">
-            {Object.entries(json)
-              .filter(([, value]) => value && value.trim() !== "")
-              .map(([key, value]) => (
-                <div key={key} className="section">
-                  
-                  <h4 className="section-title">{key.replace(/_/g, " ")}</h4>
-                  
-                  <p className="section-content">{value}</p>
-                </div>
-            ))}
-          </div>
+            <div className="structured-text">
+                {Object.entries(json)
+                    .filter(([, value]) => value && value.trim() !== "")
+                    .map(([key, value]) => (
+                        <div key={key} className="section">
+                            <h4 className="section-title">{key.replace(/_/g, " ")}</h4>
+                            <p className="section-content">{value}</p>
+                        </div>
+                    ))}
+            </div>
         );
-      }  
-    
-    
-    
+    }
+
     useEffect(() => {
         if (!id) return;
-    
+        console.log("Aktuelle ID:", id);
+
         fetch(`http://s3-navigator.duckdns.org:5000/guidelines/${id}`)
             .then(res => res.json())
             .then(data => {
                 const g = data;
-    
-                console.log("API-Antwort:", g);
-                console.log("compressed_text (als string):", g.compressed_text);
-    
+
                 setGuideline({
                     id: g.id,
                     guidelineId: g.awmf_guideline_id,
@@ -104,12 +116,11 @@ export default function GuidelineDetailPage(): JSX.Element {
                     validDate: g.valid_until,
                     remark: g.aktueller_hinweis
                 });
-    
+
                 if (g.compressed_text) {
                     try {
                         const cleaned = g.compressed_text.replace(/,\s*}$/, '}');
                         const parsed = JSON.parse(cleaned);
-                        console.log("Parsed compressed_text", parsed);
                         setStructuredText(parsed);
                     } catch (error) {
                         console.error("Fehler beim Parsen von compressed_text:", error);
@@ -126,8 +137,6 @@ export default function GuidelineDetailPage(): JSX.Element {
                 console.error("Fetch-Fehler:", err);
             });
     }, [id]);
-    
-    
 
     if (!guideline) {
         return (
@@ -148,35 +157,47 @@ export default function GuidelineDetailPage(): JSX.Element {
 
             <h3>Zusammenfassung:</h3>
 
-            {structuredText
-        ? renderStructuredText(structuredText)
-        : <p style={{ whiteSpace: "pre-wrap" }}>{fullText}</p>
-}
+            {structuredText ? (
+                renderStructuredText(structuredText)
+            ) : (
+                <>
+                    <p style={{ whiteSpace: "pre-wrap" }}>{fullText}</p>
+                    {fullText === "Kein Langtext verfügbar" && (
+                        <button
+                            className="primary"
+                            onClick={summarizeGuideline}
+                            disabled={isSummarizing}
+                            style={{ marginTop: "1rem", marginLeft: "1rem" }} 
+                        >
+                            {isSummarizing ? "Wird zusammengefasst..." : "Richtlinie zusammenfassen"}
+                        </button>
+                    )}
+                </>
+            )}
 
             <div className="vote-buttons">
-            <button
-                onClick={() => submitVote("up")}
-                className={`vote-button ${voting === "up" ? "voting" : ""}`}
-                title="Hilfreich"
-            >
-                <img src={ThumbsUp} alt="Daumen hoch" />
-                <span>{votes.up}</span>
-            </button>
+                <button
+                    onClick={() => submitVote("up")}
+                    className={`vote-button ${voting === "up" ? "voting" : ""}`}
+                    title="Hilfreich"
+                >
+                    <img src={ThumbsUp} alt="Daumen hoch" />
+                    <span>{votes.up}</span>
+                </button>
 
-            <button
-                onClick={() => submitVote("down")}
-                className={`vote-button ${voting === "down" ? "voting" : ""}`}
-                title="Nicht hilfreich"
-            >
-                <img src={ThumbsDown} alt="Daumen runter" />
-                <span>{votes.down}</span>
-            </button>
+                <button
+                    onClick={() => submitVote("down")}
+                    className={`vote-button ${voting === "down" ? "voting" : ""}`}
+                    title="Nicht hilfreich"
+                >
+                    <img src={ThumbsDown} alt="Daumen runter" />
+                    <span>{votes.down}</span>
+                </button>
             </div>
 
             <p className="disclaimer">
                 Diese Zusammenfassung wurde automatisiert durch eine KI erstellt. Es wird keine Gewähr für Richtigkeit oder Vollständigkeit übernommen.
             </p>
-
         </CardComponent>
     );
 }
