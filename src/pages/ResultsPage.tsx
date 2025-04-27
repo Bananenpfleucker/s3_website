@@ -34,8 +34,7 @@ export default function ResultsPage(): JSX.Element {
         const timeout = setTimeout(() => setTimeoutReached(true), 5000);
         handleNewSearch();
         return () => clearTimeout(timeout);
-    }, []);
-    
+    }, []);   
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -43,11 +42,23 @@ export default function ResultsPage(): JSX.Element {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    function handleNewSearch(page = currentPage): void {
+    useEffect(() => {
+        handleNewSearch(1, true);
+      }, [sortBy]);
+      
+      useEffect(() => {
+        handleNewSearch(1, true);
+      }, [sortDirection]);
+    
+    function handleNewSearch(page = currentPage, resetPage = false): void {
         if (!search.trim()) {
             setGuidelines([]);
             setLoading(false);
             return;
+        }
+    
+        if (resetPage) {
+            page = 1;
         }
     
         localStorage.setItem("searchTerm", search);
@@ -71,7 +82,7 @@ export default function ResultsPage(): JSX.Element {
             .then(res => res.json())
             .then(countData => {
                 console.log("Antwort von /count:", countData);
-                setTotalCount(countData.count || 0); 
+                setTotalCount(countData.count || 0);
                 return fetch(`http://s3-navigator.duckdns.org:5000/guidelines/search?${params.toString()}`);
             })
             .then(res => res.json())
@@ -101,7 +112,6 @@ export default function ResultsPage(): JSX.Element {
                 setTimeoutReached(true);
             });
     }
-    
     
     function renderPagination(): JSX.Element | null {
         const totalPages = Math.ceil(totalCount / pageSize);
@@ -174,9 +184,9 @@ export default function ResultsPage(): JSX.Element {
                             placeholder="Suchbegriff"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && handleNewSearch()}
+                            onKeyDown={(e) => e.key === 'Enter' && handleNewSearch(1, true)}
                         />
-                        <button className="primary" onClick={() => handleNewSearch()} title="Suche starten">
+                        <button className="primary" onClick={() => handleNewSearch(1, true)} title="Suche starten">
                         <img src={searchIcon} alt="Suche" className="button-icon" />
                         </button>
 
@@ -191,19 +201,19 @@ export default function ResultsPage(): JSX.Element {
                         <div className="filter-option">
                             <label>Sortieren nach:</label>
                             <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-                                <option value="created_at">Erstellungsdatum</option>
-                                <option value="title">Titel</option>
-                                <option value="valid_until">Gültigkeit</option>
-                                <option value="stand">Stand (letzte Überprüfung)</option>
-                                <option value="lversion">Leitlinien-Version</option>
+                            <option value="created_at">Erstellungsdatum</option>
+                            <option value="title">Titel</option>
+                            <option value="valid_until">Gültigkeit</option>
+                            <option value="stand">Stand (letzte Überprüfung)</option>
+                            <option value="lversion">Leitlinien-Version</option>
                             </select>
                         </div>
                     
                         <div className="filter-option">
                             <label>Richtung:</label>
                             <select value={sortDirection} onChange={(e) => setSortDirection(e.target.value)}>
-                                <option value="desc">Absteigend</option>
-                                <option value="asc">Aufsteigend</option>
+                            <option value="desc">Absteigend</option>
+                            <option value="asc">Aufsteigend</option>
                             </select>
                         </div>
                     </div>
