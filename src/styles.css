@@ -1079,3 +1079,10 @@ body.dark-mode .vote-button span {
     gap: 1rem; 
   }
 }
+
+body.dark-mode .contact-form input,
+body.dark-mode .contact-form textarea {
+  background-color: var(--dark-background);
+  color: var(--dark-font-color);
+  border-color: var(--dark-font-color);
+}

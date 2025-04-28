@@ -1,43 +1,22 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { RouterProvider } from "react-router-dom";
+
 import "./styles.css";
 import "./assets/icon/S3Navigator.ico";
-import App from "./App.tsx";
 
-import {
-    createBrowserRouter,
-    RouterProvider,
-} from "react-router-dom";
+import { router } from "./router"; 
 
-import HomePage from "./pages/HomePage";
-import CheatSheetPage from "./pages/CheatSheetPage";
-import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
-import ImprintPage from "./pages/ImprintPage";
-import ContactPage from "./pages/ContactPage";
-import GuidelineDetailPage from "./pages/GuidelineDetailPage";
-import ResultsPage from "./pages/ResultsPage";
-
-
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <App />,
-        children: [
-            { path: "", element: <HomePage /> },
-            { path: "design-test", element: <CheatSheetPage /> },
-            { path: "privacy", element: <PrivacyPolicyPage /> },
-            { path: "imprint", element: <ImprintPage /> },
-            { path: "contact", element: <ContactPage /> },
-            { path: "guideline/:id", element: <GuidelineDetailPage /> },
-            { path: "results", element: <ResultsPage /> },
-        ],
-    },
-], {
-    basename: ''
-});
-
-createRoot(document.getElementById("root")!).render(
+function renderApp() {
+  createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </StrictMode>
-);
+  );
+}
+
+if ((window as any).cordova) {
+  document.addEventListener('deviceready', renderApp, false);
+} else {
+  renderApp();
+}
